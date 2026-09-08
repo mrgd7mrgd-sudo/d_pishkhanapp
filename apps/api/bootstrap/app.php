@@ -6,6 +6,7 @@ use App\Exceptions\Handler;
 use App\Shared\Http\Middleware\AuditLog;
 use App\Shared\Http\Middleware\ForceJson;
 use App\Shared\Http\Middleware\Idempotent;
+use App\Shared\Http\Middleware\MultiTierOtpRateLimiter;
 use App\Shared\Http\Middleware\RequestId;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -29,6 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'idempotent' => Idempotent::class,
             'audit.log' => AuditLog::class,
+            'rate.limit.otp' => MultiTierOtpRateLimiter::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -28,7 +28,7 @@ Route::get('/v1/health', HealthController::class);
 
 Route::post('/test/validation', function (Request $request) {
     $validated = $request->validate([
-        'national_id' => ['required', 'string', 'digits:10'],
+        'email' => ['required', 'string', 'email'],
     ]);
 
     return response()->json(['success' => true, 'data' => $validated]);

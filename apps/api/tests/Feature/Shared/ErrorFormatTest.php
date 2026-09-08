@@ -6,7 +6,7 @@ use App\Shared\Http\Middleware\RequestId;
 
 test('validation errors return RFC 7807 problem details structure', function () {
     $response = $this->postJson('/api/test/validation', [
-        'national_id' => '123',
+        'email' => 'invalid-email',
     ]);
 
     $response->assertStatus(422)
@@ -20,7 +20,7 @@ test('validation errors return RFC 7807 problem details structure', function () 
             'instance',
             'request_id',
             'errors' => [
-                'national_id',
+                'email',
             ],
         ])
         ->assertJson([

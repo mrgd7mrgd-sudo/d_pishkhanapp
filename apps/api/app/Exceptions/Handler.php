@@ -25,16 +25,24 @@ final class Handler
 
         if ($e instanceof ValidationException) {
             $errors = [];
+            $hasNationalIdError = false;
             foreach ($e->errors() as $field => $messages) {
                 $errors[$field] = $messages;
+                if ($field === 'national_id') {
+                    $hasNationalIdError = true;
+                }
             }
 
+            $code = $hasNationalIdError ? ErrorCode::AUTH_NATIONAL_ID_INVALID->value : 'VALIDATION_ERROR';
+            $title = $hasNationalIdError ? ErrorCode::AUTH_NATIONAL_ID_INVALID->title() : 'خطای اعتبارسنجی داده‌های ورودی';
+            $detail = $hasNationalIdError ? ErrorCode::AUTH_NATIONAL_ID_INVALID->defaultDetail() : 'داده‌های ارسال‌شده با قوانین سامانه مطابقت ندارند.';
+
             return new JsonResponse([
-                'type' => 'https://api.pishkhan.ir/problems/validation-error',
-                'title' => 'خطای اعتبارسنجی داده‌های ورودی',
+                'type' => 'https://api.pishkhan.ir/problems/'.strtolower(str_replace('_', '-', $code)),
+                'title' => $title,
                 'status' => 422,
-                'code' => 'VALIDATION_ERROR',
-                'detail' => 'داده‌های ارسال‌شده با قوانین سامانه مطابقت ندارند.',
+                'code' => $code,
+                'detail' => $detail,
                 'instance' => $instance,
                 'request_id' => $requestId,
                 'errors' => $errors,

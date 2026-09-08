@@ -7,6 +7,7 @@ arch('modules communicate only via contracts')
     ->toOnlyUse([
         'App\\Modules',
         'App\\Shared',
+        'App\\Integration',
         'Illuminate',
         'Carbon',
         'Symfony',
