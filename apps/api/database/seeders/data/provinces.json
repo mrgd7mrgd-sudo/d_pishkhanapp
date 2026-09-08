@@ -1,0 +1,300 @@
+﻿[
+  {
+    "province_code": "THR",
+    "name": "تهران",
+    "office_count": 0,
+    "cities": [
+      { "name": "تهران", "latitude": 35.6892, "longitude": 51.3890 },
+      { "name": "ری", "latitude": 35.5947, "longitude": 51.4363 },
+      { "name": "شهریار", "latitude": 35.6596, "longitude": 51.0588 },
+      { "name": "اسلامشهر", "latitude": 35.5417, "longitude": 51.2325 },
+      { "name": "دماوند", "latitude": 35.7196, "longitude": 52.0644 },
+      { "name": "ورامین", "latitude": 35.3242, "longitude": 51.6468 }
+    ]
+  },
+  {
+    "province_code": "ESF",
+    "name": "اصفهان",
+    "office_count": 0,
+    "cities": [
+      { "name": "اصفهان", "latitude": 32.6546, "longitude": 51.6680 },
+      { "name": "کاشان", "latitude": 33.9850, "longitude": 51.4100 },
+      { "name": "نجف‌آباد", "latitude": 32.6341, "longitude": 51.3668 },
+      { "name": "شاهین‌شهر", "latitude": 32.8643, "longitude": 51.5471 }
+    ]
+  },
+  {
+    "province_code": "FRS",
+    "name": "فارس",
+    "office_count": 0,
+    "cities": [
+      { "name": "شیراز", "latitude": 29.5918, "longitude": 52.5837 },
+      { "name": "مرودشت", "latitude": 29.8742, "longitude": 52.8025 },
+      { "name": "جهرم", "latitude": 28.5003, "longitude": 53.5604 }
+    ]
+  },
+  {
+    "province_code": "KHZ",
+    "name": "خوزستان",
+    "office_count": 0,
+    "cities": [
+      { "name": "اهواز", "latitude": 31.3183, "longitude": 48.6706 },
+      { "name": "دزفول", "latitude": 32.3811, "longitude": 48.4058 },
+      { "name": "آبادان", "latitude": 30.3392, "longitude": 48.3043 }
+    ]
+  },
+  {
+    "province_code": "EAZ",
+    "name": "آذربایجان شرقی",
+    "office_count": 0,
+    "cities": [
+      { "name": "تبریز", "latitude": 38.0962, "longitude": 46.2738 },
+      { "name": "مراغه", "latitude": 37.3919, "longitude": 46.2394 },
+      { "name": "میانه", "latitude": 37.4206, "longitude": 47.7153 }
+    ]
+  },
+  {
+    "province_code": "WAZ",
+    "name": "آذربایجان غربی",
+    "office_count": 0,
+    "cities": [
+      { "name": "ارومیه", "latitude": 37.5527, "longitude": 45.0761 },
+      { "name": "خوی", "latitude": 38.5519, "longitude": 44.9578 },
+      { "name": "مهاباد", "latitude": 36.7631, "longitude": 45.7222 }
+    ]
+  },
+  {
+    "province_code": "ARD",
+    "name": "اردبیل",
+    "office_count": 0,
+    "cities": [
+      { "name": "اردبیل", "latitude": 38.2498, "longitude": 48.2933 },
+      { "name": "مشگین‌شهر", "latitude": 38.3986, "longitude": 47.6822 },
+      { "name": "پارس‌آباد", "latitude": 39.6486, "longitude": 47.9175 }
+    ]
+  },
+  {
+    "province_code": "ILM",
+    "name": "ایلام",
+    "office_count": 0,
+    "cities": [
+      { "name": "ایلام", "latitude": 33.6374, "longitude": 46.4227 },
+      { "name": "دهلران", "latitude": 32.6942, "longitude": 47.2678 }
+    ]
+  },
+  {
+    "province_code": "BSH",
+    "name": "بوشهر",
+    "office_count": 0,
+    "cities": [
+      { "name": "بوشهر", "latitude": 28.9234, "longitude": 50.8203 },
+      { "name": "برازجان", "latitude": 29.2667, "longitude": 51.2167 },
+      { "name": "کنگان", "latitude": 27.8339, "longitude": 52.0628 }
+    ]
+  },
+  {
+    "province_code": "CHB",
+    "name": "چهارمحال و بختیاری",
+    "office_count": 0,
+    "cities": [
+      { "name": "شهرکرد", "latitude": 32.3256, "longitude": 50.8644 },
+      { "name": "بروجن", "latitude": 31.9689, "longitude": 51.2894 }
+    ]
+  },
+  {
+    "province_code": "SKH",
+    "name": "خراسان جنوبی",
+    "office_count": 0,
+    "cities": [
+      { "name": "بیرجند", "latitude": 32.8663, "longitude": 59.2211 },
+      { "name": "قائن", "latitude": 33.7278, "longitude": 59.1847 }
+    ]
+  },
+  {
+    "province_code": "RKH",
+    "name": "خراسان رضوی",
+    "office_count": 0,
+    "cities": [
+      { "name": "مشهد", "latitude": 36.2972, "longitude": 59.6067 },
+      { "name": "نیشابور", "latitude": 36.2133, "longitude": 58.7958 },
+      { "name": "سبزوار", "latitude": 36.2128, "longitude": 57.6778 }
+    ]
+  },
+  {
+    "province_code": "NKH",
+    "name": "خراسان شمالی",
+    "office_count": 0,
+    "cities": [
+      { "name": "بجنورد", "latitude": 37.4747, "longitude": 57.3292 },
+      { "name": "شیروان", "latitude": 37.3964, "longitude": 57.9294 }
+    ]
+  },
+  {
+    "province_code": "ZNJ",
+    "name": "زنجان",
+    "office_count": 0,
+    "cities": [
+      { "name": "زنجان", "latitude": 36.6744, "longitude": 48.4844 },
+      { "name": "ابهر", "latitude": 36.1468, "longitude": 49.2181 }
+    ]
+  },
+  {
+    "province_code": "SMN",
+    "name": "سمنان",
+    "office_count": 0,
+    "cities": [
+      { "name": "سمنان", "latitude": 35.5769, "longitude": 53.3972 },
+      { "name": "شاهرود", "latitude": 36.4181, "longitude": 54.9764 }
+    ]
+  },
+  {
+    "province_code": "SBN",
+    "name": "سیستان و بلوچستان",
+    "office_count": 0,
+    "cities": [
+      { "name": "زاهدان", "latitude": 29.4963, "longitude": 60.8629 },
+      { "name": "چابهار", "latitude": 25.2919, "longitude": 60.6430 },
+      { "name": "زابل", "latitude": 31.0292, "longitude": 61.5006 }
+    ]
+  },
+  {
+    "province_code": "QZW",
+    "name": "قزوین",
+    "office_count": 0,
+    "cities": [
+      { "name": "قزوین", "latitude": 36.2688, "longitude": 50.0041 },
+      { "name": "تاکستان", "latitude": 36.0697, "longitude": 49.6958 }
+    ]
+  },
+  {
+    "province_code": "QOM",
+    "name": "قم",
+    "office_count": 0,
+    "cities": [
+      { "name": "قم", "latitude": 34.6399, "longitude": 50.8759 }
+    ]
+  },
+  {
+    "province_code": "KRD",
+    "name": "کردستان",
+    "office_count": 0,
+    "cities": [
+      { "name": "سنندج", "latitude": 35.3144, "longitude": 46.9923 },
+      { "name": "سقز", "latitude": 36.2428, "longitude": 46.2733 },
+      { "name": "مریوان", "latitude": 35.5269, "longitude": 46.1764 }
+    ]
+  },
+  {
+    "province_code": "KMN",
+    "name": "کرمان",
+    "office_count": 0,
+    "cities": [
+      { "name": "کرمان", "latitude": 30.2839, "longitude": 57.0788 },
+      { "name": "رفسنجان", "latitude": 30.4067, "longitude": 55.9939 },
+      { "name": "سیرجان", "latitude": 29.4520, "longitude": 55.6814 }
+    ]
+  },
+  {
+    "province_code": "KSH",
+    "name": "کرمانشاه",
+    "office_count": 0,
+    "cities": [
+      { "name": "کرمانشاه", "latitude": 34.3277, "longitude": 47.0778 },
+      { "name": "اسلام‌آباد غرب", "latitude": 34.1094, "longitude": 46.5275 }
+    ]
+  },
+  {
+    "province_code": "KBD",
+    "name": "کهگیلویه و بویراحمد",
+    "office_count": 0,
+    "cities": [
+      { "name": "یاسوج", "latitude": 30.6684, "longitude": 51.5876 },
+      { "name": "دوگنبدان", "latitude": 30.3586, "longitude": 50.7981 }
+    ]
+  },
+  {
+    "province_code": "GLS",
+    "name": "گلستان",
+    "office_count": 0,
+    "cities": [
+      { "name": "گرگان", "latitude": 36.8427, "longitude": 54.4439 },
+      { "name": "گنبد کاووس", "latitude": 37.2500, "longitude": 55.1672 }
+    ]
+  },
+  {
+    "province_code": "GLN",
+    "name": "گیلان",
+    "office_count": 0,
+    "cities": [
+      { "name": "رشت", "latitude": 37.2809, "longitude": 49.5924 },
+      { "name": "بندر انزلی", "latitude": 37.4727, "longitude": 49.4622 },
+      { "name": "لاهیجان", "latitude": 37.2070, "longitude": 50.0034 }
+    ]
+  },
+  {
+    "province_code": "LRS",
+    "name": "لرستان",
+    "office_count": 0,
+    "cities": [
+      { "name": "خرم‌آباد", "latitude": 33.4878, "longitude": 48.3558 },
+      { "name": "بروجرد", "latitude": 33.8973, "longitude": 48.7516 }
+    ]
+  },
+  {
+    "province_code": "MZN",
+    "name": "مازندران",
+    "office_count": 0,
+    "cities": [
+      { "name": "ساری", "latitude": 36.5659, "longitude": 53.0586 },
+      { "name": "بابل", "latitude": 36.5419, "longitude": 52.6781 },
+      { "name": "آمل", "latitude": 36.4676, "longitude": 52.3507 }
+    ]
+  },
+  {
+    "province_code": "MRK",
+    "name": "مرکزی",
+    "office_count": 0,
+    "cities": [
+      { "name": "اراک", "latitude": 34.0917, "longitude": 49.6892 },
+      { "name": "ساوه", "latitude": 35.0211, "longitude": 50.3564 }
+    ]
+  },
+  {
+    "province_code": "HRZ",
+    "name": "هرمزگان",
+    "office_count": 0,
+    "cities": [
+      { "name": "بندرعباس", "latitude": 27.1832, "longitude": 56.2666 },
+      { "name": "قشم", "latitude": 26.9581, "longitude": 56.2719 },
+      { "name": "کیش", "latitude": 26.5578, "longitude": 54.0194 }
+    ]
+  },
+  {
+    "province_code": "HMD",
+    "name": "همدان",
+    "office_count": 0,
+    "cities": [
+      { "name": "همدان", "latitude": 34.7989, "longitude": 48.5150 },
+      { "name": "ملایر", "latitude": 34.2969, "longitude": 48.8236 }
+    ]
+  },
+  {
+    "province_code": "YZD",
+    "name": "یزد",
+    "office_count": 0,
+    "cities": [
+      { "name": "یزد", "latitude": 31.8974, "longitude": 54.3569 },
+      { "name": "میبد", "latitude": 32.2501, "longitude": 54.0166 }
+    ]
+  },
+  {
+    "province_code": "ABZ",
+    "name": "البرز",
+    "office_count": 0,
+    "cities": [
+      { "name": "کرج", "latitude": 35.8400, "longitude": 50.9391 },
+      { "name": "فردیس", "latitude": 35.7247, "longitude": 50.9856 },
+      { "name": "هشتگرد", "latitude": 35.9619, "longitude": 50.6806 }
+    ]
+  }
+]
