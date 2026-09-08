@@ -1,0 +1,17 @@
+﻿[
+  {
+    "name": "citizen-pwa initial JS bundle (Architecture §4.8)",
+    "path": "apps/citizen-pwa/dist/assets/index-*.js",
+    "limit": "60 KB"
+  },
+  {
+    "name": "citizen-pwa initial CSS bundle (Architecture §4.8)",
+    "path": "apps/citizen-pwa/dist/assets/index-*.css",
+    "limit": "28 KB"
+  },
+  {
+    "name": "operator-desk initial JS bundle (Architecture §4.8)",
+    "path": "apps/operator-desk/dist/assets/index-*.js",
+    "limit": "400 KB"
+  }
+]

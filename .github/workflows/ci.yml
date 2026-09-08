@@ -1,0 +1,215 @@
+﻿name: CI Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  constraint-guard:
+    name: 🛡️ Constraint Guard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ممنوعیت Native (HC-1)
+        run: |
+          if grep -rniE '(react-native|flutter|\.kt\b|\.swift\b|capacitor|cordova|expo-)' \
+             --include='*.json' --include='*.ts' --include='*.tsx' --include='*.php' \
+             --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=prototype . ; then
+            echo "::error::نقض HC-1 — ارجاع به فناوری Native یافت شد"
+            exit 1
+          fi
+
+      - name: کلید AI در کلاینت ممنوع (HC-5)
+        run: |
+          if grep -rniE '(openrouter|openai|anthropic|generativelanguage|@google/genai)' apps/citizen-pwa/src apps/operator-desk/src ; then
+            echo "::error::نقض HC-5 — ارجاع به سرویس AI در کد کلاینت"
+            exit 1
+          fi
+
+      - name: وابستگی‌های مرده پروتوتایپ
+        run: |
+          if grep -qE '"(@google/genai|express|dotenv)"' apps/*/package.json ; then
+            echo "::error::وابستگی مرده پروتوتایپ بازگشته است"
+            exit 1
+          fi
+
+  lint-and-static:
+    name: 🎨 Lint & Static Analysis
+    needs: constraint-guard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js & pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.5.2
+
+      - name: Setup PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo, pdo_pgsql, pgsql, redis, bcmath, mbstring, gd
+          coverage: none
+
+      - name: Install Node Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Composer Dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+        working-directory: apps/api
+
+      - name: PHP Pint Code Style Check
+        run: ./vendor/bin/pint --test
+        working-directory: apps/api
+
+      - name: PHPStan Static Analysis (Level 8)
+        run: ./vendor/bin/phpstan analyse
+        working-directory: apps/api
+
+      - name: TypeScript Typecheck
+        run: pnpm -r --parallel run typecheck
+
+      - name: ESLint Code Quality
+        run: pnpm -r --parallel run lint
+
+  contract-check:
+    name: 📜 API Contract Gate
+    needs: constraint-guard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js & pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.5.2
+
+      - name: Setup PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo, sqlite3, redis, bcmath, mbstring
+          coverage: none
+
+      - name: Install Dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          cd apps/api && composer install --prefer-dist --no-interaction
+
+      - name: Run API Contract Gate
+        run: bash scripts/contract-check.sh
+
+  test-frontend:
+    name: 🧪 Frontend Tests
+    needs: lint-and-static
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js & pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.5.2
+
+      - name: Install Node Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Frontend Tests
+        run: pnpm -r --parallel run test
+
+  test-backend:
+    name: 🧪 Backend Tests (PostGIS + Redis + MinIO)
+    needs: lint-and-static
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_DB: pishkhan_test
+          POSTGRES_USER: pishkhan
+          POSTGRES_PASSWORD: secret_local_password_change_in_prod
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo, pdo_pgsql, pgsql, redis, bcmath, mbstring
+          coverage: none
+
+      - name: Install Composer Dependencies
+        run: composer install --prefer-dist --no-interaction
+        working-directory: apps/api
+
+      - name: Prepare Test Environment
+        run: |
+          cp .env.example .env.testing
+          php artisan key:generate --env=testing
+        working-directory: apps/api
+
+      - name: Run Pest Test Suite (Feature, Unit, Architecture)
+        run: ./vendor/bin/pest
+        working-directory: apps/api
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: pishkhan_test
+          DB_USERNAME: pishkhan
+          DB_PASSWORD: secret_local_password_change_in_prod
+          REDIS_HOST: 127.0.0.1
+          REDIS_PORT: 6379
+
+  build:
+    name: 🏗️ Production Build & Bundle Inspection
+    needs: [test-frontend, test-backend, contract-check]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js & pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.5.2
+
+      - name: Install Node Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Web Applications
+        run: pnpm turbo run build
+
+      - name: Check Bundle Size Limits
+        run: npx size-limit

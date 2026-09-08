@@ -1,0 +1,38 @@
+﻿name: Constraint Guard (HC-1 & HC-5)
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  constraint-guard:
+    name: Enforce Hard Constraints
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ممنوعیت Native (HC-1)
+        run: |
+          if grep -rniE '(react-native|flutter|\.kt\b|\.swift\b|capacitor|cordova|expo-)' \
+             --include='*.json' --include='*.ts' --include='*.tsx' --include='*.php' \
+             --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=prototype . ; then
+            echo "::error::نقض HC-1 — ارجاع به فناوری Native یافت شد"
+            exit 1
+          fi
+
+      - name: کلید AI در کلاینت ممنوع (HC-5)
+        run: |
+          if grep -rniE '(openrouter|openai|anthropic|generativelanguage|@google/genai)' apps/citizen-pwa/src apps/operator-desk/src ; then
+            echo "::error::نقض HC-5 — ارجاع به سرویس AI در کد کلاینت"
+            exit 1
+          fi
+
+      - name: وابستگی‌های مرده پروتوتایپ
+        run: |
+          if grep -qE '"(@google/genai|express|dotenv)"' apps/*/package.json ; then
+            echo "::error::وابستگی مرده پروتوتایپ بازگشته است"
+            exit 1
+          fi
