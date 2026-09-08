@@ -4,6 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/shared/api/query-client';
 import { routes } from '@/routes';
 import { ErrorBoundary } from '@/shared/ui/ErrorBoundary';
+import { UpdatePrompt } from '@/shared/pwa/UpdatePrompt';
 import '@/shared/i18n';
 
 const router = createBrowserRouter(routes);
@@ -23,6 +24,7 @@ export function App(): React.JSX.Element {
           }
         >
           <RouterProvider router={router} />
+          <UpdatePrompt />
         </Suspense>
       </QueryClientProvider>
     </ErrorBoundary>
