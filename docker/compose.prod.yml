@@ -1,0 +1,61 @@
+services:
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: pishkhan_nginx_prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/security-headers.conf:/etc/nginx/security-headers.conf:ro
+      - ../apps/citizen-pwa/dist:/usr/share/nginx/html/citizen-pwa:ro
+      - ../apps/operator-desk/dist:/usr/share/nginx/html/operator-desk:ro
+    depends_on:
+      - api
+    restart: always
+
+  api:
+    build:
+      context: ../apps/api
+      dockerfile: Dockerfile
+    image: pishkhan/api:${APP_VERSION:-latest}
+    container_name: pishkhan_api_prod
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_KEY: ${APP_KEY}
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: pishkhan
+      DB_USERNAME: pishkhan
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - postgres
+      - redis
+    restart: always
+
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: pishkhan_postgres_prod
+    environment:
+      POSTGRES_DB: pishkhan
+      POSTGRES_USER: pishkhan
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: pishkhan_redis_prod
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_prod_data:/data
+    restart: always
+
+volumes:
+  postgres_prod_data:
+  redis_prod_data:
