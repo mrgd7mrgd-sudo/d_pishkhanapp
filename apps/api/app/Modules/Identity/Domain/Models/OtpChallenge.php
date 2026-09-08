@@ -11,6 +11,7 @@ use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -66,7 +67,7 @@ final class OtpChallenge extends Model
         int $ttlSeconds = 120
     ): self {
         $challenge = new self;
-        $challenge->mobile_hash = app(EnvelopeEncryptor::class)->hashIndex($mobile);
+        $challenge->mobile_hash = App::make(EnvelopeEncryptor::class)->hashIndex($mobile);
         $challenge->code_hash = Hash::make($rawCode);
         $challenge->purpose = $purpose;
         $challenge->attempts = 0;
