@@ -1,0 +1,2742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سامانه-جامع-خدمات-شهروندی-و-پیشخوان-هوشمند (3) — Complete Call Flow &amp; Architecture Documentation</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --bg: #0f172a; --surface: #1e293b; --border: #334155;
+  --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+  --warn: #fbbf24; --err: #f87171; --ok: #34d399;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+h1 { font-size: 2.4rem; margin-bottom: 8px; background: linear-gradient(135deg, var(--accent), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h2 { font-size: 1.7rem; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
+h3 { font-size: 1.25rem; margin: 32px 0 12px; color: var(--accent); }
+h4 { font-size: 1.05rem; margin: 20px 0 8px; color: var(--warn); }
+p { margin: 8px 0; color: var(--muted); }
+.subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 32px; }
+.mermaid { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 20px 0; overflow-x: auto; position: relative; }
+.mermaid.is-enhanced { padding: 0; overflow: hidden; min-height: 260px; }
+.mermaid-viewport { padding: 54px 24px 24px; overflow: hidden; cursor: grab; touch-action: none; min-height: 260px; }
+.mermaid-viewport.is-dragging { cursor: grabbing; }
+.mermaid-viewport svg { max-width: none !important; height: auto; transform-origin: 0 0; transition: transform 120ms ease; }
+.mermaid-toolbar { position: absolute; top: 10px; right: 10px; z-index: 3; display: flex; align-items: center; gap: 6px; padding: 6px; background: rgba(15,23,42,0.92); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.28); }
+.mermaid-toolbar button, .mermaid-toolbar .zoom-level { height: 28px; min-width: 32px; border: 1px solid var(--border); border-radius: 6px; background: #1e293b; color: var(--text); font: 600 0.78rem system-ui, sans-serif; display: inline-flex; align-items: center; justify-content: center; }
+.mermaid-toolbar button { cursor: pointer; }
+.mermaid-toolbar button:hover { border-color: var(--accent); color: var(--accent); }
+.mermaid-toolbar .zoom-level { min-width: 52px; color: var(--muted); background: transparent; }
+.call-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+.call-table th { background: #1a2744; color: var(--accent); text-align: left; padding: 10px 14px; border: 1px solid var(--border); }
+.call-table td { padding: 8px 14px; border: 1px solid var(--border); vertical-align: top; }
+.call-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+.tag-async { background: #7c3aed33; color: #a78bfa; }
+.tag-class { background: #05966933; color: var(--ok); }
+.tag-func { background: #2563eb33; color: var(--accent); }
+.tag-cmd { background: #d9770633; color: var(--warn); }
+.tag-endpoint { background: #dc262633; color: var(--err); }
+.tag-hook { background: #db277733; color: #f472b6; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin: 16px 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; margin: 16px 0; }
+.arrow-chain { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--accent); padding: 10px; background: rgba(56,189,248,0.06); border-radius: 6px; }
+code { font-family: 'Fira Code', 'Cascadia Code', monospace; background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 3px; font-size: 0.88em; }
+ul, ol { margin: 8px 0 8px 24px; color: var(--muted); }
+li { margin: 4px 0; }
+a { color: var(--accent); }
+hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+.nav { position: sticky; top: 0; background: var(--bg); z-index: 10; padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.9rem; }
+.nav a { text-decoration: none; }
+.nav a:hover { text-decoration: underline; }
+@media (max-width: 768px) { .container { padding: 16px; } h1 { font-size: 1.8rem; } }
+
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>سامانه-جامع-خدمات-شهروندی-و-پیشخوان-هوشمند (3) — Complete Call Flow &amp; Architecture Documentation</h1>
+<p class="subtitle">Generated from graphify knowledge graph: 229 nodes, 432 edges, 13 communities. Commit: unknown</p>
+
+<div class="nav">
+    <a href="#overview">Architecture Overview</a>
+    <a href="#build-graph">Graph Build</a>
+    <a href="#tests-fixtures">Tests &amp; Fixtures</a>
+    <a href="#components-typests-consultationdatats">Components Typests Consultationdatats</a>
+    <a href="#components-officesmaptsx-smartchatbotmodaltsx">Components Officesmaptsx Smartchatbotmodaltsx</a>
+    <a href="#components-userprofileviewtsx-appointmentmodalts">Components Userprofileviewtsx Appointmentmodaltsx</a>
+    <a href="#components-citizenloginviewtsx-headertsx">Components Citizenloginviewtsx Headertsx</a>
+    <a href="#officeportalviewtsx-components-initial">Officeportalviewtsx Components Initial</a>
+    <a href="#navbartsx-components-liquidtabitem">Navbartsx Components Liquidtabitem</a>
+    <a href="#vite-envdts-jpeg">Vite Envdts Jpeg</a>
+    <a href="#clientqualitycheckmodaltsx-components-clientqual">Clientqualitycheckmodaltsx Components Clientqualitycheckmodalprops</a>
+    <a href="#viteconfigts">Viteconfigts</a>
+</div>
+
+<!-- ====== Architecture Overview ====== -->
+<h2 id="overview">1. Architecture Overview</h2>
+
+<div class="mermaid">
+
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    BUILD_GRAPH_321CBB04("Graph Build<br/><small>71 nodes</small>")
+    class BUILD_GRAPH_321CBB04 module;
+    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>33 nodes</small>")
+    class TESTS_FIXTURES_B84B1DCC module;
+    COMPONENTS_TYPESTS_CONSULTATIONDATATS_E0825E16("Components Typests Consultationdatats<br/><small>34 nodes</small>")
+    class COMPONENTS_TYPESTS_CONSULTATIONDATATS_E0825E16 module;
+    COMPONENTS_OFFICESMAPTSX_SMARTCHATBOTMODALTSX_E52ED29B("Components Officesmaptsx Smartchatbotmodaltsx<br/><small>28 nodes</small>")
+    class COMPONENTS_OFFICESMAPTSX_SMARTCHATBOTMODALTSX_E52ED29B module;
+    COMPONENTS_USERPROFILEVIEWTSX_APPOINTMENTMODALTS_595AD2C7("Components Userprofileviewtsx Appointmentmodaltsx<br/><small>16 nodes</small>")
+    class COMPONENTS_USERPROFILEVIEWTSX_APPOINTMENTMODALTS_595AD2C7 module;
+    COMPONENTS_CITIZENLOGINVIEWTSX_HEADERTSX_2F664380("Components Citizenloginviewtsx Headertsx<br/><small>15 nodes</small>")
+    class COMPONENTS_CITIZENLOGINVIEWTSX_HEADERTSX_2F664380 module;
+    OFFICEPORTALVIEWTSX_COMPONENTS_INITIAL_9CCA8208("Officeportalviewtsx Components Initial<br/><small>15 nodes</small>")
+    class OFFICEPORTALVIEWTSX_COMPONENTS_INITIAL_9CCA8208 module;
+    NAVBARTSX_COMPONENTS_LIQUIDTABITEM_71FC1608("Navbartsx Components Liquidtabitem<br/><small>7 nodes</small>")
+    class NAVBARTSX_COMPONENTS_LIQUIDTABITEM_71FC1608 module;
+    VITE_ENVDTS_JPEG_B5D4FCAC("Vite Envdts Jpeg<br/><small>6 nodes</small>")
+    class VITE_ENVDTS_JPEG_B5D4FCAC module;
+    CLIENTQUALITYCHECKMODALTSX_COMPONENTS_CLIENTQUAL_74799F77("Clientqualitycheckmodaltsx Components Clientqualitycheckmodalprops<br/><small>3 nodes</small>")
+    class CLIENTQUALITYCHECKMODALTSX_COMPONENTS_CLIENTQUAL_74799F77 module;
+    VITECONFIGTS_48F21C18("Viteconfigts<br/><small>1 nodes</small>")
+    class VITECONFIGTS_48F21C18 module;
+    TESTS_FIXTURES_B84B1DCC -->|imports x18| COMPONENTS_OFFICESMAPTSX_SMARTCHATBOTMODALTSX_E52ED29B
+    TESTS_FIXTURES_B84B1DCC -->|imports x13| COMPONENTS_USERPROFILEVIEWTSX_APPOINTMENTMODALTS_595AD2C7
+    TESTS_FIXTURES_B84B1DCC -->|imports x12| COMPONENTS_CITIZENLOGINVIEWTSX_HEADERTSX_2F664380
+    COMPONENTS_USERPROFILEVIEWTSX_APPOINTMENTMODALTS_595AD2C7 -->|imports x9| COMPONENTS_OFFICESMAPTSX_SMARTCHATBOTMODALTSX_E52ED29B
+    TESTS_FIXTURES_B84B1DCC -->|imports x8| COMPONENTS_TYPESTS_CONSULTATIONDATATS_E0825E16
+    COMPONENTS_OFFICESMAPTSX_SMARTCHATBOTMODALTSX_E52ED29B -->|imports x7| COMPONENTS_TYPESTS_CONSULTATIONDATATS_E0825E16
+    COMPONENTS_TYPESTS_CONSULTATIONDATATS_E0825E16 -->|contains x5| COMPONENTS_OFFICESMAPTSX_SMARTCHATBOTMODALTSX_E52ED29B
+    TESTS_FIXTURES_B84B1DCC -->|imports x4| OFFICEPORTALVIEWTSX_COMPONENTS_INITIAL_9CCA8208
+    COMPONENTS_USERPROFILEVIEWTSX_APPOINTMENTMODALTS_595AD2C7 -->|imports x4| COMPONENTS_TYPESTS_CONSULTATIONDATATS_E0825E16
+    COMPONENTS_CITIZENLOGINVIEWTSX_HEADERTSX_2F664380 -->|imports x4| COMPONENTS_TYPESTS_CONSULTATIONDATATS_E0825E16
+    OFFICEPORTALVIEWTSX_COMPONENTS_INITIAL_9CCA8208 -->|imports x4| TESTS_FIXTURES_B84B1DCC
+    COMPONENTS_TYPESTS_CONSULTATIONDATATS_E0825E16 -->|contains x3| COMPONENTS_USERPROFILEVIEWTSX_APPOINTMENTMODALTS_595AD2C7
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h4>Architecture Layers</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
+      <tr><td>Graph Build</td><td>71</td><td><code>2, 4, 5</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>33</td><td><code>1</code></td></tr><tr><td>Components Typests Consultationdatats</td><td>34</td><td><code>0</code></td></tr><tr><td>Components Officesmaptsx Smartchatbotmodaltsx</td><td>28</td><td><code>3</code></td></tr><tr><td>Components Userprofileviewtsx Appointmentmodaltsx</td><td>16</td><td><code>6</code></td></tr><tr><td>Components Citizenloginviewtsx Headertsx</td><td>15</td><td><code>7</code></td></tr><tr><td>Officeportalviewtsx Components Initial</td><td>15</td><td><code>8</code></td></tr><tr><td>Navbartsx Components Liquidtabitem</td><td>7</td><td><code>9</code></td></tr><tr><td>Vite Envdts Jpeg</td><td>6</td><td><code>10</code></td></tr><tr><td>Clientqualitycheckmodaltsx Components Clientqualitycheckmodalprops</td><td>3</td><td><code>11</code></td></tr><tr><td>Viteconfigts</td><td>1</td><td><code>12</code></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Core Flow</h4>
+    <div class="arrow-chain">Graph Build -&gt; Tests &amp; Fixtures -&gt; Components Officesmaptsx Smartchatbotmodaltsx -&gt; Components Typests Consultationdatats -&gt; Components Userprofileviewtsx Appointmentmodaltsx -&gt; Components Citizenloginviewtsx Headertsx -&gt; Officeportalviewtsx Components Initial</div>
+  </div>
+</div>
+<div class="grid">
+  <div class="card">
+    <h4>Graph Report Highlights</h4>
+    <ul>
+      <li>229 nodes · 432 edges · 13 communities (11 shown, 1 thin omitted)</li>
+      <li>Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS</li>
+      <li>Token cost: 0 input · 0 output</li>
+      <li>1. `CaseRequest` - 17 edges</li>
+      <li>2. `PishkhanOffice` - 17 edges</li>
+      <li>3. `CitizenService` - 16 edges</li>
+    </ul>
+  </div>
+</div>
+<hr>
+<!-- ====== 2. Graph Build ====== -->
+<h2 id="build-graph">2. Graph Build</h2>
+<p>Graph Build groups implementation around packagejson, tsconfigjson, react, types, mostly in package.json, tsconfig.json. This section covers 71 nodes and 70 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Graph Build (71 nodes, 70 edges)
+    package_dependencies_dotenv_27698e94("dotenv<br/><small>package.json</small>")
+    package_dependencies_express_ada56cce("express<br/><small>package.json</small>")
+    package_dependencies_google_genai_1da26732("@google/genai<br/><small>package.json</small>")
+    package_dependencies_leaflet_e1b9b00b("leaflet<br/><small>package.json</small>")
+    package_dependencies_lucide_react_17f0074f("lucide-react<br/><small>package.json</small>")
+    package_dependencies_motion_89db0553("motion<br/><small>package.json</small>")
+    package_dependencies_vite_eedbdfed("vite<br/><small>package.json</small>")
+    vite_9907d3c4("vite<br/><small>package.json</small>")
+    package_devdependencies_autoprefixer_b396c789("autoprefixer<br/><small>package.json</small>")
+    autoprefixer_87dfe145("autoprefixer<br/><small>package.json</small>")
+    package_devdependencies_esbuild_6c3a561a("esbuild<br/><small>package.json</small>")
+    esbuild_5d98dd13("esbuild<br/><small>package.json</small>")
+    package_devdependencies_tailwindcss_9686c9d3("tailwindcss<br/><small>package.json</small>")
+    tailwindcss_34a67857("tailwindcss<br/><small>package.json</small>")
+    package_devdependencies_tsx_a8f732ed("tsx<br/><small>package.json</small>")
+    tsx_a90e8eec("tsx<br/><small>package.json</small>")
+    package_devdependencies_types_express_4df2cdea("@types/express<br/><small>package.json</small>")
+    types_express_d2b77465("@types/express<br/><small>package.json</small>")
+    package_dependencies_vite_eedbdfed -->|imports| vite_9907d3c4
+    package_devdependencies_autoprefixer_b396c789 -->|imports| autoprefixer_87dfe145
+    package_devdependencies_esbuild_6c3a561a -->|imports| esbuild_5d98dd13
+    package_devdependencies_tailwindcss_9686c9d3 -->|imports| tailwindcss_34a67857
+    package_devdependencies_tsx_a8f732ed -->|imports| tsx_a90e8eec
+    package_devdependencies_types_express_4df2cdea -->|imports| types_express_d2b77465
+    %% Omitted for readability: 53 nodes, 0 edges
+    class package_dependencies_dotenv_27698e94 function;
+    class package_dependencies_express_ada56cce function;
+    class package_dependencies_google_genai_1da26732 function;
+    class package_dependencies_leaflet_e1b9b00b function;
+    class package_dependencies_lucide_react_17f0074f function;
+    class package_dependencies_motion_89db0553 function;
+    class package_dependencies_vite_eedbdfed function;
+    class vite_9907d3c4 function;
+    class package_devdependencies_autoprefixer_b396c789 function;
+    class autoprefixer_87dfe145 function;
+    class package_devdependencies_esbuild_6c3a561a function;
+    class esbuild_5d98dd13 function;
+    class package_devdependencies_tailwindcss_9686c9d3 function;
+    class tailwindcss_34a67857 function;
+    class package_devdependencies_tsx_a8f732ed function;
+    class tsx_a90e8eec function;
+    class package_devdependencies_types_express_4df2cdea function;
+    class types_express_d2b77465 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>package.json node in package.json.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>vite</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>vite</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>vite node in package.json.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>devDependencies</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>devDependencies node in package.json.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>autoprefixer</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>autoprefixer</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>autoprefixer node in package.json.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>esbuild</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>esbuild</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>esbuild node in package.json.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>tailwindcss</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>tailwindcss</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>tailwindcss node in package.json.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>tsx</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>tsx</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>tsx node in package.json.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>@types/express</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>@types/express</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>@types/express node in package.json.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>@types/node</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>@types/node</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>@types/node node in package.json.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>typescript</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>typescript</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>typescript node in package.json.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>vite</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>vite</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>vite node in package.json.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>name</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>name node in package.json.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>private</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>private node in package.json.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>scripts</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>scripts node in package.json.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>build</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>build node in package.json.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>clean</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>clean node in package.json.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>dev</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>dev node in package.json.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>lint</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>lint node in package.json.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>preview</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>preview node in package.json.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>type</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>type node in package.json.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>version</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>version node in package.json.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>autoprefixer</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>autoprefixer</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>autoprefixer node in package.json.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>esbuild</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>esbuild</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>esbuild node in package.json.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>tailwindcss</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>tailwindcss</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>tailwindcss node in package.json.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>tsx</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>tsx</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>tsx node in package.json.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>@types/express</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>@types/express</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>@types/express node in package.json.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>@types/node</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>@types/node</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>@types/node node in package.json.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>typescript</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>typescript</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>typescript node in package.json.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>vite</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>vite</code><br><small style="color:var(--muted)">package.json</small><br><code>vite</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>vite node in package.json.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>dependencies</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>dependencies node in package.json.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>package.json</code></td><td>52 nodes</td></tr>
+<tr><td><code>tsconfig.json</code></td><td>19 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x47, imports x20, extends x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 3. Tests & Fixtures ====== -->
+<h2 id="tests-fixtures">3. Tests &amp; Fixtures</h2>
+<p>Tests &amp; Fixtures groups implementation around components, mockdatats, data, servicescatalogviewtsx, mostly in src/data/mockData.ts, src/components/ServicesCatalogView.tsx, src/components/CategoryFilter.tsx. This section covers 33 nodes and 59 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Tests &amp; Fixtures (33 nodes, 59 edges)
+    subgraph tests_fixtures_src_data_mockData_ts_d812077e["src/data/mockData.ts"]
+        src_data_mockdata_categories_243fc957("CATEGORIES<br/><small>src/data/mockData.ts</small>")
+        src_data_mockdata_citizen_services_7db0f02a("CITIZEN_SERVICES<br/><small>src/data/mockData.ts</small>")
+        src_data_mockdata_hero_banner_image_4ff646e3("HERO_BANNER_IMAGE<br/><small>src/data/mockData.ts</small>")
+        src_data_mockdata_initial_cases_569ed477("INITIAL_CASES<br/><small>src/data/mockData.ts</small>")
+        src_data_mockdata_initial_citizen_profile_f1c22d47("INITIAL_CITIZEN_PROFILE<br/><small>src/data/mockData.ts</small>")
+        src_data_mockdata_mock_appointments_9d5c21e1("MOCK_APPOINTMENTS<br/><small>src/data/mockData.ts</small>")
+        src_data_mockdata_mock_chat_messages_149ee6d0("MOCK_CHAT_MESSAGES<br/><small>src/data/mockData.ts</small>")
+        src_data_mockdata_mock_legal_delegations_59fd6dc9("MOCK_LEGAL_DELEGATIONS<br/><small>src/data/mockData.ts</small>")
+        src_data_mockdata_mock_offices_4a2f3579("MOCK_OFFICES<br/><small>src/data/mockData.ts</small>")
+        src_data_mockdata_mock_transactions_6953b05b("MOCK_TRANSACTIONS<br/><small>src/data/mockData.ts</small>")
+    end
+    subgraph tests_fixtures_src_components_CategoryFilter_tsx_96c1d1f1["src/components/CategoryFilter.tsx"]
+        src_components_categoryfilter_b72111ec("CategoryFilter.tsx")
+        src_components_categoryfilter_categoryfilter_9939c85f("CategoryFilter()<br/><small>src/components/CategoryFilter.tsx</small>")
+    end
+    src_app_46efd68e("App.tsx")
+    src_components_legaldelegationmodal_085ec836("LegalDelegationModal.tsx")
+    src_components_officeloginview_b207e59d("OfficeLoginView.tsx")
+    src_components_servicescatalogview_9db3d4b6("ServicesCatalogView.tsx")
+    src_main_3231ff52("main.tsx")
+    src_types_legaldelegation_33beae16("LegalDelegation<br/><small>src/types.ts</small>")
+    src_app_46efd68e -->|imports| src_types_legaldelegation_33beae16
+    src_app_46efd68e -->|imports| src_data_mockdata_categories_243fc957
+    src_app_46efd68e -->|imports| src_data_mockdata_citizen_services_7db0f02a
+    src_app_46efd68e -->|imports| src_data_mockdata_hero_banner_image_4ff646e3
+    src_app_46efd68e -->|imports| src_data_mockdata_initial_cases_569ed477
+    src_app_46efd68e -->|imports| src_data_mockdata_initial_citizen_profile_f1c22d47
+    src_app_46efd68e -->|imports| src_data_mockdata_mock_appointments_9d5c21e1
+    src_app_46efd68e -->|imports| src_data_mockdata_mock_chat_messages_149ee6d0
+    src_app_46efd68e -->|imports| src_data_mockdata_mock_legal_delegations_59fd6dc9
+    src_app_46efd68e -->|imports| src_data_mockdata_mock_offices_4a2f3579
+    src_app_46efd68e -->|imports| src_data_mockdata_mock_transactions_6953b05b
+    src_app_46efd68e -->|imports| src_components_categoryfilter_categoryfilter_9939c85f
+    src_app_46efd68e -->|imports| src_components_categoryfilter_b72111ec
+    src_app_46efd68e -->|imports| src_components_legaldelegationmodal_085ec836
+    src_app_46efd68e -->|imports| src_components_servicescatalogview_9db3d4b6
+    src_app_46efd68e -->|imports| src_components_officeloginview_b207e59d
+    src_components_categoryfilter_b72111ec -->|imports| src_data_mockdata_categories_243fc957
+    src_components_legaldelegationmodal_085ec836 -->|imports| src_types_legaldelegation_33beae16
+    src_components_officeloginview_b207e59d -->|imports| src_data_mockdata_mock_offices_4a2f3579
+    src_components_servicescatalogview_9db3d4b6 -->|imports| src_data_mockdata_categories_243fc957
+    src_main_3231ff52 -->|imports| src_app_46efd68e
+    %% Omitted for readability: 15 nodes, 0 edges
+    class src_data_mockdata_categories_243fc957 klass;
+    class src_data_mockdata_citizen_services_7db0f02a klass;
+    class src_data_mockdata_hero_banner_image_4ff646e3 klass;
+    class src_data_mockdata_initial_cases_569ed477 klass;
+    class src_data_mockdata_initial_citizen_profile_f1c22d47 klass;
+    class src_data_mockdata_mock_appointments_9d5c21e1 klass;
+    class src_data_mockdata_mock_chat_messages_149ee6d0 klass;
+    class src_data_mockdata_mock_legal_delegations_59fd6dc9 klass;
+    class src_data_mockdata_mock_offices_4a2f3579 klass;
+    class src_data_mockdata_mock_transactions_6953b05b klass;
+    class src_components_categoryfilter_b72111ec ui;
+    class src_components_categoryfilter_categoryfilter_9939c85f ui;
+    class src_app_46efd68e ui;
+    class src_components_legaldelegationmodal_085ec836 ui;
+    class src_components_officeloginview_b207e59d ui;
+    class src_components_servicescatalogview_9db3d4b6 ui;
+    class src_main_3231ff52 ui;
+    class src_types_legaldelegation_33beae16 klass;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>CategoryFilterProps</code><br><small style="color:var(--muted)">src/components/CategoryFilter.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>CategoryFilterProps node in src/components/CategoryFilter.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>CtaSliderProps</code><br><small style="color:var(--muted)">src/components/CtaSlider.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>CtaSliderProps node in src/components/CtaSlider.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>LegalDelegationModalProps</code><br><small style="color:var(--muted)">src/components/LegalDelegationModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>LegalDelegationModalProps node in src/components/LegalDelegationModal.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>ServicesCatalogViewProps</code><br><small style="color:var(--muted)">src/components/ServicesCatalogView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ServicesCatalogViewProps node in src/components/ServicesCatalogView.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>LegalDelegation</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>LegalDelegationModal.tsx</code><br><small style="color:var(--muted)">src/components/LegalDelegationModal.tsx</small><br><code>mockData.ts</code><br><small style="color:var(--muted)">src/data/mockData.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>LegalDelegation node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>ServiceCategory</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>CategoryFilter.tsx</code><br><small style="color:var(--muted)">src/components/CategoryFilter.tsx</small><br><code>mockData.ts</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br><code>ServicesCatalogView.tsx</code><br><small style="color:var(--muted)">src/components/ServicesCatalogView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ServiceCategory node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>main.tsx</code><br><small style="color:var(--muted)">src/main.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>App() node in src/App.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>CategoryFilter()</code><br><small style="color:var(--muted)">src/components/CategoryFilter.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>CategoryFilter() node in src/components/CategoryFilter.tsx.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>CtaSlider()</code><br><small style="color:var(--muted)">src/components/CtaSlider.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>CtaSlider() node in src/components/CtaSlider.tsx.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>LegalDelegationModal()</code><br><small style="color:var(--muted)">src/components/LegalDelegationModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>LegalDelegationModal() node in src/components/LegalDelegationModal.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>OfficeLoginView()</code><br><small style="color:var(--muted)">src/components/OfficeLoginView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>OfficeLoginView() node in src/components/OfficeLoginView.tsx.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>CategoryIcon()</code><br><small style="color:var(--muted)">src/components/ServicesCatalogView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>CategoryIcon() node in src/components/ServicesCatalogView.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>ServiceIcon()</code><br><small style="color:var(--muted)">src/components/ServicesCatalogView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ServiceIcon() node in src/components/ServicesCatalogView.tsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>ServicesCatalogView()</code><br><small style="color:var(--muted)">src/components/ServicesCatalogView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ServicesCatalogView() node in src/components/ServicesCatalogView.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>main.tsx</code><br><small style="color:var(--muted)">src/main.tsx</small></td>
+  <td><code>Appointment</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>AppointmentModal()</code><br><small style="color:var(--muted)">src/components/AppointmentModal.tsx</small><br><code>AppointmentModal.tsx</code><br><small style="color:var(--muted)">src/components/AppointmentModal.tsx</small><br>+59 more</td>
+  <td>Module file in src/App.tsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>CategoryFilter.tsx</code><br><small style="color:var(--muted)">src/components/CategoryFilter.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CATEGORIES</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br><code>mockData.ts</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br><code>ServiceCategory</code><br><small style="color:var(--muted)">src/types.ts</small><br>+1 more</td>
+  <td>Module file in src/components/CategoryFilter.tsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>CtaSlider.tsx</code><br><small style="color:var(--muted)">src/components/CtaSlider.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>Module file in src/components/CtaSlider.tsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>LegalDelegationModal.tsx</code><br><small style="color:var(--muted)">src/components/LegalDelegationModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>LegalDelegation</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>types.ts</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td>Module file in src/components/LegalDelegationModal.tsx.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>OfficeLoginView.tsx</code><br><small style="color:var(--muted)">src/components/OfficeLoginView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>MOCK_OFFICES</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br><code>mockData.ts</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br><code>PishkhanOffice</code><br><small style="color:var(--muted)">src/types.ts</small><br>+1 more</td>
+  <td>Module file in src/components/OfficeLoginView.tsx.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>ServicesCatalogView.tsx</code><br><small style="color:var(--muted)">src/components/ServicesCatalogView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CATEGORIES</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br><code>CitizenService</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>mockData.ts</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br>+2 more</td>
+  <td>Module file in src/components/ServicesCatalogView.tsx.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>CATEGORY_THEMES</code><br><small style="color:var(--muted)">src/components/ServicesCatalogView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>CATEGORY_THEMES node in src/components/ServicesCatalogView.tsx.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>mockData.ts</code><br><small style="color:var(--muted)">src/data/mockData.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>CategoryFilter.tsx</code><br><small style="color:var(--muted)">src/components/CategoryFilter.tsx</small><br><code>CitizenLoginView.tsx</code><br><small style="color:var(--muted)">src/components/CitizenLoginView.tsx</small><br>+5 more</td>
+  <td><code>Appointment</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>CaseRequest</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>ChatMessage</code><br><small style="color:var(--muted)">src/types.ts</small><br>+8 more</td>
+  <td>Module file in src/data/mockData.ts.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>CATEGORIES</code><br><small style="color:var(--muted)">src/data/mockData.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>CategoryFilter.tsx</code><br><small style="color:var(--muted)">src/components/CategoryFilter.tsx</small><br><code>OfficePortalView.tsx</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small><br>+3 more</td>
+  <td>No direct outbound edge</td>
+  <td>CATEGORIES node in src/data/mockData.ts.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>CITIZEN_SERVICES</code><br><small style="color:var(--muted)">src/data/mockData.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>OfficePortalView.tsx</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>CITIZEN_SERVICES node in src/data/mockData.ts.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>HERO_BANNER_IMAGE</code><br><small style="color:var(--muted)">src/data/mockData.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>HERO_BANNER_IMAGE node in src/data/mockData.ts.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>INITIAL_CASES</code><br><small style="color:var(--muted)">src/data/mockData.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>INITIAL_CASES node in src/data/mockData.ts.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>INITIAL_CITIZEN_PROFILE</code><br><small style="color:var(--muted)">src/data/mockData.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>CitizenLoginView.tsx</code><br><small style="color:var(--muted)">src/components/CitizenLoginView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>INITIAL_CITIZEN_PROFILE node in src/data/mockData.ts.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>MOCK_APPOINTMENTS</code><br><small style="color:var(--muted)">src/data/mockData.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>MOCK_APPOINTMENTS node in src/data/mockData.ts.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>MOCK_CHAT_MESSAGES</code><br><small style="color:var(--muted)">src/data/mockData.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>MOCK_LEGAL_DELEGATIONS</code><br><small style="color:var(--muted)">src/data/mockData.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>MOCK_LEGAL_DELEGATIONS node in src/data/mockData.ts.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/data/mockData.ts</code></td><td>11 nodes</td></tr>
+<tr><td><code>src/components/ServicesCatalogView.tsx</code></td><td>6 nodes</td></tr>
+<tr><td><code>src/components/CategoryFilter.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/CtaSlider.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/LegalDelegationModal.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/App.tsx</code></td><td>2 nodes</td></tr>
+<tr><td><code>src/components/OfficeLoginView.tsx</code></td><td>2 nodes</td></tr>
+<tr><td><code>src/types.ts</code></td><td>2 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: imports x25, contains x23, imports x10, references x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 4. Components Typests Consultationdatats ====== -->
+<h2 id="components-typests-consultationdatats">4. Components Typests Consultationdatats</h2>
+<p>Components Typests Consultationdatats groups implementation around components, typests, consultationdatats, data, mostly in src/types.ts, src/data/consultationData.ts, src/components/AdvisorRegistrationModal.tsx. This section covers 34 nodes and 69 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Components Typests Consultationdatats (34 nodes, 69 edges)
+    subgraph components_typests_consultationdatats_src_types_3ecace1a["src/types.ts"]
+        src_types_consultationadvisor_47048643("ConsultationAdvisor<br/><small>src/types.ts</small>")
+        src_types_consultationcategory_012da4a3("ConsultationCategory<br/><small>src/types.ts</small>")
+        src_types_1f6437ac("types.ts")
+        src_types_businesssubscriptionplan_2c3572b0("BusinessSubscriptionPlan<br/><small>src/types.ts</small>")
+        src_types_consultationmode_5230d2e9("ConsultationMode<br/><small>src/types.ts</small>")
+        src_types_consultationsession_9b26f2f7("ConsultationSession<br/><small>src/types.ts</small>")
+    end
+    subgraph components_typests_consultationdatats_src_data_c_2b625257["src/data/consultationData.ts"]
+        src_data_consultationdata_8a53aad0("consultationData.ts")
+        src_data_consultationdata_business_subscription_931173d7("BUSINESS_SUBSCRIPTION_PLANS<br/><small>src/data/consultationData.ts</small>")
+        src_data_consultationdata_consultation_specialti_7a896ead("CONSULTATION_SPECIALTIES<br/><small>src/data/consultationData.ts</small>")
+        src_data_consultationdata_mock_advisors_b8615c27("MOCK_ADVISORS<br/><small>src/data/consultationData.ts</small>")
+    end
+    subgraph components_typests_consultationdatats_src_compon_8f4967c0["src/components/AdvisorRegistrationModal.tsx"]
+        src_components_advisorregistrationmodal_7d8dc5ce("AdvisorRegistrationModal.tsx")
+        src_components_advisorregistrationmodal_advisorr_0b7c8e50("AdvisorRegistrationModal()<br/><small>src/components/AdvisorRegistrationModal.tsx</small>")
+    end
+    subgraph components_typests_consultationdatats_src_compon_2273b41a["src/components/ConsultationDetailModal.tsx"]
+        src_components_consultationdetailmodal_36939c1f("ConsultationDetailModal.tsx")
+        src_components_consultationdetailmodal_consultat_19733509("ConsultationDetailModal()<br/><small>src/components/ConsultationDetailModal.tsx</small>")
+    end
+    subgraph components_typests_consultationdatats_src_compon_5fd3aed5["src/components/ConsultationLiveSessionModal.tsx"]
+        src_components_consultationlivesessionmodal_bb0201b3("ConsultationLiveSessionModal.tsx")
+        src_components_consultationlivesessionmodal_cons_73344b52("ConsultationLiveSessionModal()<br/><small>src/components/ConsultationLiveSessionModal.tsx</small>")
+    end
+    src_components_businesssubscriptionmodal_7088b6a3("BusinessSubscriptionModal.tsx")
+    src_components_consultationhubview_0b68c973("ConsultationHubView.tsx")
+    src_components_advisorregistrationmodal_7d8dc5ce -->|imports| src_types_consultationadvisor_47048643
+    src_components_advisorregistrationmodal_7d8dc5ce -->|imports| src_types_consultationcategory_012da4a3
+    src_components_advisorregistrationmodal_7d8dc5ce -->|imports| src_types_1f6437ac
+    src_components_businesssubscriptionmodal_7088b6a3 -->|imports| src_types_businesssubscriptionplan_2c3572b0
+    src_components_businesssubscriptionmodal_7088b6a3 -->|imports| src_types_1f6437ac
+    src_components_consultationdetailmodal_36939c1f -->|imports| src_types_consultationadvisor_47048643
+    src_components_consultationdetailmodal_36939c1f -->|imports| src_types_consultationmode_5230d2e9
+    src_components_consultationdetailmodal_36939c1f -->|imports| src_types_1f6437ac
+    src_components_consultationhubview_0b68c973 -->|imports| src_types_businesssubscriptionplan_2c3572b0
+    src_components_consultationhubview_0b68c973 -->|imports| src_types_consultationadvisor_47048643
+    src_components_consultationhubview_0b68c973 -->|imports| src_types_consultationcategory_012da4a3
+    src_components_consultationhubview_0b68c973 -->|imports| src_types_consultationmode_5230d2e9
+    src_components_consultationhubview_0b68c973 -->|imports| src_types_consultationsession_9b26f2f7
+    src_components_consultationhubview_0b68c973 -->|imports| src_data_consultationdata_business_subscription_931173d7
+    src_components_consultationhubview_0b68c973 -->|imports| src_data_consultationdata_consultation_specialti_7a896ead
+    src_components_consultationhubview_0b68c973 -->|imports| src_data_consultationdata_mock_advisors_b8615c27
+    src_components_consultationhubview_0b68c973 -->|imports| src_components_consultationdetailmodal_consultat_19733509
+    src_components_consultationhubview_0b68c973 -->|imports| src_components_consultationlivesessionmodal_cons_73344b52
+    src_components_consultationhubview_0b68c973 -->|imports| src_components_advisorregistrationmodal_advisorr_0b7c8e50
+    src_components_consultationhubview_0b68c973 -->|imports| src_types_1f6437ac
+    src_components_consultationhubview_0b68c973 -->|imports| src_data_consultationdata_8a53aad0
+    src_components_consultationhubview_0b68c973 -->|imports| src_components_consultationdetailmodal_36939c1f
+    src_components_consultationhubview_0b68c973 -->|imports| src_components_consultationlivesessionmodal_bb0201b3
+    src_components_consultationhubview_0b68c973 -->|imports| src_components_advisorregistrationmodal_7d8dc5ce
+    %% Omitted for readability: 16 nodes, 9 edges
+    class src_types_consultationadvisor_47048643 klass;
+    class src_types_consultationcategory_012da4a3 klass;
+    class src_types_1f6437ac module;
+    class src_types_businesssubscriptionplan_2c3572b0 klass;
+    class src_types_consultationmode_5230d2e9 klass;
+    class src_types_consultationsession_9b26f2f7 klass;
+    class src_data_consultationdata_8a53aad0 module;
+    class src_data_consultationdata_business_subscription_931173d7 klass;
+    class src_data_consultationdata_consultation_specialti_7a896ead klass;
+    class src_data_consultationdata_mock_advisors_b8615c27 klass;
+    class src_components_advisorregistrationmodal_7d8dc5ce ui;
+    class src_components_advisorregistrationmodal_advisorr_0b7c8e50 ui;
+    class src_components_consultationdetailmodal_36939c1f ui;
+    class src_components_consultationdetailmodal_consultat_19733509 ui;
+    class src_components_consultationlivesessionmodal_bb0201b3 ui;
+    class src_components_consultationlivesessionmodal_cons_73344b52 ui;
+    class src_components_businesssubscriptionmodal_7088b6a3 ui;
+    class src_components_consultationhubview_0b68c973 ui;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>AdvisorRegistrationModalProps</code><br><small style="color:var(--muted)">src/components/AdvisorRegistrationModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>AdvisorRegistrationModalProps node in src/components/AdvisorRegistrationModal.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>BusinessSubscriptionModalProps</code><br><small style="color:var(--muted)">src/components/BusinessSubscriptionModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>BusinessSubscriptionModalProps node in src/components/BusinessSubscriptionModal.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>ConsultationDetailModalProps</code><br><small style="color:var(--muted)">src/components/ConsultationDetailModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ConsultationDetailModalProps node in src/components/ConsultationDetailModal.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>ConsultationHubViewProps</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ConsultationHubViewProps node in src/components/ConsultationHubView.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>ConsultationLiveSessionModalProps</code><br><small style="color:var(--muted)">src/components/ConsultationLiveSessionModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ConsultationLiveSessionModalProps node in src/components/ConsultationLiveSessionModal.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>AdvisorRatingBreakdown</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>AdvisorRatingBreakdown node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>AdvisorRegistrationForm</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>AdvisorRegistrationForm node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>BusinessSubscriptionPlan</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>BusinessSubscriptionModal.tsx</code><br><small style="color:var(--muted)">src/components/BusinessSubscriptionModal.tsx</small><br><code>consultationData.ts</code><br><small style="color:var(--muted)">src/data/consultationData.ts</small><br><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>BusinessSubscriptionPlan node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>CaseStatus</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>CaseStatus node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>CaseTimelineStep</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>CaseTimelineStep node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>ConsultationAdvisor</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>AdvisorRegistrationModal.tsx</code><br><small style="color:var(--muted)">src/components/AdvisorRegistrationModal.tsx</small><br><code>consultationData.ts</code><br><small style="color:var(--muted)">src/data/consultationData.ts</small><br><code>ConsultationDetailModal.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationDetailModal.tsx</small><br>+2 more</td>
+  <td>No direct outbound edge</td>
+  <td>ConsultationAdvisor node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>ConsultationCategory</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>AdvisorRegistrationModal.tsx</code><br><small style="color:var(--muted)">src/components/AdvisorRegistrationModal.tsx</small><br><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ConsultationCategory node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>ConsultationMode</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>ConsultationDetailModal.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationDetailModal.tsx</small><br><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small><br><code>ConsultationLiveSessionModal.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationLiveSessionModal.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ConsultationMode node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>ConsultationSession</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>consultationData.ts</code><br><small style="color:var(--muted)">src/data/consultationData.ts</small><br><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small><br><code>ConsultationLiveSessionModal.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationLiveSessionModal.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ConsultationSession node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>ConsultationSpecialtyItem</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>consultationData.ts</code><br><small style="color:var(--muted)">src/data/consultationData.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>ConsultationSpecialtyItem node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>OfficeMembershipStatus</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>OfficesMap.tsx</code><br><small style="color:var(--muted)">src/components/OfficesMap.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>OfficeMembershipStatus node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>OfficeReview</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>OfficeReview node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>OfficeSpecialty</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>OfficeSpecialty node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>AdvisorRegistrationModal()</code><br><small style="color:var(--muted)">src/components/AdvisorRegistrationModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>AdvisorRegistrationModal() node in src/components/AdvisorRegistrationModal.tsx.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>BusinessSubscriptionModal()</code><br><small style="color:var(--muted)">src/components/BusinessSubscriptionModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>BusinessSubscriptionModal() node in src/components/BusinessSubscriptionModal.tsx.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>ConsultationDetailModal()</code><br><small style="color:var(--muted)">src/components/ConsultationDetailModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ConsultationDetailModal() node in src/components/ConsultationDetailModal.tsx.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>ConsultationHubView()</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ConsultationHubView() node in src/components/ConsultationHubView.tsx.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>ConsultationLiveSessionModal()</code><br><small style="color:var(--muted)">src/components/ConsultationLiveSessionModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ConsultationLiveSessionModal() node in src/components/ConsultationLiveSessionModal.tsx.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>AdvisorRegistrationModal.tsx</code><br><small style="color:var(--muted)">src/components/AdvisorRegistrationModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td><code>ConsultationAdvisor</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>ConsultationCategory</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>types.ts</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td>Module file in src/components/AdvisorRegistrationModal.tsx.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>BusinessSubscriptionModal.tsx</code><br><small style="color:var(--muted)">src/components/BusinessSubscriptionModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td><code>BusinessSubscriptionPlan</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>types.ts</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td>Module file in src/components/BusinessSubscriptionModal.tsx.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>ConsultationDetailModal.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationDetailModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td><code>ConsultationAdvisor</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>ConsultationMode</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>types.ts</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td>Module file in src/components/ConsultationDetailModal.tsx.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>AdvisorRegistrationModal()</code><br><small style="color:var(--muted)">src/components/AdvisorRegistrationModal.tsx</small><br><code>AdvisorRegistrationModal.tsx</code><br><small style="color:var(--muted)">src/components/AdvisorRegistrationModal.tsx</small><br><code>BUSINESS_SUBSCRIPTION_PLANS</code><br><small style="color:var(--muted)">src/data/consultationData.ts</small><br>+15 more</td>
+  <td>Module file in src/components/ConsultationHubView.tsx.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>ConsultationLiveSessionModal.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationLiveSessionModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td><code>CitizenService</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>ConsultationAdvisor</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>ConsultationMode</code><br><small style="color:var(--muted)">src/types.ts</small><br>+2 more</td>
+  <td>Module file in src/components/ConsultationLiveSessionModal.tsx.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>consultationData.ts</code><br><small style="color:var(--muted)">src/data/consultationData.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td><code>BusinessSubscriptionPlan</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>ConsultationAdvisor</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>ConsultationSession</code><br><small style="color:var(--muted)">src/types.ts</small><br>+2 more</td>
+  <td>Module file in src/data/consultationData.ts.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>BUSINESS_SUBSCRIPTION_PLANS</code><br><small style="color:var(--muted)">src/data/consultationData.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>ConsultationHubView.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationHubView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>BUSINESS_SUBSCRIPTION_PLANS node in src/data/consultationData.ts.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/types.ts</code></td><td>14 nodes</td></tr>
+<tr><td><code>src/data/consultationData.ts</code></td><td>5 nodes</td></tr>
+<tr><td><code>src/components/AdvisorRegistrationModal.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/BusinessSubscriptionModal.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/ConsultationDetailModal.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/ConsultationHubView.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/ConsultationLiveSessionModal.tsx</code></td><td>3 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x27, imports x24, imports x11, references x7. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 5. Components Officesmaptsx Smartchatbotmodaltsx ====== -->
+<h2 id="components-officesmaptsx-smartchatbotmodaltsx">5. Components Officesmaptsx Smartchatbotmodaltsx</h2>
+<p>Components Officesmaptsx Smartchatbotmodaltsx groups implementation around components, officesmaptsx, smartchatbotmodaltsx, servicecardtsx, mostly in src/components/OfficesMap.tsx, src/components/SmartChatbotModal.tsx, src/types.ts. This section covers 28 nodes and 48 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Components Officesmaptsx Smartchatbotmodaltsx (28 nodes, 48 edges)
+    subgraph components_officesmaptsx_smartchatbotmodaltsx_sr_bbe8f210["src/components/OfficesMap.tsx"]
+        src_components_officesmap_2ffeeed0("OfficesMap.tsx")
+        src_components_officesmap_officesmap_d7385b1a("OfficesMap()<br/><small>src/components/OfficesMap.tsx</small>")
+        src_components_officesmap_getofficestatus_872ccd3c("getOfficeStatus()<br/><small>src/components/OfficesMap.tsx</small>")
+        src_components_officesmap_map_themes_a8c02790("MAP_THEMES<br/><small>src/components/OfficesMap.tsx</small>")
+        src_components_officesmap_officesmapprops_7306218c("OfficesMapProps<br/><small>src/components/OfficesMap.tsx</small>")
+        src_components_officesmap_user_location_736e99a2("USER_LOCATION<br/><small>src/components/OfficesMap.tsx</small>")
+    end
+    subgraph components_officesmaptsx_smartchatbotmodaltsx_sr_aa7a50b5["src/types.ts"]
+        src_types_citizenservice_8894a5d9("CitizenService<br/><small>src/types.ts</small>")
+        src_types_pishkhanoffice_a5151d3f("PishkhanOffice<br/><small>src/types.ts</small>")
+        src_types_caserequest_a3cd6c8c("CaseRequest<br/><small>src/types.ts</small>")
+        src_types_servicetag_975b32a3("ServiceTag<br/><small>src/types.ts</small>")
+    end
+    subgraph components_officesmaptsx_smartchatbotmodaltsx_sr_6fbb8466["src/components/ServiceTagBadge.tsx"]
+        src_components_servicetagbadge_servicetagbadge_beda7227("ServiceTagBadge()<br/><small>src/components/ServiceTagBadge.tsx</small>")
+        src_components_servicetagbadge_eb8d2b16("ServiceTagBadge.tsx")
+    end
+    src_components_officeloginview_officeloginviewpr_0b85a8c0("OfficeLoginViewProps<br/><small>src/components/OfficeLoginView.tsx</small>")
+    src_components_officeportalview_officeportalview_9b5d9732("OfficePortalViewProps<br/><small>src/components/OfficePortalView.tsx</small>")
+    src_components_servicecard_bfc7630b("ServiceCard.tsx")
+    src_components_servicerequestmodal_c0cfde2d("ServiceRequestModal.tsx")
+    src_components_smartchatbotmodal_bad31f31("SmartChatbotModal.tsx")
+    src_components_voiceassistantmodal_bbed6238("VoiceAssistantModal.tsx")
+    src_components_officesmap_officesmap_d7385b1a -->|calls| src_components_officesmap_getofficestatus_872ccd3c
+    src_components_officesmap_2ffeeed0 -->|imports| src_types_citizenservice_8894a5d9
+    src_components_officesmap_2ffeeed0 -->|imports| src_types_pishkhanoffice_a5151d3f
+    src_components_servicecard_bfc7630b -->|imports| src_components_servicetagbadge_servicetagbadge_beda7227
+    src_components_servicecard_bfc7630b -->|imports| src_types_citizenservice_8894a5d9
+    src_components_servicecard_bfc7630b -->|imports| src_components_servicetagbadge_eb8d2b16
+    src_components_servicerequestmodal_c0cfde2d -->|imports| src_types_caserequest_a3cd6c8c
+    src_components_servicerequestmodal_c0cfde2d -->|imports| src_types_citizenservice_8894a5d9
+    src_components_servicerequestmodal_c0cfde2d -->|imports| src_types_pishkhanoffice_a5151d3f
+    src_components_servicerequestmodal_c0cfde2d -->|imports| src_types_servicetag_975b32a3
+    src_components_servicerequestmodal_c0cfde2d -->|imports| src_components_servicetagbadge_servicetagbadge_beda7227
+    src_components_servicerequestmodal_c0cfde2d -->|imports| src_components_servicetagbadge_eb8d2b16
+    src_components_servicetagbadge_eb8d2b16 -->|imports| src_types_servicetag_975b32a3
+    src_components_smartchatbotmodal_bad31f31 -->|imports| src_types_caserequest_a3cd6c8c
+    src_components_smartchatbotmodal_bad31f31 -->|imports| src_types_citizenservice_8894a5d9
+    src_components_smartchatbotmodal_bad31f31 -->|imports| src_types_pishkhanoffice_a5151d3f
+    src_components_voiceassistantmodal_bbed6238 -->|imports| src_types_citizenservice_8894a5d9
+    src_components_voiceassistantmodal_bbed6238 -->|imports| src_types_pishkhanoffice_a5151d3f
+    %% Omitted for readability: 10 nodes, 0 edges
+    class src_components_officesmap_2ffeeed0 ui;
+    class src_components_officesmap_officesmap_d7385b1a ui;
+    class src_components_officesmap_getofficestatus_872ccd3c ui;
+    class src_components_officesmap_map_themes_a8c02790 ui;
+    class src_components_officesmap_officesmapprops_7306218c ui;
+    class src_components_officesmap_user_location_736e99a2 ui;
+    class src_types_citizenservice_8894a5d9 klass;
+    class src_types_pishkhanoffice_a5151d3f klass;
+    class src_types_caserequest_a3cd6c8c klass;
+    class src_types_servicetag_975b32a3 klass;
+    class src_components_servicetagbadge_servicetagbadge_beda7227 ui;
+    class src_components_servicetagbadge_eb8d2b16 ui;
+    class src_components_officeloginview_officeloginviewpr_0b85a8c0 ui;
+    class src_components_officeportalview_officeportalview_9b5d9732 ui;
+    class src_components_servicecard_bfc7630b ui;
+    class src_components_servicerequestmodal_c0cfde2d ui;
+    class src_components_smartchatbotmodal_bad31f31 ui;
+    class src_components_voiceassistantmodal_bbed6238 ui;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>OfficeLoginViewProps</code><br><small style="color:var(--muted)">src/components/OfficeLoginView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>OfficeLoginViewProps node in src/components/OfficeLoginView.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>OfficePortalViewProps</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>OfficePortalViewProps node in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>OfficesMapProps</code><br><small style="color:var(--muted)">src/components/OfficesMap.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>OfficesMapProps node in src/components/OfficesMap.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>ServiceCardProps</code><br><small style="color:var(--muted)">src/components/ServiceCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ServiceCardProps node in src/components/ServiceCard.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>ServiceRequestModalProps</code><br><small style="color:var(--muted)">src/components/ServiceRequestModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ServiceRequestModalProps node in src/components/ServiceRequestModal.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>ServiceTagBadgeProps</code><br><small style="color:var(--muted)">src/components/ServiceTagBadge.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ServiceTagBadgeProps node in src/components/ServiceTagBadge.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>Message</code><br><small style="color:var(--muted)">src/components/SmartChatbotModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Message node in src/components/SmartChatbotModal.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>SmartChatbotModalProps</code><br><small style="color:var(--muted)">src/components/SmartChatbotModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>VoiceAssistantModalProps</code><br><small style="color:var(--muted)">src/components/VoiceAssistantModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>VoiceAssistantModalProps node in src/components/VoiceAssistantModal.tsx.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>CaseRequest</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>CaseTrackingView.tsx</code><br><small style="color:var(--muted)">src/components/CaseTrackingView.tsx</small><br><code>MessagesView.tsx</code><br><small style="color:var(--muted)">src/components/MessagesView.tsx</small><br>+6 more</td>
+  <td>No direct outbound edge</td>
+  <td>CaseRequest node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>CitizenService</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>ConsultationLiveSessionModal.tsx</code><br><small style="color:var(--muted)">src/components/ConsultationLiveSessionModal.tsx</small><br><code>mockData.ts</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br>+6 more</td>
+  <td>No direct outbound edge</td>
+  <td>CitizenService node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>PishkhanOffice</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>AppointmentModal.tsx</code><br><small style="color:var(--muted)">src/components/AppointmentModal.tsx</small><br><code>MessagesView.tsx</code><br><small style="color:var(--muted)">src/components/MessagesView.tsx</small><br>+7 more</td>
+  <td>No direct outbound edge</td>
+  <td>PishkhanOffice node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>ServiceTag</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>ServiceRequestModal.tsx</code><br><small style="color:var(--muted)">src/components/ServiceRequestModal.tsx</small><br><code>ServiceTagBadge.tsx</code><br><small style="color:var(--muted)">src/components/ServiceTagBadge.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ServiceTag node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>getOfficeStatus()</code><br><small style="color:var(--muted)">src/components/OfficesMap.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>OfficesMap()</code><br><small style="color:var(--muted)">src/components/OfficesMap.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>getOfficeStatus() node in src/components/OfficesMap.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>OfficesMap()</code><br><small style="color:var(--muted)">src/components/OfficesMap.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>getOfficeStatus()</code><br><small style="color:var(--muted)">src/components/OfficesMap.tsx</small></td>
+  <td>OfficesMap() node in src/components/OfficesMap.tsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>ServiceCard()</code><br><small style="color:var(--muted)">src/components/ServiceCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ServiceCard() node in src/components/ServiceCard.tsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>ServiceRequestModal()</code><br><small style="color:var(--muted)">src/components/ServiceRequestModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ServiceRequestModal() node in src/components/ServiceRequestModal.tsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>ServiceTagBadge()</code><br><small style="color:var(--muted)">src/components/ServiceTagBadge.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ServiceCard.tsx</code><br><small style="color:var(--muted)">src/components/ServiceCard.tsx</small><br><code>ServiceRequestModal.tsx</code><br><small style="color:var(--muted)">src/components/ServiceRequestModal.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ServiceTagBadge() node in src/components/ServiceTagBadge.tsx.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>SmartChatbotModal()</code><br><small style="color:var(--muted)">src/components/SmartChatbotModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>VoiceAssistantModal()</code><br><small style="color:var(--muted)">src/components/VoiceAssistantModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>VoiceAssistantModal() node in src/components/VoiceAssistantModal.tsx.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>OfficesMap.tsx</code><br><small style="color:var(--muted)">src/components/OfficesMap.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CitizenService</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>OfficeMembershipStatus</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>PishkhanOffice</code><br><small style="color:var(--muted)">src/types.ts</small><br>+1 more</td>
+  <td>Module file in src/components/OfficesMap.tsx.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>MAP_THEMES</code><br><small style="color:var(--muted)">src/components/OfficesMap.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>MAP_THEMES node in src/components/OfficesMap.tsx.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>USER_LOCATION</code><br><small style="color:var(--muted)">src/components/OfficesMap.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>USER_LOCATION node in src/components/OfficesMap.tsx.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>ServiceCard.tsx</code><br><small style="color:var(--muted)">src/components/ServiceCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>CATEGORIES</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br><code>CitizenService</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>mockData.ts</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br>+3 more</td>
+  <td>Module file in src/components/ServiceCard.tsx.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>ServiceRequestModal.tsx</code><br><small style="color:var(--muted)">src/components/ServiceRequestModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CaseRequest</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>CitizenProfile</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>CitizenService</code><br><small style="color:var(--muted)">src/types.ts</small><br>+5 more</td>
+  <td>Module file in src/components/ServiceRequestModal.tsx.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>ServiceTagBadge.tsx</code><br><small style="color:var(--muted)">src/components/ServiceTagBadge.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ServiceCard.tsx</code><br><small style="color:var(--muted)">src/components/ServiceCard.tsx</small><br><code>ServiceRequestModal.tsx</code><br><small style="color:var(--muted)">src/components/ServiceRequestModal.tsx</small></td>
+  <td><code>ServiceTag</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>types.ts</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td>Module file in src/components/ServiceTagBadge.tsx.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>SmartChatbotModal.tsx</code><br><small style="color:var(--muted)">src/components/SmartChatbotModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CaseRequest</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>CitizenService</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>PishkhanOffice</code><br><small style="color:var(--muted)">src/types.ts</small><br>+1 more</td>
+  <td>Module file in src/components/SmartChatbotModal.tsx.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>VoiceAssistantModal.tsx</code><br><small style="color:var(--muted)">src/components/VoiceAssistantModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CitizenService</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>PishkhanOffice</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>types.ts</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td>Module file in src/components/VoiceAssistantModal.tsx.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/components/OfficesMap.tsx</code></td><td>6 nodes</td></tr>
+<tr><td><code>src/components/SmartChatbotModal.tsx</code></td><td>4 nodes</td></tr>
+<tr><td><code>src/types.ts</code></td><td>4 nodes</td></tr>
+<tr><td><code>src/components/ServiceCard.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/ServiceRequestModal.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/ServiceTagBadge.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/VoiceAssistantModal.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/OfficeLoginView.tsx</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x16, imports x15, references x14, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 6. Components Userprofileviewtsx Appointmentmodaltsx ====== -->
+<h2 id="components-userprofileviewtsx-appointmentmodalts">6. Components Userprofileviewtsx Appointmentmodaltsx</h2>
+<p>Components Userprofileviewtsx Appointmentmodaltsx groups implementation around components, userprofileviewtsx, appointmentmodaltsx, casetrackingviewtsx, mostly in src/components/UserProfileView.tsx, src/components/AppointmentModal.tsx, src/components/CaseTrackingView.tsx. This section covers 16 nodes and 21 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Components Userprofileviewtsx Appointmentmodaltsx (16 nodes, 21 edges)
+    subgraph components_userprofileviewtsx_appointmentmodalts_31b5ee41["src/components/UserProfileView.tsx"]
+        src_components_userprofileview_e03f591e("UserProfileView.tsx")
+        src_components_userprofileview_profilesubpage_1cd3feff("ProfileSubPage<br/><small>src/components/UserProfileView.tsx</small>")
+        src_components_userprofileview_userprofileview_d1c43c85("UserProfileView()<br/><small>src/components/UserProfileView.tsx</small>")
+        src_components_userprofileview_userprofileviewpr_7ff565c5("UserProfileViewProps<br/><small>src/components/UserProfileView.tsx</small>")
+    end
+    subgraph components_userprofileviewtsx_appointmentmodalts_1e3ea7f7["src/components/AppointmentModal.tsx"]
+        src_components_appointmentmodal_25b86baa("AppointmentModal.tsx")
+        src_components_appointmentmodal_appointmentmodal_7bc8843c("AppointmentModal()<br/><small>src/components/AppointmentModal.tsx</small>")
+        src_components_appointmentmodal_appointmentmodal_b4114fd9("AppointmentModalProps<br/><small>src/components/AppointmentModal.tsx</small>")
+    end
+    subgraph components_userprofileviewtsx_appointmentmodalts_d0ca6290["src/components/CaseTrackingView.tsx"]
+        src_components_casetrackingview_52a5cf72("CaseTrackingView.tsx")
+        src_components_casetrackingview_casetrackingview_1080b26f("CaseTrackingView()<br/><small>src/components/CaseTrackingView.tsx</small>")
+        src_components_casetrackingview_casetrackingview_071021ff("CaseTrackingViewProps<br/><small>src/components/CaseTrackingView.tsx</small>")
+    end
+    subgraph components_userprofileviewtsx_appointmentmodalts_929917b5["src/components/MessagesView.tsx"]
+        src_components_messagesview_9efe28a1("MessagesView.tsx")
+        src_components_messagesview_messagesview_2fe65ce9("MessagesView()<br/><small>src/components/MessagesView.tsx</small>")
+        src_components_messagesview_messagesviewprops_1d3cb07b("MessagesViewProps<br/><small>src/components/MessagesView.tsx</small>")
+    end
+    subgraph components_userprofileviewtsx_appointmentmodalts_43f16cca["src/types.ts"]
+        src_types_appointment_83e6729e("Appointment<br/><small>src/types.ts</small>")
+        src_types_chatmessage_9f1da231("ChatMessage<br/><small>src/types.ts</small>")
+        src_types_documentitem_6cf4faaf("DocumentItem<br/><small>src/types.ts</small>")
+    end
+    src_components_appointmentmodal_25b86baa -->|imports| src_types_appointment_83e6729e
+    src_components_casetrackingview_52a5cf72 -->|imports| src_types_chatmessage_9f1da231
+    src_components_messagesview_9efe28a1 -->|imports| src_types_chatmessage_9f1da231
+    src_components_userprofileview_e03f591e -->|imports| src_types_appointment_83e6729e
+    src_components_userprofileview_e03f591e -->|imports| src_types_chatmessage_9f1da231
+    src_components_userprofileview_e03f591e -->|imports| src_types_documentitem_6cf4faaf
+    class src_components_userprofileview_e03f591e ui;
+    class src_components_userprofileview_profilesubpage_1cd3feff ui;
+    class src_components_userprofileview_userprofileview_d1c43c85 ui;
+    class src_components_userprofileview_userprofileviewpr_7ff565c5 ui;
+    class src_components_appointmentmodal_25b86baa ui;
+    class src_components_appointmentmodal_appointmentmodal_7bc8843c ui;
+    class src_components_appointmentmodal_appointmentmodal_b4114fd9 ui;
+    class src_components_casetrackingview_52a5cf72 ui;
+    class src_components_casetrackingview_casetrackingview_1080b26f ui;
+    class src_components_casetrackingview_casetrackingview_071021ff ui;
+    class src_components_messagesview_9efe28a1 ui;
+    class src_components_messagesview_messagesview_2fe65ce9 ui;
+    class src_components_messagesview_messagesviewprops_1d3cb07b ui;
+    class src_types_appointment_83e6729e klass;
+    class src_types_chatmessage_9f1da231 klass;
+    class src_types_documentitem_6cf4faaf klass;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>AppointmentModalProps</code><br><small style="color:var(--muted)">src/components/AppointmentModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>AppointmentModalProps node in src/components/AppointmentModal.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>CaseTrackingViewProps</code><br><small style="color:var(--muted)">src/components/CaseTrackingView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>CaseTrackingViewProps node in src/components/CaseTrackingView.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>MessagesViewProps</code><br><small style="color:var(--muted)">src/components/MessagesView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>MessagesViewProps node in src/components/MessagesView.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>ProfileSubPage</code><br><small style="color:var(--muted)">src/components/UserProfileView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Organizes documentation pages, navigation, or content lookup.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>UserProfileViewProps</code><br><small style="color:var(--muted)">src/components/UserProfileView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>UserProfileViewProps node in src/components/UserProfileView.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>Appointment</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>AppointmentModal.tsx</code><br><small style="color:var(--muted)">src/components/AppointmentModal.tsx</small><br><code>mockData.ts</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>Appointment node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>ChatMessage</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>CaseTrackingView.tsx</code><br><small style="color:var(--muted)">src/components/CaseTrackingView.tsx</small><br><code>MessagesView.tsx</code><br><small style="color:var(--muted)">src/components/MessagesView.tsx</small><br>+2 more</td>
+  <td>No direct outbound edge</td>
+  <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>DocumentItem</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>UserProfileView.tsx</code><br><small style="color:var(--muted)">src/components/UserProfileView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>DocumentItem node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>AppointmentModal()</code><br><small style="color:var(--muted)">src/components/AppointmentModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>AppointmentModal() node in src/components/AppointmentModal.tsx.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>CaseTrackingView()</code><br><small style="color:var(--muted)">src/components/CaseTrackingView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>CaseTrackingView() node in src/components/CaseTrackingView.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>MessagesView()</code><br><small style="color:var(--muted)">src/components/MessagesView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>MessagesView() node in src/components/MessagesView.tsx.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>UserProfileView()</code><br><small style="color:var(--muted)">src/components/UserProfileView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>UserProfileView() node in src/components/UserProfileView.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>AppointmentModal.tsx</code><br><small style="color:var(--muted)">src/components/AppointmentModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>Appointment</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>PishkhanOffice</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>types.ts</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td>Module file in src/components/AppointmentModal.tsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>CaseTrackingView.tsx</code><br><small style="color:var(--muted)">src/components/CaseTrackingView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CaseRequest</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>ChatMessage</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>types.ts</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td>Module file in src/components/CaseTrackingView.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>MessagesView.tsx</code><br><small style="color:var(--muted)">src/components/MessagesView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CaseRequest</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>ChatMessage</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>PishkhanOffice</code><br><small style="color:var(--muted)">src/types.ts</small><br>+1 more</td>
+  <td>Module file in src/components/MessagesView.tsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>UserProfileView.tsx</code><br><small style="color:var(--muted)">src/components/UserProfileView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>Appointment</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>CaseRequest</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>CATEGORIES</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br>+5 more</td>
+  <td>Module file in src/components/UserProfileView.tsx.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/components/UserProfileView.tsx</code></td><td>4 nodes</td></tr>
+<tr><td><code>src/components/AppointmentModal.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/CaseTrackingView.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/MessagesView.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/types.ts</code></td><td>3 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x9, references x6, imports x6. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 7. Components Citizenloginviewtsx Headertsx ====== -->
+<h2 id="components-citizenloginviewtsx-headertsx">7. Components Citizenloginviewtsx Headertsx</h2>
+<p>Components Citizenloginviewtsx Headertsx groups implementation around components, citizenloginviewtsx, headertsx, walletcardtsx, mostly in src/components/CitizenLoginView.tsx, src/components/Header.tsx, src/components/WalletCard.tsx. This section covers 15 nodes and 21 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Components Citizenloginviewtsx Headertsx (15 nodes, 21 edges)
+    subgraph components_citizenloginviewtsx_headertsx_src_com_68c72ccb["src/components/CitizenLoginView.tsx"]
+        src_components_citizenloginview_f97ce356("CitizenLoginView.tsx")
+        src_components_citizenloginview_citizenloginview_98059918("CitizenLoginView()<br/><small>src/components/CitizenLoginView.tsx</small>")
+        src_components_citizenloginview_citizenloginview_5754a9c5("CitizenLoginViewProps<br/><small>src/components/CitizenLoginView.tsx</small>")
+        src_components_citizenloginview_registered_users_b800a621("REGISTERED_USERS_DB<br/><small>src/components/CitizenLoginView.tsx</small>")
+    end
+    subgraph components_citizenloginviewtsx_headertsx_src_com_82d9fff3["src/components/Header.tsx"]
+        src_components_header_426ae262("Header.tsx")
+        src_components_header_header_e8fa6442("Header()<br/><small>src/components/Header.tsx</small>")
+        src_components_header_headerprops_3873758c("HeaderProps<br/><small>src/components/Header.tsx</small>")
+    end
+    subgraph components_citizenloginviewtsx_headertsx_src_com_6aaa2aa8["src/components/WalletCard.tsx"]
+        src_components_walletcard_1d6e35e7("WalletCard.tsx")
+        src_components_walletcard_walletcard_6e0e901d("WalletCard()<br/><small>src/components/WalletCard.tsx</small>")
+        src_components_walletcard_walletcardprops_79b2d464("WalletCardProps<br/><small>src/components/WalletCard.tsx</small>")
+    end
+    subgraph components_citizenloginviewtsx_headertsx_src_com_27e6e823["src/components/WalletDetailsView.tsx"]
+        src_components_walletdetailsview_de2a9c0f("WalletDetailsView.tsx")
+        src_components_walletdetailsview_walletdetailsvi_e6d4f3c4("WalletDetailsView()<br/><small>src/components/WalletDetailsView.tsx</small>")
+        src_components_walletdetailsview_walletdetailsvi_36947971("WalletDetailsViewProps<br/><small>src/components/WalletDetailsView.tsx</small>")
+    end
+    subgraph components_citizenloginviewtsx_headertsx_src_typ_ba51cd59["src/types.ts"]
+        src_types_citizenprofile_a957a152("CitizenProfile<br/><small>src/types.ts</small>")
+        src_types_wallettransaction_585d2fbf("WalletTransaction<br/><small>src/types.ts</small>")
+    end
+    src_components_citizenloginview_f97ce356 -->|imports| src_types_citizenprofile_a957a152
+    src_components_header_426ae262 -->|imports| src_types_citizenprofile_a957a152
+    src_components_walletcard_1d6e35e7 -->|imports| src_types_citizenprofile_a957a152
+    src_components_walletcard_1d6e35e7 -->|imports| src_types_wallettransaction_585d2fbf
+    src_components_walletdetailsview_de2a9c0f -->|imports| src_types_citizenprofile_a957a152
+    src_components_walletdetailsview_de2a9c0f -->|imports| src_types_wallettransaction_585d2fbf
+    class src_components_citizenloginview_f97ce356 ui;
+    class src_components_citizenloginview_citizenloginview_98059918 ui;
+    class src_components_citizenloginview_citizenloginview_5754a9c5 ui;
+    class src_components_citizenloginview_registered_users_b800a621 ui;
+    class src_components_header_426ae262 ui;
+    class src_components_header_header_e8fa6442 ui;
+    class src_components_header_headerprops_3873758c ui;
+    class src_components_walletcard_1d6e35e7 ui;
+    class src_components_walletcard_walletcard_6e0e901d ui;
+    class src_components_walletcard_walletcardprops_79b2d464 ui;
+    class src_components_walletdetailsview_de2a9c0f ui;
+    class src_components_walletdetailsview_walletdetailsvi_e6d4f3c4 ui;
+    class src_components_walletdetailsview_walletdetailsvi_36947971 ui;
+    class src_types_citizenprofile_a957a152 klass;
+    class src_types_wallettransaction_585d2fbf klass;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>CitizenLoginViewProps</code><br><small style="color:var(--muted)">src/components/CitizenLoginView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>CitizenLoginViewProps node in src/components/CitizenLoginView.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>HeaderProps</code><br><small style="color:var(--muted)">src/components/Header.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>HeaderProps node in src/components/Header.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>WalletCardProps</code><br><small style="color:var(--muted)">src/components/WalletCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>WalletCardProps node in src/components/WalletCard.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>WalletDetailsViewProps</code><br><small style="color:var(--muted)">src/components/WalletDetailsView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>WalletDetailsViewProps node in src/components/WalletDetailsView.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>CitizenProfile</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>CitizenLoginView.tsx</code><br><small style="color:var(--muted)">src/components/CitizenLoginView.tsx</small><br><code>Header.tsx</code><br><small style="color:var(--muted)">src/components/Header.tsx</small><br>+5 more</td>
+  <td>No direct outbound edge</td>
+  <td>CitizenProfile node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>WalletTransaction</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>mockData.ts</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br><code>WalletCard.tsx</code><br><small style="color:var(--muted)">src/components/WalletCard.tsx</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>WalletTransaction node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>CitizenLoginView()</code><br><small style="color:var(--muted)">src/components/CitizenLoginView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>CitizenLoginView() node in src/components/CitizenLoginView.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>Header()</code><br><small style="color:var(--muted)">src/components/Header.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>Header() node in src/components/Header.tsx.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>WalletCard()</code><br><small style="color:var(--muted)">src/components/WalletCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>WalletCard() node in src/components/WalletCard.tsx.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>WalletDetailsView()</code><br><small style="color:var(--muted)">src/components/WalletDetailsView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>WalletDetailsView() node in src/components/WalletDetailsView.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>CitizenLoginView.tsx</code><br><small style="color:var(--muted)">src/components/CitizenLoginView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CitizenProfile</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>INITIAL_CITIZEN_PROFILE</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br><code>mockData.ts</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br>+1 more</td>
+  <td>Module file in src/components/CitizenLoginView.tsx.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>REGISTERED_USERS_DB</code><br><small style="color:var(--muted)">src/components/CitizenLoginView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>REGISTERED_USERS_DB node in src/components/CitizenLoginView.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>Header.tsx</code><br><small style="color:var(--muted)">src/components/Header.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CitizenProfile</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>types.ts</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td>Module file in src/components/Header.tsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>WalletCard.tsx</code><br><small style="color:var(--muted)">src/components/WalletCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CitizenProfile</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>types.ts</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>WalletTransaction</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td>Module file in src/components/WalletCard.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>WalletDetailsView.tsx</code><br><small style="color:var(--muted)">src/components/WalletDetailsView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CitizenProfile</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>types.ts</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>WalletTransaction</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td>Module file in src/components/WalletDetailsView.tsx.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/components/CitizenLoginView.tsx</code></td><td>4 nodes</td></tr>
+<tr><td><code>src/components/Header.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/WalletCard.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/components/WalletDetailsView.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/types.ts</code></td><td>2 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x9, references x6, imports x6. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 8. Officeportalviewtsx Components Initial ====== -->
+<h2 id="officeportalviewtsx-components-initial">8. Officeportalviewtsx Components Initial</h2>
+<p>Officeportalviewtsx Components Initial groups implementation around officeportalviewtsx, components, initial, typests, mostly in src/components/OfficePortalView.tsx, src/types.ts, src/data/mockData.ts. This section covers 15 nodes and 14 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Officeportalviewtsx Components Initial (15 nodes, 14 edges)
+    subgraph officeportalviewtsx_components_initial_src_compo_5c9422b3["src/components/OfficePortalView.tsx"]
+        src_components_officeportalview_5c83d45f("OfficePortalView.tsx")
+        src_components_officeportalview_deliverydoctype_493068d6("DeliveryDocType<br/><small>src/components/OfficePortalView.tsx</small>")
+        src_components_officeportalview_deskcitizenrevie_4b7df937("DeskCitizenReview<br/><small>src/components/OfficePortalView.tsx</small>")
+        src_components_officeportalview_desktab_152ffd30("DeskTab<br/><small>src/components/OfficePortalView.tsx</small>")
+        src_components_officeportalview_documentdelivery_6541949c("DocumentDeliveryRequest<br/><small>src/components/OfficePortalView.tsx</small>")
+        src_components_officeportalview_initial_in_perso_273e4949("IN PERSON APPOINTMENTS<br/><small>src/components/OfficePortalView.tsx</small>")
+        src_components_officeportalview_initial_delivery_3c622e42("INITIAL_DELIVERY_REQUESTS<br/><small>src/components/OfficePortalView.tsx</small>")
+        src_components_officeportalview_initial_office_r_243f52ec("INITIAL_OFFICE_REVIEWS<br/><small>src/components/OfficePortalView.tsx</small>")
+        src_components_officeportalview_inpersonappointm_5ddeb99e("InPersonAppointment<br/><small>src/components/OfficePortalView.tsx</small>")
+        src_components_officeportalview_officeportalview_6fbb5577("OfficePortalView()<br/><small>src/components/OfficePortalView.tsx</small>")
+        src_components_officeportalview_ready_cases_for_e812641b("READY_CASES_FOR_DELIVERY<br/><small>src/components/OfficePortalView.tsx</small>")
+        src_components_officeportalview_readydocumentcas_98841e1d("ReadyDocumentCase<br/><small>src/components/OfficePortalView.tsx</small>")
+    end
+    subgraph officeportalviewtsx_components_initial_src_types_d0dd2fe2["src/types.ts"]
+        src_types_returnreasondefinition_f41fb32c("ReturnReasonDefinition<br/><small>src/types.ts</small>")
+        src_types_stepturnowner_96ec9945("StepTurnOwner<br/><small>src/types.ts</small>")
+    end
+    src_data_mockdata_return_reason_dictionary_89b475f7("RETURN_REASON_DICTIONARY<br/><small>src/data/mockData.ts</small>")
+    src_components_officeportalview_5c83d45f -->|imports| src_types_returnreasondefinition_f41fb32c
+    src_components_officeportalview_5c83d45f -->|imports| src_types_stepturnowner_96ec9945
+    src_components_officeportalview_5c83d45f -->|imports| src_data_mockdata_return_reason_dictionary_89b475f7
+    class src_components_officeportalview_5c83d45f ui;
+    class src_components_officeportalview_deliverydoctype_493068d6 ui;
+    class src_components_officeportalview_deskcitizenrevie_4b7df937 ui;
+    class src_components_officeportalview_desktab_152ffd30 ui;
+    class src_components_officeportalview_documentdelivery_6541949c ui;
+    class src_components_officeportalview_initial_in_perso_273e4949 ui;
+    class src_components_officeportalview_initial_delivery_3c622e42 ui;
+    class src_components_officeportalview_initial_office_r_243f52ec ui;
+    class src_components_officeportalview_inpersonappointm_5ddeb99e ui;
+    class src_components_officeportalview_officeportalview_6fbb5577 ui;
+    class src_components_officeportalview_ready_cases_for_e812641b ui;
+    class src_components_officeportalview_readydocumentcas_98841e1d ui;
+    class src_types_returnreasondefinition_f41fb32c klass;
+    class src_types_stepturnowner_96ec9945 klass;
+    class src_data_mockdata_return_reason_dictionary_89b475f7 klass;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>DeliveryDocType</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>DeliveryDocType node in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>DeskCitizenReview</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>DeskCitizenReview node in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>DeskTab</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>DeskTab node in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>DocumentDeliveryRequest</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>DocumentDeliveryRequest node in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>InPersonAppointment</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>InPersonAppointment node in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>ReadyDocumentCase</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ReadyDocumentCase node in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>ReturnReasonDefinition</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>mockData.ts</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br><code>OfficePortalView.tsx</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ReturnReasonDefinition node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>StepTurnOwner</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>OfficePortalView.tsx</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>StepTurnOwner node in src/types.ts.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>OfficePortalView()</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>OfficePortalView() node in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>OfficePortalView.tsx</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CaseRequest</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>CATEGORIES</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br><code>CITIZEN_SERVICES</code><br><small style="color:var(--muted)">src/data/mockData.ts</small><br>+7 more</td>
+  <td>Module file in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>INITIAL_DELIVERY_REQUESTS</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>INITIAL_DELIVERY_REQUESTS node in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>INITIAL_IN_PERSON_APPOINTMENTS</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>INITIAL_IN_PERSON_APPOINTMENTS node in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>INITIAL_OFFICE_REVIEWS</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>INITIAL_OFFICE_REVIEWS node in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>READY_CASES_FOR_DELIVERY</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>READY_CASES_FOR_DELIVERY node in src/components/OfficePortalView.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>RETURN_REASON_DICTIONARY</code><br><small style="color:var(--muted)">src/data/mockData.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>OfficePortalView.tsx</code><br><small style="color:var(--muted)">src/components/OfficePortalView.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>RETURN_REASON_DICTIONARY node in src/data/mockData.ts.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/components/OfficePortalView.tsx</code></td><td>12 nodes</td></tr>
+<tr><td><code>src/types.ts</code></td><td>2 nodes</td></tr>
+<tr><td><code>src/data/mockData.ts</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x11, imports x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 9. Navbartsx Components Liquidtabitem ====== -->
+<h2 id="navbartsx-components-liquidtabitem">9. Navbartsx Components Liquidtabitem</h2>
+<p>Navbartsx Components Liquidtabitem groups implementation around navbartsx, components, liquidtabitem, navbarprops, mostly in src/components/Navbar.tsx. This section covers 7 nodes and 6 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Navbartsx Components Liquidtabitem (7 nodes, 6 edges)
+    src_components_navbar_844f5f16("Navbar.tsx")
+    src_components_navbar_navtab_17ebd84c("NavTab<br/><small>src/components/Navbar.tsx</small>")
+    src_components_navbar_liquidtabitem_48ce6448("LiquidTabItem<br/><small>src/components/Navbar.tsx</small>")
+    src_components_navbar_liquidglassdefs_5b920f8d("LiquidGlassDefs()<br/><small>src/components/Navbar.tsx</small>")
+    src_components_navbar_navbarprops_78fc48e3("NavbarProps<br/><small>src/components/Navbar.tsx</small>")
+    src_components_navbar_rect_73f2c522("Rect<br/><small>src/components/Navbar.tsx</small>")
+    src_components_navbar_navbar_319d91c7("Navbar()<br/><small>src/components/Navbar.tsx</small>")
+    src_components_navbar_844f5f16 -->|contains| src_components_navbar_navtab_17ebd84c
+    src_components_navbar_844f5f16 -->|contains| src_components_navbar_liquidtabitem_48ce6448
+    src_components_navbar_844f5f16 -->|contains| src_components_navbar_liquidglassdefs_5b920f8d
+    src_components_navbar_844f5f16 -->|contains| src_components_navbar_navbarprops_78fc48e3
+    src_components_navbar_844f5f16 -->|contains| src_components_navbar_rect_73f2c522
+    src_components_navbar_844f5f16 -->|contains| src_components_navbar_navbar_319d91c7
+    class src_components_navbar_844f5f16 ui;
+    class src_components_navbar_navtab_17ebd84c ui;
+    class src_components_navbar_liquidtabitem_48ce6448 ui;
+    class src_components_navbar_liquidglassdefs_5b920f8d ui;
+    class src_components_navbar_navbarprops_78fc48e3 ui;
+    class src_components_navbar_rect_73f2c522 ui;
+    class src_components_navbar_navbar_319d91c7 ui;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>LiquidTabItem</code><br><small style="color:var(--muted)">src/components/Navbar.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>LiquidTabItem node in src/components/Navbar.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>NavbarProps</code><br><small style="color:var(--muted)">src/components/Navbar.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>NavbarProps node in src/components/Navbar.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>NavTab</code><br><small style="color:var(--muted)">src/components/Navbar.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>NavTab node in src/components/Navbar.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>Rect</code><br><small style="color:var(--muted)">src/components/Navbar.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Rect node in src/components/Navbar.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>LiquidGlassDefs()</code><br><small style="color:var(--muted)">src/components/Navbar.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>LiquidGlassDefs() node in src/components/Navbar.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>Navbar()</code><br><small style="color:var(--muted)">src/components/Navbar.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>Navbar() node in src/components/Navbar.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>Navbar.tsx</code><br><small style="color:var(--muted)">src/components/Navbar.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>CaseRequest</code><br><small style="color:var(--muted)">src/types.ts</small><br><code>types.ts</code><br><small style="color:var(--muted)">src/types.ts</small></td>
+  <td>Module file in src/components/Navbar.tsx.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/components/Navbar.tsx</code></td><td>7 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x6. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 10. Vite Envdts Jpeg ====== -->
+<h2 id="vite-envdts-jpeg">10. Vite Envdts Jpeg</h2>
+<p>Vite Envdts Jpeg groups implementation around vite, envdts, jpeg, jpg, mostly in src/vite-env.d.ts. This section covers 6 nodes and 5 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Vite Envdts Jpeg (6 nodes, 5 edges)
+    src_vite_env_d_695f3f8f("vite-env.d.ts")
+    src_vite_env_d_png_84f99a1a("*.png<br/><small>src/vite-env.d.ts</small>")
+    src_vite_env_d_svg_eecc4156("*.svg<br/><small>src/vite-env.d.ts</small>")
+    src_vite_env_d_webp_2eeb0f0f("*.webp<br/><small>src/vite-env.d.ts</small>")
+    src_vite_env_d_jpg_ec0c6bb6("*.jpg<br/><small>src/vite-env.d.ts</small>")
+    src_vite_env_d_jpeg_c5596d17("*.jpeg<br/><small>src/vite-env.d.ts</small>")
+    src_vite_env_d_695f3f8f -->|contains| src_vite_env_d_png_84f99a1a
+    src_vite_env_d_695f3f8f -->|contains| src_vite_env_d_svg_eecc4156
+    src_vite_env_d_695f3f8f -->|contains| src_vite_env_d_webp_2eeb0f0f
+    src_vite_env_d_695f3f8f -->|contains| src_vite_env_d_jpg_ec0c6bb6
+    src_vite_env_d_695f3f8f -->|contains| src_vite_env_d_jpeg_c5596d17
+    class src_vite_env_d_695f3f8f module;
+    class src_vite_env_d_png_84f99a1a function;
+    class src_vite_env_d_svg_eecc4156 function;
+    class src_vite_env_d_webp_2eeb0f0f function;
+    class src_vite_env_d_jpg_ec0c6bb6 function;
+    class src_vite_env_d_jpeg_c5596d17 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>vite-env.d.ts</code><br><small style="color:var(--muted)">src/vite-env.d.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in src/vite-env.d.ts.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>*.jpeg</code><br><small style="color:var(--muted)">src/vite-env.d.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>*.jpeg node in src/vite-env.d.ts.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>*.jpg</code><br><small style="color:var(--muted)">src/vite-env.d.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>*.jpg node in src/vite-env.d.ts.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>*.png</code><br><small style="color:var(--muted)">src/vite-env.d.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>*.png node in src/vite-env.d.ts.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>*.svg</code><br><small style="color:var(--muted)">src/vite-env.d.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>*.svg node in src/vite-env.d.ts.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>*.webp</code><br><small style="color:var(--muted)">src/vite-env.d.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>*.webp node in src/vite-env.d.ts.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/vite-env.d.ts</code></td><td>6 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x5. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 11. Clientqualitycheckmodaltsx Components Clientqualitycheckmodalprops ====== -->
+<h2 id="clientqualitycheckmodaltsx-components-clientqual">11. Clientqualitycheckmodaltsx Components Clientqualitycheckmodalprops</h2>
+<p>Clientqualitycheckmodaltsx Components Clientqualitycheckmodalprops groups implementation around clientqualitycheckmodaltsx, components, clientqualitycheckmodalprops, clientqualitycheckmodal, mostly in src/components/ClientQualityCheckModal.tsx. This section covers 3 nodes and 2 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Clientqualitycheckmodaltsx Components Clientqualitycheckmodalprops (3 nodes, 2 edges)
+    src_components_clientqualitycheckmodal_21f91d8b("ClientQualityCheckModal.tsx")
+    src_components_clientqualitycheckmodal_clientqua_eedfec11("ClientQualityCheckModalProps<br/><small>src/components/ClientQualityCheckModal.tsx</small>")
+    src_components_clientqualitycheckmodal_clientqua_8b7a0ce0("ClientQualityCheckModal()<br/><small>src/components/ClientQualityCheckModal.tsx</small>")
+    src_components_clientqualitycheckmodal_21f91d8b -->|contains| src_components_clientqualitycheckmodal_clientqua_eedfec11
+    src_components_clientqualitycheckmodal_21f91d8b -->|contains| src_components_clientqualitycheckmodal_clientqua_8b7a0ce0
+    class src_components_clientqualitycheckmodal_21f91d8b entry;
+    class src_components_clientqualitycheckmodal_clientqua_eedfec11 entry;
+    class src_components_clientqualitycheckmodal_clientqua_8b7a0ce0 entry;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>ClientQualityCheckModalProps</code><br><small style="color:var(--muted)">src/components/ClientQualityCheckModal.tsx</small></td>
+  <td><span class="tag tag-cmd">Entry</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ClientQualityCheckModalProps node in src/components/ClientQualityCheckModal.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>ClientQualityCheckModal()</code><br><small style="color:var(--muted)">src/components/ClientQualityCheckModal.tsx</small></td>
+  <td><span class="tag tag-cmd">Entry</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ClientQualityCheckModal() node in src/components/ClientQualityCheckModal.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>ClientQualityCheckModal.tsx</code><br><small style="color:var(--muted)">src/components/ClientQualityCheckModal.tsx</small></td>
+  <td><span class="tag tag-cmd">Entry</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in src/components/ClientQualityCheckModal.tsx.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/components/ClientQualityCheckModal.tsx</code></td><td>3 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 12. Viteconfigts ====== -->
+<h2 id="viteconfigts">12. Viteconfigts</h2>
+<p>Viteconfigts groups implementation around viteconfigts, mostly in vite.config.ts. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Viteconfigts (1 nodes, 0 edges)
+    vite_config_433f92aa("vite.config.ts")
+    class vite_config_433f92aa module;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>vite.config.ts</code><br><small style="color:var(--muted)">vite.config.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in vite.config.ts.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>vite.config.ts</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: No high-confidence call edges detected. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<h2 id="stats">Project Statistics</h2>
+
+<div class="grid">
+  <div class="card">
+    <h4>Graph</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><td>Nodes</td><td>229</td></tr>
+      <tr><td>Edges</td><td>432</td></tr>
+      <tr><td>Hyperedges</td><td>0</td></tr>
+      <tr><td>Communities</td><td>13</td></tr>
+      <tr><td>Documented Sections</td><td>11</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Edge Confidence</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><td>EXTRACTED</td><td>432</td></tr>
+      <tr><td>INFERRED</td><td>0</td></tr>
+      <tr><td>AMBIGUOUS</td><td>0</td></tr>
+    </table>
+  </div>
+</div>
+
+<div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
+  <p>سامانه-جامع-خدمات-شهروندی-و-پیشخوان-هوشمند (3) — Architecture Documentation</p>
+  <p>Generated: 2026-09-08 11:45 UTC · graphify callflow-html</p>
+</div>
+
+</div><!-- .container -->
+
+<script>
+(function () {
+  const mermaidConfig = {
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose',
+    flowchart: { htmlLabels: true, useMaxWidth: true },
+    themeVariables: {
+      primaryColor: '#1e293b',
+      primaryTextColor: '#e2e8f0',
+      primaryBorderColor: '#38bdf8',
+      secondaryColor: '#0f172a',
+      tertiaryColor: '#334155',
+      lineColor: '#64748b',
+      textColor: '#e2e8f0',
+    }
+  };
+
+  mermaid.initialize(mermaidConfig);
+
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function enhanceMermaidDiagrams() {
+    document.querySelectorAll('.mermaid').forEach((container) => {
+      if (container.dataset.zoomReady === 'true') return;
+      const svg = container.querySelector('svg');
+      if (!svg) return;
+
+      container.dataset.zoomReady = 'true';
+      container.classList.add('is-enhanced');
+
+      const viewport = document.createElement('div');
+      viewport.className = 'mermaid-viewport';
+      svg.parentNode.insertBefore(viewport, svg);
+      viewport.appendChild(svg);
+
+      const toolbar = document.createElement('div');
+      toolbar.className = 'mermaid-toolbar';
+      toolbar.innerHTML = [
+        '<button type="button" data-action="zoom-out" title="Zoom out">-</button>',
+        '<span class="zoom-level" data-role="level">100%</span>',
+        '<button type="button" data-action="zoom-in" title="Zoom in">+</button>',
+        '<button type="button" data-action="fit" title="Fit width">Fit</button>',
+        '<button type="button" data-action="reset" title="Reset view">Reset</button>'
+      ].join('');
+      container.insertBefore(toolbar, viewport);
+
+      const state = { scale: 1, x: 0, y: 0, dragging: false, startX: 0, startY: 0, originX: 0, originY: 0 };
+      const level = toolbar.querySelector('[data-role="level"]');
+
+      function applyTransform() {
+        svg.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
+        level.textContent = `${Math.round(state.scale * 100)}%`;
+      }
+
+      function zoomBy(delta) {
+        state.scale = clamp(state.scale + delta, 0.25, 3);
+        applyTransform();
+      }
+
+      function reset() {
+        state.scale = 1;
+        state.x = 0;
+        state.y = 0;
+        applyTransform();
+      }
+
+      function fitWidth() {
+        const rawWidth = svg.viewBox && svg.viewBox.baseVal && svg.viewBox.baseVal.width
+          ? svg.viewBox.baseVal.width
+          : svg.getBoundingClientRect().width / state.scale;
+        if (!rawWidth) {
+          reset();
+          return;
+        }
+        state.scale = clamp((viewport.clientWidth - 48) / rawWidth, 0.25, 1.4);
+        state.x = 0;
+        state.y = 0;
+        applyTransform();
+      }
+
+      toolbar.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-action]');
+        if (!button) return;
+        const action = button.dataset.action;
+        if (action === 'zoom-in') zoomBy(0.15);
+        if (action === 'zoom-out') zoomBy(-0.15);
+        if (action === 'fit') fitWidth();
+        if (action === 'reset') reset();
+      });
+
+      viewport.addEventListener('wheel', (event) => {
+        if (!event.ctrlKey && !event.metaKey) return;
+        event.preventDefault();
+        zoomBy(event.deltaY < 0 ? 0.1 : -0.1);
+      }, { passive: false });
+
+      viewport.addEventListener('pointerdown', (event) => {
+        if (event.button !== 0) return;
+        state.dragging = true;
+        state.startX = event.clientX;
+        state.startY = event.clientY;
+        state.originX = state.x;
+        state.originY = state.y;
+        viewport.classList.add('is-dragging');
+        viewport.setPointerCapture(event.pointerId);
+      });
+
+      viewport.addEventListener('pointermove', (event) => {
+        if (!state.dragging) return;
+        state.x = state.originX + event.clientX - state.startX;
+        state.y = state.originY + event.clientY - state.startY;
+        applyTransform();
+      });
+
+      function endDrag(event) {
+        if (!state.dragging) return;
+        state.dragging = false;
+        viewport.classList.remove('is-dragging');
+        if (viewport.hasPointerCapture(event.pointerId)) {
+          viewport.releasePointerCapture(event.pointerId);
+        }
+      }
+
+      viewport.addEventListener('pointerup', endDrag);
+      viewport.addEventListener('pointercancel', endDrag);
+      applyTransform();
+    });
+  }
+
+  function renderMermaid() {
+    const result = mermaid.run
+      ? mermaid.run({ querySelector: '.mermaid' })
+      : Promise.resolve();
+    Promise.resolve(result)
+      .then(enhanceMermaidDiagrams)
+      .catch((error) => {
+        console.error('Mermaid render failed:', error);
+        enhanceMermaidDiagrams();
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderMermaid);
+  } else {
+    renderMermaid();
+  }
+})();
+</script>
+
+</body>
+</html>

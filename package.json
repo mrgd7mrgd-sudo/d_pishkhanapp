@@ -1,0 +1,27 @@
+{
+  "name": "pishkhan-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean",
+    "generate:client": "pnpm --filter @pishkhan/api-client generate",
+    "contract-check": "bash scripts/contract-check.sh"
+  },
+  "devDependencies": {
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "turbo": "^2.4.4"
+  },
+  "packageManager": "pnpm@10.5.2",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}

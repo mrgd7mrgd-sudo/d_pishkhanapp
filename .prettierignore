@@ -1,0 +1,11 @@
+node_modules/
+dist/
+build/
+.turbo/
+vendor/
+storage/
+prototype/
+pnpm-lock.yaml
+bun.lock
+*.min.js
+*.min.css

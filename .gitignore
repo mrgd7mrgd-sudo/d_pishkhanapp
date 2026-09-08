@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+vendor/
+
+# Build and caches
+dist/
+build/
+.turbo/
+.cache/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Laravel storage & keys (Architecture §7.4)
+storage/*.key
+storage/oauth-*.key
+storage/logs/*
+!storage/logs/.gitkeep
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+
+# Testing & Coverage
+coverage/
+.phpunit.result.cache
+.phpstan.cache/
+.php-cs-fixer.cache
+
+# Logs & System
+*.log
+.DS_Store
+Thumbs.db

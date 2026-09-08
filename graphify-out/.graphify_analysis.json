@@ -1,0 +1,420 @@
+{
+  "communities": {
+    "0": [
+      "src_components_advisorregistrationmodal",
+      "src_components_advisorregistrationmodal_advisorregistrationmodal",
+      "src_components_advisorregistrationmodal_advisorregistrationmodalprops",
+      "src_components_businesssubscriptionmodal",
+      "src_components_businesssubscriptionmodal_businesssubscriptionmodal",
+      "src_components_businesssubscriptionmodal_businesssubscriptionmodalprops",
+      "src_components_consultationdetailmodal",
+      "src_components_consultationdetailmodal_consultationdetailmodal",
+      "src_components_consultationdetailmodal_consultationdetailmodalprops",
+      "src_components_consultationhubview",
+      "src_components_consultationhubview_consultationhubview",
+      "src_components_consultationhubview_consultationhubviewprops",
+      "src_components_consultationlivesessionmodal",
+      "src_components_consultationlivesessionmodal_consultationlivesessionmodal",
+      "src_components_consultationlivesessionmodal_consultationlivesessionmodalprops",
+      "src_data_consultationdata",
+      "src_data_consultationdata_business_subscription_plans",
+      "src_data_consultationdata_consultation_specialties",
+      "src_data_consultationdata_initial_consultation_sessions",
+      "src_data_consultationdata_mock_advisors",
+      "src_types",
+      "src_types_advisorratingbreakdown",
+      "src_types_advisorregistrationform",
+      "src_types_businesssubscriptionplan",
+      "src_types_casestatus",
+      "src_types_casetimelinestep",
+      "src_types_consultationadvisor",
+      "src_types_consultationcategory",
+      "src_types_consultationmode",
+      "src_types_consultationsession",
+      "src_types_consultationspecialtyitem",
+      "src_types_officemembershipstatus",
+      "src_types_officereview",
+      "src_types_officespecialty"
+    ],
+    "1": [
+      "src_app",
+      "src_app_app",
+      "src_components_categoryfilter",
+      "src_components_categoryfilter_categoryfilter",
+      "src_components_categoryfilter_categoryfilterprops",
+      "src_components_ctaslider",
+      "src_components_ctaslider_ctaslider",
+      "src_components_ctaslider_ctasliderprops",
+      "src_components_legaldelegationmodal",
+      "src_components_legaldelegationmodal_legaldelegationmodal",
+      "src_components_legaldelegationmodal_legaldelegationmodalprops",
+      "src_components_officeloginview",
+      "src_components_officeloginview_officeloginview",
+      "src_components_servicescatalogview",
+      "src_components_servicescatalogview_category_themes",
+      "src_components_servicescatalogview_categoryicon",
+      "src_components_servicescatalogview_serviceicon",
+      "src_components_servicescatalogview_servicescatalogview",
+      "src_components_servicescatalogview_servicescatalogviewprops",
+      "src_data_mockdata",
+      "src_data_mockdata_categories",
+      "src_data_mockdata_citizen_services",
+      "src_data_mockdata_hero_banner_image",
+      "src_data_mockdata_initial_cases",
+      "src_data_mockdata_initial_citizen_profile",
+      "src_data_mockdata_mock_appointments",
+      "src_data_mockdata_mock_chat_messages",
+      "src_data_mockdata_mock_legal_delegations",
+      "src_data_mockdata_mock_offices",
+      "src_data_mockdata_mock_transactions",
+      "src_main",
+      "src_types_legaldelegation",
+      "src_types_servicecategory"
+    ],
+    "2": [
+      "autoprefixer",
+      "esbuild",
+      "package",
+      "package_dependencies_vite",
+      "package_devdependencies",
+      "package_devdependencies_autoprefixer",
+      "package_devdependencies_esbuild",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tsx",
+      "package_devdependencies_types_express",
+      "package_devdependencies_types_node",
+      "package_devdependencies_typescript",
+      "package_devdependencies_vite",
+      "package_name",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_clean",
+      "package_scripts_dev",
+      "package_scripts_lint",
+      "package_scripts_preview",
+      "package_type",
+      "package_version",
+      "tailwindcss",
+      "tsx",
+      "types_express",
+      "types_node",
+      "typescript",
+      "vite"
+    ],
+    "3": [
+      "src_components_officeloginview_officeloginviewprops",
+      "src_components_officeportalview_officeportalviewprops",
+      "src_components_officesmap",
+      "src_components_officesmap_getofficestatus",
+      "src_components_officesmap_map_themes",
+      "src_components_officesmap_officesmap",
+      "src_components_officesmap_officesmapprops",
+      "src_components_officesmap_user_location",
+      "src_components_servicecard",
+      "src_components_servicecard_servicecard",
+      "src_components_servicecard_servicecardprops",
+      "src_components_servicerequestmodal",
+      "src_components_servicerequestmodal_servicerequestmodal",
+      "src_components_servicerequestmodal_servicerequestmodalprops",
+      "src_components_servicetagbadge",
+      "src_components_servicetagbadge_servicetagbadge",
+      "src_components_servicetagbadge_servicetagbadgeprops",
+      "src_components_smartchatbotmodal",
+      "src_components_smartchatbotmodal_message",
+      "src_components_smartchatbotmodal_smartchatbotmodal",
+      "src_components_smartchatbotmodal_smartchatbotmodalprops",
+      "src_components_voiceassistantmodal",
+      "src_components_voiceassistantmodal_voiceassistantmodal",
+      "src_components_voiceassistantmodal_voiceassistantmodalprops",
+      "src_types_caserequest",
+      "src_types_citizenservice",
+      "src_types_pishkhanoffice",
+      "src_types_servicetag"
+    ],
+    "4": [
+      "dotenv",
+      "express",
+      "google_genai",
+      "leaflet",
+      "lucide_react",
+      "motion",
+      "package_dependencies",
+      "package_dependencies_dotenv",
+      "package_dependencies_express",
+      "package_dependencies_google_genai",
+      "package_dependencies_leaflet",
+      "package_dependencies_lucide_react",
+      "package_dependencies_motion",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_tailwindcss_vite",
+      "package_dependencies_types_leaflet",
+      "package_dependencies_vitejs_plugin_react",
+      "react",
+      "react_dom",
+      "tailwindcss_vite",
+      "types_leaflet",
+      "vitejs_plugin_react"
+    ],
+    "5": [
+      "ref_dom",
+      "ref_dom_iterable",
+      "ref_es2022",
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowimportingtsextensions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_experimentaldecorators",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduledetection",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_target",
+      "tsconfig_compileroptions_usedefineforclassfields"
+    ],
+    "6": [
+      "src_components_appointmentmodal",
+      "src_components_appointmentmodal_appointmentmodal",
+      "src_components_appointmentmodal_appointmentmodalprops",
+      "src_components_casetrackingview",
+      "src_components_casetrackingview_casetrackingview",
+      "src_components_casetrackingview_casetrackingviewprops",
+      "src_components_messagesview",
+      "src_components_messagesview_messagesview",
+      "src_components_messagesview_messagesviewprops",
+      "src_components_userprofileview",
+      "src_components_userprofileview_profilesubpage",
+      "src_components_userprofileview_userprofileview",
+      "src_components_userprofileview_userprofileviewprops",
+      "src_types_appointment",
+      "src_types_chatmessage",
+      "src_types_documentitem"
+    ],
+    "7": [
+      "src_components_citizenloginview",
+      "src_components_citizenloginview_citizenloginview",
+      "src_components_citizenloginview_citizenloginviewprops",
+      "src_components_citizenloginview_registered_users_db",
+      "src_components_header",
+      "src_components_header_header",
+      "src_components_header_headerprops",
+      "src_components_walletcard",
+      "src_components_walletcard_walletcard",
+      "src_components_walletcard_walletcardprops",
+      "src_components_walletdetailsview",
+      "src_components_walletdetailsview_walletdetailsview",
+      "src_components_walletdetailsview_walletdetailsviewprops",
+      "src_types_citizenprofile",
+      "src_types_wallettransaction"
+    ],
+    "8": [
+      "src_components_officeportalview",
+      "src_components_officeportalview_deliverydoctype",
+      "src_components_officeportalview_deskcitizenreview",
+      "src_components_officeportalview_desktab",
+      "src_components_officeportalview_documentdeliveryrequest",
+      "src_components_officeportalview_initial_delivery_requests",
+      "src_components_officeportalview_initial_in_person_appointments",
+      "src_components_officeportalview_initial_office_reviews",
+      "src_components_officeportalview_inpersonappointment",
+      "src_components_officeportalview_officeportalview",
+      "src_components_officeportalview_ready_cases_for_delivery",
+      "src_components_officeportalview_readydocumentcase",
+      "src_data_mockdata_return_reason_dictionary",
+      "src_types_returnreasondefinition",
+      "src_types_stepturnowner"
+    ],
+    "9": [
+      "src_components_navbar",
+      "src_components_navbar_liquidglassdefs",
+      "src_components_navbar_liquidtabitem",
+      "src_components_navbar_navbar",
+      "src_components_navbar_navbarprops",
+      "src_components_navbar_navtab",
+      "src_components_navbar_rect"
+    ],
+    "10": [
+      "src_vite_env_d",
+      "src_vite_env_d_jpeg",
+      "src_vite_env_d_jpg",
+      "src_vite_env_d_png",
+      "src_vite_env_d_svg",
+      "src_vite_env_d_webp"
+    ],
+    "11": [
+      "src_components_clientqualitycheckmodal",
+      "src_components_clientqualitycheckmodal_clientqualitycheckmodal",
+      "src_components_clientqualitycheckmodal_clientqualitycheckmodalprops"
+    ],
+    "12": [
+      "vite_config"
+    ]
+  },
+  "cohesion": {
+    "0": 0.12299465240641712,
+    "1": 0.11174242424242424,
+    "2": 0.06896551724137931,
+    "3": 0.12698412698412698,
+    "4": 0.08695652173913043,
+    "5": 0.10526315789473684,
+    "6": 0.175,
+    "7": 0.2,
+    "8": 0.13333333333333333,
+    "9": 0.2857142857142857,
+    "10": 0.3333333333333333,
+    "11": 0.6666666666666666,
+    "12": 1.0
+  },
+  "gods": [
+    {
+      "id": "src_types_caserequest",
+      "label": "CaseRequest",
+      "degree": 17
+    },
+    {
+      "id": "src_types_pishkhanoffice",
+      "label": "PishkhanOffice",
+      "degree": 17
+    },
+    {
+      "id": "src_types_citizenservice",
+      "label": "CitizenService",
+      "degree": 16
+    },
+    {
+      "id": "src_types_citizenprofile",
+      "label": "CitizenProfile",
+      "degree": 15
+    },
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 15
+    },
+    {
+      "id": "src_types_consultationadvisor",
+      "label": "ConsultationAdvisor",
+      "degree": 9
+    },
+    {
+      "id": "src_types_chatmessage",
+      "label": "ChatMessage",
+      "degree": 9
+    },
+    {
+      "id": "src_types_appointment",
+      "label": "Appointment",
+      "degree": 7
+    },
+    {
+      "id": "src_types_wallettransaction",
+      "label": "WalletTransaction",
+      "degree": 7
+    },
+    {
+      "id": "src_data_mockdata_categories",
+      "label": "CATEGORIES",
+      "degree": 7
+    }
+  ],
+  "surprises": [
+    {
+      "source": "ServicesCatalogViewProps",
+      "target": "CitizenService",
+      "source_files": [
+        "src/components/ServicesCatalogView.tsx",
+        "src/types.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "bridges separate communities; peripheral node `ServicesCatalogViewProps` unexpectedly reaches hub `CitizenService`"
+    },
+    {
+      "source": "NavbarProps",
+      "target": "CaseRequest",
+      "source_files": [
+        "src/components/Navbar.tsx",
+        "src/types.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "bridges separate communities; peripheral node `NavbarProps` unexpectedly reaches hub `CaseRequest`"
+    },
+    {
+      "source": "AdvisorRegistrationModalProps",
+      "target": "ConsultationAdvisor",
+      "source_files": [
+        "src/components/AdvisorRegistrationModal.tsx",
+        "src/types.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "peripheral node `AdvisorRegistrationModalProps` unexpectedly reaches hub `ConsultationAdvisor`"
+    },
+    {
+      "source": "BusinessSubscriptionModalProps",
+      "target": "BusinessSubscriptionPlan",
+      "source_files": [
+        "src/components/BusinessSubscriptionModal.tsx",
+        "src/types.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "peripheral node `BusinessSubscriptionModalProps` unexpectedly reaches hub `BusinessSubscriptionPlan`"
+    },
+    {
+      "source": "LegalDelegationModalProps",
+      "target": "LegalDelegation",
+      "source_files": [
+        "src/components/LegalDelegationModal.tsx",
+        "src/types.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "peripheral node `LegalDelegationModalProps` unexpectedly reaches hub `LegalDelegation`"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `dependencies` connect `Community 4` to `Community 2`?",
+      "why": "High betweenness centrality (0.034) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `CitizenService` connect `Community 3` to `Community 0`, `Community 1`?",
+      "why": "High betweenness centrality (0.018) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `ConsultationHubViewProps`, `AdvisorRatingBreakdown`, `AdvisorRegistrationForm` to the rest of the system?",
+      "why": "77 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 0` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.12299465240641712 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 1` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.11174242424242424 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 2` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.06896551724137931 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 3` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.12698412698412698 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

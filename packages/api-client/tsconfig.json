@@ -1,0 +1,9 @@
+{
+  "extends": "@pishkhan/config-typescript/base.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "declarationMap": true
+  },
+  "include": ["src/**/*", "orval.config.ts"]
+}

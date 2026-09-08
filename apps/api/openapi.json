@@ -1,0 +1,235 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Pishkhan Citizen & Smart Office API",
+        "version": "1.0.0",
+        "description": "\u0633\u0627\u0645\u0627\u0646\u0647 \u062c\u0627\u0645\u0639 \u062e\u062f\u0645\u0627\u062a \u0634\u0647\u0631\u0648\u0646\u062f\u06cc \u0648 \u067e\u06cc\u0634\u062e\u0648\u0627\u0646 \u0647\u0648\u0634\u0645\u0646\u062f \u2014 API \u0645\u0633\u062a\u0646\u062f OpenAPI 3.1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/api"
+        }
+    ],
+    "paths": {
+        "/v1/services/ping": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "module": {
+                                            "type": "string",
+                                            "const": "ServiceCatalog"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "const": "active"
+                                        },
+                                        "timestamp": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "module",
+                                        "status",
+                                        "timestamp"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "const": "Pishkhan Citizen & Smart Office API"
+                                        },
+                                        "version": {
+                                            "type": "string",
+                                            "const": "v1"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "const": "active"
+                                        }
+                                    },
+                                    "required": [
+                                        "name",
+                                        "version",
+                                        "status"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/test/validation": {
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "national_id": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "national_id"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/test/payment": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "amount_rials": {
+                                        "type": "string",
+                                        "default": 100000
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "const": "paid"
+                                        },
+                                        "execution_count": {
+                                            "type": "string"
+                                        },
+                                        "amount_rials": {}
+                                    },
+                                    "required": [
+                                        "status",
+                                        "execution_count",
+                                        "amount_rials"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/health": {
+            "get": {
+                "operationId": "shared.health",
+                "summary": "Check system health across DB, Redis, and Object Storage",
+                "tags": [
+                    "Health"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "integer",
+                                    "const": 200
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "ValidationException": {
+                "description": "Validation error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Errors overview."
+                                },
+                                "errors": {
+                                    "type": "object",
+                                    "description": "A detailed description of each field that failed validation.",
+                                    "additionalProperties": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "required": [
+                                "message",
+                                "errors"
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
