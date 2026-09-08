@@ -1,0 +1,58 @@
+/* Architecture §4.7 Liquid Glass CSS with Mandatory Low-Performance Fallback */
+
+.glass-dock {
+  background: rgb(248 250 252 / 0.92); /* Fallback مات — پیش‌فرض */
+  border: 1px solid rgb(226 232 240);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  @media (prefers-reduced-transparency: no-preference) {
+    html:not([data-perf="low"]) .glass-dock {
+      background: rgb(255 255 255 / 0.62);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border-color: rgb(255 255 255 / 0.55);
+    }
+  }
+}
+
+.glass-lens {
+  background: rgb(241 245 249 / 0.95);
+  border: 1px solid rgb(203 213 225);
+  position: relative;
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  @media (prefers-reduced-transparency: no-preference) {
+    html:not([data-perf="low"]) .glass-lens {
+      background: rgb(255 255 255 / 0.42);
+      backdrop-filter: blur(22px) saturate(175%);
+      -webkit-backdrop-filter: blur(22px) saturate(175%);
+      border-color: rgb(255 255 255 / 0.6);
+    }
+  }
+}
+
+.glass-lens::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(from 180deg, #ff008040, #ffae0040, #00ffd140, #7a00ff40, #ff008040);
+  z-index: -1;
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-lens::before {
+    animation: none !important;
+  }
+}
+
+/* On low-performance devices, eliminate all costly filter calculations */
+html[data-perf="low"] .glass-dock,
+html[data-perf="low"] .glass-lens {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background-color: #ffffff !important;
+}
