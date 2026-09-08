@@ -8,3 +8,4 @@ export * from './consultation.js';
 export * from './timeline-step-status.js';
 export * from './citizen-tier.js';
 export * from './delegation-status.js';
+export * from './national-id.js';
