@@ -117,8 +117,7 @@
 
 | **TASK-021** | 🔨 | استقرار Staging — Compose تولیدی + nginx + Blue-Green | §۹.۱، §۱۰.۵، §۷.۸ | `docker/compose.prod.yml`, `docker/nginx/{nginx.conf,security-headers.conf}`, `scripts/deploy.sh`, `.github/workflows/deploy-staging.yml` | TASK-019, TASK-005 | همه هدرهای امنیتی §۷.۸ از جمله CSP دقیق (بدون هیچ دامنه AI در `connect-src`) · TLS 1.3 + HSTS · اسکریپت Blue-Green ۸ مرحله‌ای §۱۰.۵ با بازگشت خودکار · `APP_DEBUG=false` اجباری — ✅ Completed |
 | TASK-021-T | 🧪 | تأیید استقرار و امنیت Staging | §۷.۸، §۱۰.۵ | `tests/Feature/ProductionConfigTest.php` | TASK-021 | `curl -I` روی Staging هر ۶ هدر امنیتی را نشان می‌دهد (خروجی واقعی) · `testssl.sh` بدون یافته high/critical · تست: `APP_DEBUG=true` در تولید باعث Fail شدن Boot می‌شود · Deploy آزمایشی + بازگشت خودکار روی Health Check ناموفق تأیید شود — ✅ Completed |
-| **GATE-P0** | 🚪 | **دروازه بازبینی فاز ۰** | فصل ۱۱ فاز ۰ | — | TASK-021-T | همه ۷ معیار پذیرش فاز ۰ فصل ۱۱ واقعاً اجرا و سبز · کل تست‌سوئیت سبز · گزارش خلاصه به کارفرما · **توقف تا دریافت «approved»** |
-
+| **GATE-P0** | 🚪 | **دروازه بازبینی فاز ۰** | فصل ۱۱ فاز ۰ | — | TASK-021-T | همه ۷ معیار پذیرش فاز ۰ فصل ۱۱ واقعاً اجرا و سبز · کل تست‌سوئیت سبز · گزارش خلاصه به کارفرما · **تأیید شد (Approved)** — ✅ Completed |
 
 ---
 
@@ -129,8 +128,9 @@
 
 | ID | Type | عنوان | Arch § | فایل‌ها | Deps | Definition of Done |
 |---|:---:|---|---|---|---|---|
-| **TASK-022** | 🔨 | مهاجرت `citizens` و `operators` با ستون‌های رمزنگاری‌شده | §۶.۱، §۶.۲، §۷.۴ | `app/Modules/Identity/Database/Migrations/*_create_citizens_table.php`, `*_create_operators_table.php`, `Domain/Models/{Citizen,Operator}.php` | TASK-018, TASK-008 | `national_id_encrypted`/`mobile_encrypted` (bytea) + `national_id_hash`/`mobile_hash` (یکتا، `SHA-256 + pepper`) · Castهای `EncryptedCast`/`HashedCast` از TASK-008 · `province_code` و `city_id` کلید خارجی · Soft Delete · Enum `citizen_tier` |
-| TASK-022-T | 🧪 | تست رمزنگاری ستونی PII | §۷.۴، §۶.۲ | `tests/Feature/Identity/CitizenEncryptionTest.php` | TASK-022 | تست: `SELECT national_id_encrypted FROM citizens` مقدار **غیرقابل خواندن** برمی‌گرداند (خروجی واقعی SQL نمایش داده شود) · تست: جستجو با `national_id_hash` رکورد را می‌یابد · تست: دو شهروند با یک کد ملی → نقض ایندکس یکتا |
+| **TASK-022** | 🔨 | مهاجرت `citizens` و `operators` با ستون‌های رمزنگاری‌شده | §۶.۱، §۶.۲، §۷.۴ | `app/Modules/Identity/Database/Migrations/*_create_citizens_table.php`, `*_create_operators_table.php`, `Domain/Models/{Citizen,Operator}.php` | TASK-018, TASK-008 | `national_id_encrypted`/`mobile_encrypted` (bytea) + `national_id_hash`/`mobile_hash` (یکتا، `SHA-256 + pepper`) · Castهای `EncryptedCast`/`HashedCast` از TASK-008 · `province_code` و `city_id` کلید خارجی · Soft Delete · Enum `citizen_tier` — ✅ Completed |
+| TASK-022-T | 🧪 | تست رمزنگاری ستونی PII | §۷.۴، §۶.۲ | `tests/Feature/Identity/CitizenEncryptionTest.php` | TASK-022 | تست: `SELECT national_id_encrypted FROM citizens` مقدار **غیرقابل خواندن** برمی‌گرداند (خروجی واقعی SQL نمایش داده شود) · تست: جستجو با `national_id_hash` رکورد را می‌یابد · تست: دو شهروند با یک کد ملی → نقض ایندکس یکتا — ✅ Completed |
+
 | **TASK-023** | 🔨 | قاعده اعتبارسنجی کد ملی ایرانی (چک‌دیجیت) | §۵.۳، §۵.۶ | `app/Modules/Identity/Domain/Rules/ValidIranianNationalId.php`, `packages/domain/src/national-id.ts` | TASK-022, TASK-003 | الگوریتم چک‌دیجیت رسمی · رد کد‌های تکراری (`1111111111`) · نسخه TypeScript **دقیقاً همان منطق** برای اعتبارسنجی سمت کلاینت · خطای `AUTH_NATIONAL_ID_INVALID` |
 | TASK-023-T | 🧪 | تست چک‌دیجیت — تطابق PHP و TS | §۶.۳ | `tests/Unit/Identity/NationalIdTest.php`, `packages/domain/src/national-id.test.ts` | TASK-023 | پوشش **۱۰۰٪** · ۲۰ کد معتبر و ۲۰ کد نامعتبر شناخته‌شده · تست تطابق: هر دو پیاده‌سازی روی همان ۴۰ ورودی نتیجه یکسان می‌دهند |
 | **TASK-024** | 🔨 | جدول و مدل `otp_challenges` | §۶.۱، §۷.۲ | `Identity/Database/Migrations/*_create_otp_challenges_table.php`, `Domain/Models/OtpChallenge.php` | TASK-022 | `code_hash` با bcrypt (کد خام **هرگز** ذخیره نمی‌شود) · `mobile_hash`, `purpose`, `attempts`, `expires_at`, `verified_at`, `ip_address` · ایندکس `(mobile_hash, purpose, expires_at)` · Enum `OtpPurpose` با ۴ مقدار |
