@@ -1,0 +1,278 @@
+[
+  {
+    "key": "avatar_user_profile",
+    "originalName": "avatar_user_profile_1788037610243.jpg",
+    "blurhash": "LzLNurod.8x]~pofbIt6IVayV@WB",
+    "aspectRatio": 1,
+    "variants": {
+      "avif": {
+        "320": "/images/optimized/avatar_user_profile-320.avif",
+        "640": "/images/optimized/avatar_user_profile-640.avif",
+        "1024": "/images/optimized/avatar_user_profile-1024.avif"
+      },
+      "webp": {
+        "320": "/images/optimized/avatar_user_profile-320.webp",
+        "640": "/images/optimized/avatar_user_profile-640.webp",
+        "1024": "/images/optimized/avatar_user_profile-1024.webp"
+      },
+      "jpg": {
+        "320": "/images/optimized/avatar_user_profile-320.jpg",
+        "640": "/images/optimized/avatar_user_profile-640.jpg",
+        "1024": "/images/optimized/avatar_user_profile-1024.jpg"
+      }
+    }
+  },
+  {
+    "key": "illus_bank_3d",
+    "originalName": "illus_bank_3d_1788033234556.jpg",
+    "blurhash": "LlO:|kt8~W%M-qt7fhV@_3oLM|R*",
+    "aspectRatio": 1,
+    "variants": {
+      "avif": {
+        "320": "/images/optimized/illus_bank_3d-320.avif",
+        "640": "/images/optimized/illus_bank_3d-640.avif",
+        "1024": "/images/optimized/illus_bank_3d-1024.avif"
+      },
+      "webp": {
+        "320": "/images/optimized/illus_bank_3d-320.webp",
+        "640": "/images/optimized/illus_bank_3d-640.webp",
+        "1024": "/images/optimized/illus_bank_3d-1024.webp"
+      },
+      "jpg": {
+        "320": "/images/optimized/illus_bank_3d-320.jpg",
+        "640": "/images/optimized/illus_bank_3d-640.jpg",
+        "1024": "/images/optimized/illus_bank_3d-1024.jpg"
+      }
+    }
+  },
+  {
+    "key": "illus_consult_3d",
+    "originalName": "illus_consult_3d_1788285048758.jpg",
+    "blurhash": "LTOp_HIn^m%M%gxut7WU~XxaD%R*",
+    "aspectRatio": 1,
+    "variants": {
+      "avif": {
+        "320": "/images/optimized/illus_consult_3d-320.avif",
+        "640": "/images/optimized/illus_consult_3d-640.avif",
+        "1024": "/images/optimized/illus_consult_3d-1024.avif"
+      },
+      "webp": {
+        "320": "/images/optimized/illus_consult_3d-320.webp",
+        "640": "/images/optimized/illus_consult_3d-640.webp",
+        "1024": "/images/optimized/illus_consult_3d-1024.webp"
+      },
+      "jpg": {
+        "320": "/images/optimized/illus_consult_3d-320.jpg",
+        "640": "/images/optimized/illus_consult_3d-640.jpg",
+        "1024": "/images/optimized/illus_consult_3d-1024.jpg"
+      }
+    }
+  },
+  {
+    "key": "illus_gov_3d",
+    "originalName": "illus_gov_3d_1788033220023.jpg",
+    "blurhash": "LsOf[c%M_MoK.8ayj?kC_3ofM{WC",
+    "aspectRatio": 1,
+    "variants": {
+      "avif": {
+        "320": "/images/optimized/illus_gov_3d-320.avif",
+        "640": "/images/optimized/illus_gov_3d-640.avif",
+        "1024": "/images/optimized/illus_gov_3d-1024.avif"
+      },
+      "webp": {
+        "320": "/images/optimized/illus_gov_3d-320.webp",
+        "640": "/images/optimized/illus_gov_3d-640.webp",
+        "1024": "/images/optimized/illus_gov_3d-1024.webp"
+      },
+      "jpg": {
+        "320": "/images/optimized/illus_gov_3d-320.jpg",
+        "640": "/images/optimized/illus_gov_3d-640.jpg",
+        "1024": "/images/optimized/illus_gov_3d-1024.jpg"
+      }
+    }
+  },
+  {
+    "key": "illus_health_3d",
+    "originalName": "illus_health_3d_1788033174762.jpg",
+    "blurhash": "LcS5*Ht7*J-;-pn*X8bb.mozMcRj",
+    "aspectRatio": 1,
+    "variants": {
+      "avif": {
+        "320": "/images/optimized/illus_health_3d-320.avif",
+        "640": "/images/optimized/illus_health_3d-640.avif",
+        "1024": "/images/optimized/illus_health_3d-1024.avif"
+      },
+      "webp": {
+        "320": "/images/optimized/illus_health_3d-320.webp",
+        "640": "/images/optimized/illus_health_3d-640.webp",
+        "1024": "/images/optimized/illus_health_3d-1024.webp"
+      },
+      "jpg": {
+        "320": "/images/optimized/illus_health_3d-320.jpg",
+        "640": "/images/optimized/illus_health_3d-640.jpg",
+        "1024": "/images/optimized/illus_health_3d-1024.jpg"
+      }
+    }
+  },
+  {
+    "key": "illus_hero_banner",
+    "originalName": "illus_hero_banner_1788033276617.jpg",
+    "blurhash": "LRK2*N?b.mx]yEWEV@aeyYRkR5Rk",
+    "aspectRatio": 1.7917,
+    "variants": {
+      "avif": {
+        "320": "/images/optimized/illus_hero_banner-320.avif",
+        "640": "/images/optimized/illus_hero_banner-640.avif",
+        "1024": "/images/optimized/illus_hero_banner-1024.avif"
+      },
+      "webp": {
+        "320": "/images/optimized/illus_hero_banner-320.webp",
+        "640": "/images/optimized/illus_hero_banner-640.webp",
+        "1024": "/images/optimized/illus_hero_banner-1024.webp"
+      },
+      "jpg": {
+        "320": "/images/optimized/illus_hero_banner-320.jpg",
+        "640": "/images/optimized/illus_hero_banner-640.jpg",
+        "1024": "/images/optimized/illus_hero_banner-1024.jpg"
+      }
+    }
+  },
+  {
+    "key": "illus_house_3d",
+    "originalName": "illus_house_3d_1788033248282.jpg",
+    "blurhash": "LnNdm%tR_3s:xcazoza{~XsnNGW;",
+    "aspectRatio": 1,
+    "variants": {
+      "avif": {
+        "320": "/images/optimized/illus_house_3d-320.avif",
+        "640": "/images/optimized/illus_house_3d-640.avif",
+        "1024": "/images/optimized/illus_house_3d-1024.avif"
+      },
+      "webp": {
+        "320": "/images/optimized/illus_house_3d-320.webp",
+        "640": "/images/optimized/illus_house_3d-640.webp",
+        "1024": "/images/optimized/illus_house_3d-1024.webp"
+      },
+      "jpg": {
+        "320": "/images/optimized/illus_house_3d-320.jpg",
+        "640": "/images/optimized/illus_house_3d-640.jpg",
+        "1024": "/images/optimized/illus_house_3d-1024.jpg"
+      }
+    }
+  },
+  {
+    "key": "illus_identity_3d",
+    "originalName": "illus_identity_3d_1788033162106.jpg",
+    "blurhash": "LtOgm1WX?Ixt%fxujZNF~EoJI.j]",
+    "aspectRatio": 1,
+    "variants": {
+      "avif": {
+        "320": "/images/optimized/illus_identity_3d-320.avif",
+        "640": "/images/optimized/illus_identity_3d-640.avif",
+        "1024": "/images/optimized/illus_identity_3d-1024.avif"
+      },
+      "webp": {
+        "320": "/images/optimized/illus_identity_3d-320.webp",
+        "640": "/images/optimized/illus_identity_3d-640.webp",
+        "1024": "/images/optimized/illus_identity_3d-1024.webp"
+      },
+      "jpg": {
+        "320": "/images/optimized/illus_identity_3d-320.jpg",
+        "640": "/images/optimized/illus_identity_3d-640.jpg",
+        "1024": "/images/optimized/illus_identity_3d-1024.jpg"
+      }
+    }
+  },
+  {
+    "key": "illus_internet_3d",
+    "originalName": "illus_internet_3d_1788275403335.jpg",
+    "blurhash": "LeOEC+kX^i%2x]s:oJWC~As.IpWX",
+    "aspectRatio": 1,
+    "variants": {
+      "avif": {
+        "320": "/images/optimized/illus_internet_3d-320.avif",
+        "640": "/images/optimized/illus_internet_3d-640.avif",
+        "1024": "/images/optimized/illus_internet_3d-1024.avif"
+      },
+      "webp": {
+        "320": "/images/optimized/illus_internet_3d-320.webp",
+        "640": "/images/optimized/illus_internet_3d-640.webp",
+        "1024": "/images/optimized/illus_internet_3d-1024.webp"
+      },
+      "jpg": {
+        "320": "/images/optimized/illus_internet_3d-320.jpg",
+        "640": "/images/optimized/illus_internet_3d-640.jpg",
+        "1024": "/images/optimized/illus_internet_3d-1024.jpg"
+      }
+    }
+  },
+  {
+    "key": "illus_post_3d",
+    "originalName": "illus_post_3d_1788033261489.jpg",
+    "blurhash": "LcQb@4xa*0yD.8aeX8of*0kXVXni",
+    "aspectRatio": 1,
+    "variants": {
+      "avif": {
+        "320": "/images/optimized/illus_post_3d-320.avif",
+        "640": "/images/optimized/illus_post_3d-640.avif",
+        "1024": "/images/optimized/illus_post_3d-1024.avif"
+      },
+      "webp": {
+        "320": "/images/optimized/illus_post_3d-320.webp",
+        "640": "/images/optimized/illus_post_3d-640.webp",
+        "1024": "/images/optimized/illus_post_3d-1024.webp"
+      },
+      "jpg": {
+        "320": "/images/optimized/illus_post_3d-320.jpg",
+        "640": "/images/optimized/illus_post_3d-640.jpg",
+        "1024": "/images/optimized/illus_post_3d-1024.jpg"
+      }
+    }
+  },
+  {
+    "key": "illus_vehicle_3d",
+    "originalName": "illus_vehicle_3d_1788033190044.jpg",
+    "blurhash": "LhPQEYxv?Gxa-;WBM{WE~oRiIWoz",
+    "aspectRatio": 1,
+    "variants": {
+      "avif": {
+        "320": "/images/optimized/illus_vehicle_3d-320.avif",
+        "640": "/images/optimized/illus_vehicle_3d-640.avif",
+        "1024": "/images/optimized/illus_vehicle_3d-1024.avif"
+      },
+      "webp": {
+        "320": "/images/optimized/illus_vehicle_3d-320.webp",
+        "640": "/images/optimized/illus_vehicle_3d-640.webp",
+        "1024": "/images/optimized/illus_vehicle_3d-1024.webp"
+      },
+      "jpg": {
+        "320": "/images/optimized/illus_vehicle_3d-320.jpg",
+        "640": "/images/optimized/illus_vehicle_3d-640.jpg",
+        "1024": "/images/optimized/illus_vehicle_3d-1024.jpg"
+      }
+    }
+  },
+  {
+    "key": "illus_welfare_3d",
+    "originalName": "illus_welfare_3d_1788033205885.jpg",
+    "blurhash": "L*QSblxt%ht7%NayaebH.Ta#Mxj[",
+    "aspectRatio": 1,
+    "variants": {
+      "avif": {
+        "320": "/images/optimized/illus_welfare_3d-320.avif",
+        "640": "/images/optimized/illus_welfare_3d-640.avif",
+        "1024": "/images/optimized/illus_welfare_3d-1024.avif"
+      },
+      "webp": {
+        "320": "/images/optimized/illus_welfare_3d-320.webp",
+        "640": "/images/optimized/illus_welfare_3d-640.webp",
+        "1024": "/images/optimized/illus_welfare_3d-1024.webp"
+      },
+      "jpg": {
+        "320": "/images/optimized/illus_welfare_3d-320.jpg",
+        "640": "/images/optimized/illus_welfare_3d-640.jpg",
+        "1024": "/images/optimized/illus_welfare_3d-1024.jpg"
+      }
+    }
+  }
+]

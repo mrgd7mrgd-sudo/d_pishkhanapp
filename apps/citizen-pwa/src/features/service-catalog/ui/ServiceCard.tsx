@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Clock, Building2, Flame, Sparkles } from 'lucide-react';
-import { ServiceTagBadge } from '@pishkhan/ui-kit';
+import { ServiceTagBadge, ResponsiveImage } from '@pishkhan/ui-kit';
 import type { ServiceItem } from '../types';
 
 export interface ServiceCardProps {
@@ -14,19 +14,18 @@ const ServiceCardCover: React.FC<{ service: ServiceItem }> = ({ service }) => {
 
   return (
     <div className="relative w-full aspect-16/9 bg-slate-100 dark:bg-slate-800 overflow-hidden">
-      <picture>
-        <source srcSet={service.image.avif} type="image/avif" />
-        <source srcSet={service.image.webp} type="image/webp" />
-        <img
-          src={service.image.webp}
-          alt={service.title}
-          width={service.image.width}
-          height={service.image.height}
-          loading="lazy"
-          decoding="async"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-      </picture>
+      <ResponsiveImage
+        src={service.image.webp}
+        alt={service.title}
+        width={service.image.width}
+        height={service.image.height}
+        avifSrcSet={service.image.avif}
+        webpSrcSet={service.image.webp}
+        blurhash={service.image.blurhash}
+        loading="lazy"
+        decoding="async"
+        imageClassName="group-hover:scale-105 transition-transform duration-300"
+      />
 
       <div className="absolute top-2.5 start-2.5 flex flex-wrap gap-1.5 pointer-events-none">
         {service.is_popular && (
