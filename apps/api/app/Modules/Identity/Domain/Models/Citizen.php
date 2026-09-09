@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Citizen Domain Model (§6.1, §6.2, §7.4)
@@ -37,8 +38,11 @@ use Laravel\Sanctum\HasApiTokens;
 final class Citizen extends Authenticatable
 {
     use HasApiTokens;
+    use HasRoles;
     use HasUuids;
     use SoftDeletes;
+
+    protected string $guard_name = 'web';
 
     protected $table = 'citizens';
 

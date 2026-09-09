@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Operator Domain Model (§6.1, §6.2, §7.2)
@@ -36,8 +37,11 @@ use Laravel\Sanctum\HasApiTokens;
 final class Operator extends Authenticatable
 {
     use HasApiTokens;
+    use HasRoles;
     use HasUuids;
     use SoftDeletes;
+
+    protected string $guard_name = 'web';
 
     protected $table = 'operators';
 

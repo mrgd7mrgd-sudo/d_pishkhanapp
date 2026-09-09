@@ -14,6 +14,7 @@ arch('classes in modules and shared are final by default')
         'App\Modules\*\Database\Migrations',
         'App\Modules\*\Domain\Models',
         'App\Shared\Events\DomainEvent',
+        'App\Modules\Identity\Infrastructure\Policies\BasePolicy',
     ]);
 
 arch('enums are string backed')
