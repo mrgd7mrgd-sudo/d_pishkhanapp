@@ -9,3 +9,4 @@ export * from './timeline-step-status.js';
 export * from './citizen-tier.js';
 export * from './delegation-status.js';
 export * from './national-id.js';
+export * from './persian-text.js';

@@ -3,26 +3,9 @@
  * Exactly mirrors App\Modules\Identity\Domain\Rules\ValidIranianNationalId in backend.
  */
 
-/**
- * Normalizes Persian and Arabic digits to ASCII standard digits.
- */
-export function normalizeDigits(input: string): string {
-  const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-  const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+import { normalizeDigits } from './persian-text.js';
 
-  let result = input;
-  for (let i = 0; i < 10; i++) {
-    const p = persianDigits[i];
-    const a = arabicDigits[i];
-    if (p) {
-      result = result.replaceAll(p, i.toString());
-    }
-    if (a) {
-      result = result.replaceAll(a, i.toString());
-    }
-  }
-  return result;
-}
+export { normalizeDigits };
 
 /**
  * Validates whether a given national ID string conforms to the official check-digit algorithm.
