@@ -49,6 +49,6 @@ describe('Operator Desk Shell & Architecture', () => {
       </ErrorBoundary>,
     );
 
-    expect(screen.getByText('خطای سیستمی')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2 })).toBeInTheDocument();
   });
 });

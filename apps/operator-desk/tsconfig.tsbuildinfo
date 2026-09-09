@@ -1,1 +1,0 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/routes/index.tsx","./src/shared/api/query-client.ts","./src/shared/i18n/index.ts","./src/shared/ui/deskplaceholderpage.tsx","./src/shared/ui/errorboundary.tsx","./src/test/deskshell.test.tsx","./src/test/setup.ts","./vite.config.ts"],"version":"5.9.3"}

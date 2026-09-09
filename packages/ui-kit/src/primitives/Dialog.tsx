@@ -8,9 +8,19 @@ export interface DialogProps {
   title: string;
   children: ReactNode;
   className?: string;
+  closeAriaLabel?: string;
 }
 
-export function Dialog({ isOpen, onClose, title, children, className }: DialogProps): React.JSX.Element | null {
+const DEFAULT_CLOSE_LABEL = 'بستن دیالوگ';
+
+export function Dialog({
+  isOpen,
+  onClose,
+  title,
+  children,
+  className,
+  closeAriaLabel = DEFAULT_CLOSE_LABEL,
+}: DialogProps): React.JSX.Element | null {
   const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,7 +65,7 @@ export function Dialog({ isOpen, onClose, title, children, className }: DialogPr
           <button
             type="button"
             onClick={onClose}
-            aria-label="بستن دیالوگ"
+            aria-label={closeAriaLabel}
             className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100"
           >
             ✕

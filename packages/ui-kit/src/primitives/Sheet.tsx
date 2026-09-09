@@ -8,9 +8,19 @@ export interface SheetProps {
   title: string;
   children: ReactNode;
   className?: string;
+  closeAriaLabel?: string;
 }
 
-export function Sheet({ isOpen, onClose, title, children, className }: SheetProps): React.JSX.Element | null {
+const DEFAULT_CLOSE_LABEL = 'بستن پنجره';
+
+export function Sheet({
+  isOpen,
+  onClose,
+  title,
+  children,
+  className,
+  closeAriaLabel = DEFAULT_CLOSE_LABEL,
+}: SheetProps): React.JSX.Element | null {
   const sheetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -56,7 +66,7 @@ export function Sheet({ isOpen, onClose, title, children, className }: SheetProp
           <button
             type="button"
             onClick={onClose}
-            aria-label="بستن پنجره"
+            aria-label={closeAriaLabel}
             className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100"
           >
             ✕

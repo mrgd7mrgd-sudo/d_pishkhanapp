@@ -15,7 +15,7 @@ export function DeskPlaceholderPage({ titleKey }: DeskPlaceholderProps): React.J
           {t(`routes.${titleKey}`)}
         </h1>
         <p className="text-sm text-slate-500">
-          ماژول اداری اپراتور و مدیریت دفتر پیشخوان
+          {t('app.module_description')}
         </p>
       </div>
     </div>

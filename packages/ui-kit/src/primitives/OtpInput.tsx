@@ -9,17 +9,18 @@ export interface OtpInputProps {
   autoFocus?: boolean;
   ariaLabel?: string;
   hasError?: boolean;
+  digitAriaLabel?: (index: number) => string;
 }
 
-export const OtpInput: React.FC<OtpInputProps> = ({
-  value,
-  onChange,
-  length = 5,
-  disabled = false,
-  autoFocus = false,
-  ariaLabel = 'رمز یکبار مصرف',
-  hasError = false,
-}) => {
+const DEFAULT_ARIA_LABEL = 'رمز یکبار مصرف';
+const defaultDigitLabel = (index: number): string => `رقم ${index + 1}`;
+
+function useOtpInputHandlers(
+  value: string,
+  length: number,
+  onChange: (val: string) => void,
+  autoFocus: boolean,
+) {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
@@ -28,9 +29,7 @@ export const OtpInput: React.FC<OtpInputProps> = ({
     }
   }, [autoFocus]);
 
-  const digits = Array.from({ length }, (_, i) => value[i] ?? '');
-
-  const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>): void => {
     const raw = normalizeDigits(e.target.value);
     const cleaned = raw.replace(/\D/g, '');
     if (!cleaned) {
@@ -50,13 +49,13 @@ export const OtpInput: React.FC<OtpInputProps> = ({
     }
   };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Backspace' && !digits[index] && index > 0) {
+  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === 'Backspace' && !value[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>): void => {
     e.preventDefault();
     const pasted = normalizeDigits(e.clipboardData.getData('text/plain'));
     const cleaned = pasted.replace(/\D/g, '').slice(0, length);
@@ -66,6 +65,28 @@ export const OtpInput: React.FC<OtpInputProps> = ({
       inputRefs.current[targetIndex]?.focus();
     }
   };
+
+  return { inputRefs, handleChange, handleKeyDown, handlePaste };
+}
+
+export const OtpInput: React.FC<OtpInputProps> = ({
+  value,
+  onChange,
+  length = 5,
+  disabled = false,
+  autoFocus = false,
+  ariaLabel = DEFAULT_ARIA_LABEL,
+  hasError = false,
+  digitAriaLabel = defaultDigitLabel,
+}) => {
+  const { inputRefs, handleChange, handleKeyDown, handlePaste } = useOtpInputHandlers(
+    value,
+    length,
+    onChange,
+    autoFocus,
+  );
+
+  const digits = Array.from({ length }, (_, i) => value[i] ?? '');
 
   return (
     <div
@@ -90,7 +111,7 @@ export const OtpInput: React.FC<OtpInputProps> = ({
           onChange={(e) => handleChange(idx, e)}
           onKeyDown={(e) => handleKeyDown(idx, e)}
           onPaste={handlePaste}
-          aria-label={`رقم ${idx + 1}`}
+          aria-label={digitAriaLabel(idx)}
           className={`w-11 h-12 sm:w-12 sm:h-14 text-center text-xl font-bold rounded-lg border transition-all focus:outline-none focus:ring-2 ${
             hasError
               ? 'border-error-500 text-error-600 focus:ring-error-500/20'

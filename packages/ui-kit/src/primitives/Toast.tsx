@@ -6,10 +6,13 @@ export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
   variant?: 'info' | 'success' | 'warning' | 'error';
   title?: string;
   onClose?: () => void;
+  closeAriaLabel?: string;
 }
 
+const DEFAULT_CLOSE_LABEL = 'بستن';
+
 export const Toast = forwardRef<HTMLDivElement, ToastProps>(
-  ({ className, variant = 'info', title, children, onClose, ...props }, ref) => {
+  ({ className, variant = 'info', title, children, onClose, closeAriaLabel = DEFAULT_CLOSE_LABEL, ...props }, ref) => {
     const variants = {
       info: 'bg-white border-sky-200 text-slate-800',
       success: 'bg-white border-emerald-200 text-slate-800',
@@ -39,7 +42,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
           <button
             type="button"
             onClick={onClose}
-            aria-label="بستن"
+            aria-label={closeAriaLabel}
             className="text-slate-400 hover:text-slate-600 p-1 min-w-[28px] min-h-[28px] flex items-center justify-center rounded-lg"
           >
             ✕

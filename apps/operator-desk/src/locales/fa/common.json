@@ -3,7 +3,8 @@
     "title": "میز اپراتور پیشخوان هوشمند",
     "retry": "تلاش مجدد",
     "error_title": "خطایی رخ داده است",
-    "error_description": "متأسفانه مشکلی در بارگذاری پنل پیش آمده است."
+    "error_description": "متأسفانه مشکلی در بارگذاری پنل پیش آمده است.",
+    "module_description": "ماژول اداری اپراتور و مدیریت دفتر پیشخوان"
   },
   "routes": {
     "login": "ورود اپراتور و مدیر دفتر",
@@ -16,5 +17,29 @@
     "finance": "تسویه حساب، درآمد و مغایرت مالی",
     "reviews": "نظرات شهروندان و سنجش کیفیت SLA",
     "office_profile": "پروفایل دفتر، خدمات و ظرفیت پذیرش"
+  },
+  "auth": {
+    "login_title": "ورود به میز کار پیشخوان",
+    "login_subtitle": "کد دفتر، نام کاربری و رمز عبور خود را وارد کنید",
+    "office_code_label": "کد دفتر پیشخوان",
+    "office_code_placeholder": "مثال: 72161001",
+    "username_label": "نام کاربری",
+    "username_placeholder": "نام کاربری اپراتور",
+    "password_label": "رمز عبور",
+    "password_placeholder": "حداقل ۱۲ کاراکتر",
+    "login_button": "ادامه و دریافت کد تأیید",
+    "otp_title": "تأیید هویت دو مرحله‌ای",
+    "otp_subtitle": "کد ۵ رقمی ارسال شده به شماره {{mobile}} را وارد کنید",
+    "verify_button": "تأیید و ورود به پنل",
+    "back_to_credentials": "ویرایش مشخصات ورود",
+    "resend_code": "ارسال مجدد کد",
+    "resend_in": "ارسال مجدد تا {{seconds}} ثانیه",
+    "invalid_credentials": "کد دفتر، نام کاربری یا رمز عبور نامعتبر است.",
+    "invalid_otp": "کد تأیید باید ۵ رقم باشد.",
+    "counter_label": "باجه شماره {{number}}",
+    "office_label": "دفتر: {{code}}",
+    "role_label": "سمت: {{role}}",
+    "logout_button": "خروج از حساب",
+    "welcome_operator": "خوش آمدید، {{name}}"
   }
 }

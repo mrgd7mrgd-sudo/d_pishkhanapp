@@ -7,11 +7,16 @@ const DeskPlaceholder = (key: string) =>
     return { default: () => mod.DeskPlaceholderPage({ titleKey: key }) };
   });
 
+const OperatorAuthFlowPage = lazy(async () => {
+  const mod = await import('@/features/auth');
+  return { default: mod.OperatorAuthFlow };
+});
+
 /**
  * All 10 Operator Desk Routes defined in Architecture §4.4
  */
 export const deskRoutes: RouteObject[] = [
-  { path: '/login', Component: DeskPlaceholder('login') },
+  { path: '/login', Component: OperatorAuthFlowPage },
   { path: '/offers', Component: DeskPlaceholder('offers') },
   { path: '/workspace', Component: DeskPlaceholder('workspace') },
   { path: '/workspace/:caseId', Component: DeskPlaceholder('workspace_detail') },
