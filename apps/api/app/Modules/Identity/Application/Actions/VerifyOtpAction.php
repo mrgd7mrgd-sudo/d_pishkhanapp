@@ -125,13 +125,16 @@ final class VerifyOtpAction
         $tokenExpiresAt = CarbonImmutable::now()->addDays(7);
         $tokenName = $deviceName ?? 'Citizen PWA';
 
+        // Check if this device is new for the user (§7.2, §7.6)
+        $isExistingDevice = $citizen->tokens()->where('name', $tokenName)->exists();
+
         $tokenInstance = $citizen->createToken(
             name: $tokenName,
             abilities: self::CITIZEN_ABILITIES,
             expiresAt: $tokenExpiresAt
         );
 
-        // 6. Record successful login in immutable audit log (§7.6)
+        // 6. Record successful login and new device notification in immutable audit log (§7.6)
         AuditLogger::record(
             action: AuditableAction::AUTH_LOGIN_SUCCESS,
             subject: $citizen,
@@ -144,6 +147,21 @@ final class VerifyOtpAction
                 'challenge_id' => $challenge->id,
             ]
         );
+
+        if (! $isExistingDevice) {
+            AuditLogger::record(
+                action: AuditableAction::AUTH_DEVICE_NEW,
+                subject: $citizen,
+                changes: [
+                    'device_name' => $tokenName,
+                    'token_id' => $tokenInstance->accessToken->id,
+                ],
+                context: [
+                    'ip_address' => Request::ip(),
+                    'user_agent' => Request::userAgent(),
+                ]
+            );
+        }
 
         return [
             'token' => $tokenInstance->plainTextToken,

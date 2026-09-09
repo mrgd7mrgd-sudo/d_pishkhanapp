@@ -8,8 +8,8 @@ use App\Modules\Identity\Domain\Enums\CitizenTier;
 use App\Shared\Crypto\EncryptedCast;
 use App\Shared\Crypto\HashedCast;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -34,7 +34,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property bool $digital_signature_active
  * @property int $credit_score
  */
-final class Citizen extends Model
+final class Citizen extends Authenticatable
 {
     use HasApiTokens;
     use HasUuids;

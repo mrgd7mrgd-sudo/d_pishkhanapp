@@ -8,4 +8,6 @@ parameters:
     # Level 8 as required by Architecture §10.2 and TASK-005
     level: 8
 
+    treatPhpDocTypesAsCertain: false
+
     ignoreErrors: []

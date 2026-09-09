@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Exceptions\Handler;
+use App\Modules\Identity\Http\Middleware\EnsureTokenNotExpiringSoon;
 use App\Shared\Http\Middleware\AuditLog;
 use App\Shared\Http\Middleware\ForceJson;
 use App\Shared\Http\Middleware\Idempotent;
@@ -31,6 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'idempotent' => Idempotent::class,
             'audit.log' => AuditLog::class,
             'rate.limit.otp' => MultiTierOtpRateLimiter::class,
+            'token.slide' => EnsureTokenNotExpiringSoon::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
