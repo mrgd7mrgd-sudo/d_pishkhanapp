@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Integration\Geo\Http\TileProxyController;
 use App\Shared\Http\Controllers\HealthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,3 +45,10 @@ Route::middleware('idempotent')->post('/test/payment', function (Request $reques
         'amount_rials' => $request->input('amount_rials', 100000),
     ]);
 });
+
+// Tile Proxy (§8.4)
+Route::get('/v1/tiles/{theme}/{z}/{x}/{y}.png', [TileProxyController::class, 'getTile'])
+    ->where(['z' => '[0-9]+', 'x' => '[0-9]+', 'y' => '[0-9]+']);
+
+Route::get('/tiles/{theme}/{z}/{x}/{y}.png', [TileProxyController::class, 'getTile'])
+    ->where(['z' => '[0-9]+', 'x' => '[0-9]+', 'y' => '[0-9]+']);

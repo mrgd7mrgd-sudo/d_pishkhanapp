@@ -19,4 +19,15 @@ return [
             'line_number' => env('SMSIR_LINE_NUMBER', '30007732'),
         ],
     ],
+    'geo' => [
+        'driver' => env('GEO_DRIVER', 'fake'), // 'fake', 'neshan'
+        'neshan' => [
+            'api_key' => env('NESHAN_API_KEY', ''),
+            'base_url' => env('NESHAN_BASE_URL', 'https://api.neshan.org'),
+        ],
+        'tile_proxy' => [
+            'cache_days' => 30,
+            'url_prefix' => env('TILE_PROXY_URL_PREFIX', '/tiles'),
+        ],
+    ],
 ];
