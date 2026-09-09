@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Modules\OfficeNetwork\Domain\Models;
 
+use App\Modules\Identity\Domain\Models\Operator;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -37,5 +39,13 @@ final class Office extends Model
         return [
             'is_online' => 'boolean',
         ];
+    }
+
+    /**
+     * @return HasMany<Operator, $this>
+     */
+    public function operators(): HasMany
+    {
+        return $this->hasMany(Operator::class, 'office_id');
     }
 }

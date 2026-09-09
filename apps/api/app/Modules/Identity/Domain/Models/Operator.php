@@ -7,6 +7,7 @@ namespace App\Modules\Identity\Domain\Models;
 use App\Modules\Identity\Domain\Enums\OperatorRole;
 use App\Shared\Crypto\EncryptedCast;
 use App\Shared\Crypto\HashedCast;
+use App\Shared\Scopes\OfficeScope;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,6 +51,11 @@ final class Operator extends Authenticatable
         'counter_number' => 1,
         'is_active' => true,
     ];
+
+    protected static function booted(): void
+    {
+        self::addGlobalScope(new OfficeScope);
+    }
 
     protected $fillable = [
         'office_id',

@@ -6,6 +6,7 @@ use App\Exceptions\Handler;
 use App\Modules\Identity\Http\Middleware\EnsureOperatorSessionValid;
 use App\Modules\Identity\Http\Middleware\EnsureTokenNotExpiringSoon;
 use App\Shared\Http\Middleware\AuditLog;
+use App\Shared\Http\Middleware\EnsureOfficeScope;
 use App\Shared\Http\Middleware\ForceJson;
 use App\Shared\Http\Middleware\Idempotent;
 use App\Shared\Http\Middleware\MultiTierOtpRateLimiter;
@@ -14,6 +15,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Middleware\RoleMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -35,6 +38,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'rate.limit.otp' => MultiTierOtpRateLimiter::class,
             'token.slide' => EnsureTokenNotExpiringSoon::class,
             'operator.session.valid' => EnsureOperatorSessionValid::class,
+            'office.scope' => EnsureOfficeScope::class,
+            'role' => RoleMiddleware::class,
+            'permission' => PermissionMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
