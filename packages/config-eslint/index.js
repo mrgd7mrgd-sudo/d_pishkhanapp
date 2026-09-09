@@ -73,4 +73,16 @@ export default [
       },
     },
   },
+  {
+    files: [
+      '**/*.test.{ts,tsx,js,jsx}',
+      '**/__tests__/**/*.{ts,tsx,js,jsx}',
+      '**/*.spec.{ts,tsx,js,jsx}',
+    ],
+    rules: {
+      'max-lines-per-function': 'off',
+      'no-restricted-syntax': 'off',
+    },
+  },
 ];
+

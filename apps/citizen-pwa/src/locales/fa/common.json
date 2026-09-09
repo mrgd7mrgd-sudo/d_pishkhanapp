@@ -5,7 +5,14 @@
     "retry": "تلاش مجدد",
     "error_title": "خطایی رخ داده است",
     "error_description": "متأسفانه در پردازش درخواست شما مشکلی پیش آمده است.",
-    "back_to_home": "بازگشت به صفحه اصلی"
+    "back_to_home": "بازگشت به صفحه اصلی",
+    "valid_route": "مسیر معتبر سامانه شهروند"
+  },
+  "pwa": {
+    "update_available": "نسخه جدید سامانه",
+    "new_version_ready": "نسخه جدید آماده است",
+    "update_now": "به‌روزرسانی",
+    "close": "بستن"
   },
   "nav": {
     "home": "خانه",
@@ -42,5 +49,31 @@
     "wallet_transactions": "گردش تراکنش‌ها",
     "login": "ورود شهروند",
     "offline": "حالت آفلاین"
+  },
+  "auth": {
+    "login_title": "ورود به پیشخوان شهروندی",
+    "phone_step_title": "شماره تلفن همراه خود را وارد کنید",
+    "phone_step_subtitle": "کد تأیید به این شماره ارسال خواهد شد.",
+    "phone_label": "شماره تلفن همراه",
+    "phone_placeholder": "۰۹۱۲۳۴۵۶۷۸۹",
+    "national_id_step_title": "کد ملی خود را وارد کنید",
+    "national_id_step_subtitle": "کد ملی ۱۰ رقمی جهت احراز هویت الزامی است.",
+    "national_id_label": "کد ملی",
+    "national_id_placeholder": "۰۰۱۲۳۴۵۶۷۸",
+    "otp_step_title": "کد تأیید را وارد کنید",
+    "otp_step_subtitle": "کد ۵ رقمی ارسال شد",
+    "resend_code": "ارسال مجدد کد",
+    "resend_in": "ارسال مجدد تا {{seconds}} ثانیه",
+    "continue": "ادامه",
+    "verify_and_login": "تأیید و ورود",
+    "change_phone": "تغییر شماره همراه",
+    "invalid_phone": "شماره تلفن همراه باید با ۰۹ شروع شده و ۱۱ رقم باشد.",
+    "invalid_national_id": "کد ملی ۱۰ رقمی وارد شده نامعتبر است.",
+    "invalid_otp": "کد تأیید باید ۵ رقم باشد.",
+    "back": "بازگشت",
+    "logging_in": "در حال ورود...",
+    "sending_otp": "در حال ارسال کد...",
+    "otp_sent_to": "کد ۵ رقمی به شماره {{mobile}} پیامک شد.",
+    "login_success": "ورود با موفقیت انجام شد."
   }
 }

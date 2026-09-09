@@ -1,4 +1,5 @@
 import React, { Component, type ErrorInfo, type ReactNode } from 'react';
+import i18n from '@/shared/i18n';
 
 interface Props {
   children: ReactNode;
@@ -45,17 +46,17 @@ export class ErrorBoundary extends Component<Props, State> {
               !
             </div>
             <h2 className="text-lg font-bold text-slate-900 mb-2">
-              خطایی رخ داده است
+              {i18n.t('app.error_title')}
             </h2>
             <p className="text-sm text-slate-600 mb-6">
-              متأسفانه مشکلی در بارگذاری این صفحه پیش آمده است.
+              {i18n.t('app.error_description')}
             </p>
             <button
               type="button"
               onClick={this.handleReset}
               className="px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-xl hover:bg-slate-800 transition-colors"
             >
-              تلاش مجدد
+              {i18n.t('app.retry')}
             </button>
           </div>
         </div>

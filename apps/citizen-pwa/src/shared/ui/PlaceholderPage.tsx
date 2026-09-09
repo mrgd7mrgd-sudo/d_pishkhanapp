@@ -15,7 +15,7 @@ export function PlaceholderPage({ titleKey }: PlaceholderProps): React.JSX.Eleme
           {t(`routes.${titleKey}`)}
         </h1>
         <p className="text-xs text-slate-400">
-          مسیر معتبر سامانه شهروند
+          {t('app.valid_route')}
         </p>
       </div>
     </div>

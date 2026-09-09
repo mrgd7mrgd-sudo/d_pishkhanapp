@@ -33,14 +33,14 @@ export function UpdatePrompt(): React.ReactElement | null {
 
   return (
     <aside
-      aria-label={t('pwa.updateAvailable', { defaultValue: 'نسخه جدید سامانه' })}
+      aria-label={t('pwa.update_available')}
       className="fixed bottom-4 inset-x-4 max-w-md mx-auto z-50 p-4 rounded-2xl bg-slate-900/95 text-white shadow-2xl border border-slate-700 flex items-center justify-between gap-3"
       role="alert"
     >
       <div className="flex items-center gap-3">
         <RefreshCw aria-hidden="true" className="w-5 h-5 text-emerald-400 animate-spin" />
         <span className="text-sm font-medium">
-          {t('pwa.newVersionReady', { defaultValue: 'نسخه جدید آماده است' })}
+          {t('pwa.new_version_ready')}
         </span>
       </div>
       <div className="flex items-center gap-2">
@@ -49,10 +49,10 @@ export function UpdatePrompt(): React.ReactElement | null {
           onClick={handleUpdate}
           type="button"
         >
-          {t('pwa.updateNow', { defaultValue: 'به‌روزرسانی' })}
+          {t('pwa.update_now')}
         </button>
         <button
-          aria-label={t('common.close', { defaultValue: 'بستن' })}
+          aria-label={t('pwa.close')}
           className="p-1 rounded-lg text-slate-400 hover:text-white transition-colors"
           onClick={handleDismiss}
           type="button"

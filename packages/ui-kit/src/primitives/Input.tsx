@@ -3,8 +3,8 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  error?: string;
-  label?: string;
+  error?: string | undefined;
+  label?: string | undefined;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(

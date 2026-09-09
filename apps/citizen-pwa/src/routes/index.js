@@ -3,6 +3,10 @@ const Placeholder = (key) => lazy(async () => {
     const mod = await import('@/shared/ui/PlaceholderPage');
     return { default: () => mod.PlaceholderPage({ titleKey: key }) };
 });
+const Login = lazy(async () => {
+    const mod = await import('@/features/auth');
+    return { default: mod.AuthFlow };
+});
 /**
  * All 26 Citizen Routes defined in Architecture §4.4
  */
@@ -32,6 +36,6 @@ export const routes = [
     { path: '/profile/about', Component: Placeholder('about') },
     { path: '/wallet', Component: Placeholder('wallet') },
     { path: '/wallet/transactions', Component: Placeholder('wallet_transactions') },
-    { path: '/login', Component: Placeholder('login') },
+    { path: '/login', Component: Login },
     { path: '/offline', Component: Placeholder('offline') },
 ];

@@ -9,3 +9,4 @@ export * from './primitives/Skeleton';
 export * from './primitives/Toast';
 export * from './primitives/Dialog';
 export * from './primitives/Sheet';
+export * from './primitives/OtpInput';
