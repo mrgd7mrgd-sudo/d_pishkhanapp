@@ -30,8 +30,8 @@ return new class extends Migration
             DB::statement('
                 CREATE TABLE citizens (
                     id uuid PRIMARY KEY,
-                    national_id_encrypted text NOT NULL,
-                    national_id_hash character(64) NOT NULL,
+                    national_id_encrypted text NULL,
+                    national_id_hash character(64) NULL,
                     mobile_encrypted text NOT NULL,
                     mobile_hash character(64) NOT NULL,
                     full_name character varying(150) NOT NULL,
@@ -52,16 +52,16 @@ return new class extends Migration
             ');
 
             // Unique indexes on hashes for non-deleted records (§6.4)
-            DB::statement('CREATE UNIQUE INDEX idx_citizens_nid_hash ON citizens (national_id_hash) WHERE deleted_at IS NULL;');
+            DB::statement('CREATE UNIQUE INDEX idx_citizens_nid_hash ON citizens (national_id_hash) WHERE deleted_at IS NULL AND national_id_hash IS NOT NULL;');
             DB::statement('CREATE UNIQUE INDEX idx_citizens_mobile_hash ON citizens (mobile_hash) WHERE deleted_at IS NULL;');
             DB::statement('CREATE INDEX idx_citizens_province_code ON citizens (province_code);');
             DB::statement('CREATE INDEX idx_citizens_city_id ON citizens (city_id);');
         } else {
             Schema::create('citizens', function (Blueprint $table): void {
                 $table->uuid('id')->primary();
-                $table->text('national_id_encrypted');
-                $table->char('national_id_hash', 64);
-                $table->text('mobile_encrypted');
+                $table->text('national_id_encrypted')->nullable();
+                $table->char('national_id_hash', 64)->nullable();
+                $table->text('mobile_encrypted')->nullable();
                 $table->char('mobile_hash', 64);
                 $table->string('full_name', 150);
                 $table->string('father_name', 100)->nullable();

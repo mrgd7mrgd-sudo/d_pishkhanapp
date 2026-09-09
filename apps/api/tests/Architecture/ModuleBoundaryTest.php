@@ -9,6 +9,7 @@ arch('modules communicate only via contracts')
         'App\\Shared',
         'App\\Integration',
         'Illuminate',
+        'Laravel\\Sanctum',
         'Carbon',
         'Symfony',
     ]);

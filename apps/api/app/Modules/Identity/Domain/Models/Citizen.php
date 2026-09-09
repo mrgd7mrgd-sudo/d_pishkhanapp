@@ -10,6 +10,7 @@ use App\Shared\Crypto\HashedCast;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * Citizen Domain Model (§6.1, §6.2, §7.4)
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 final class Citizen extends Model
 {
+    use HasApiTokens;
     use HasUuids;
     use SoftDeletes;
 
@@ -64,10 +66,6 @@ final class Citizen extends Model
     protected function casts(): array
     {
         return [
-            'national_id_encrypted' => EncryptedCast::class,
-            'national_id_hash' => HashedCast::class,
-            'mobile_encrypted' => EncryptedCast::class,
-            'mobile_hash' => HashedCast::class,
             'tier' => CitizenTier::class,
             'sana_verified' => 'boolean',
             'digital_signature_active' => 'boolean',
@@ -78,10 +76,15 @@ final class Citizen extends Model
 
     public function getNationalIdAttribute(): ?string
     {
-        return $this->national_id_encrypted;
+        $value = $this->attributes['national_id_encrypted'] ?? null;
+        if ($value === null) {
+            return null;
+        }
+
+        return (new EncryptedCast)->get($this, 'national_id_encrypted', $value, $this->attributes);
     }
 
-    public function setNationalIdAttribute(string $value): void
+    public function setNationalIdAttribute(?string $value): void
     {
         $this->attributes['national_id_encrypted'] = (new EncryptedCast)->set($this, 'national_id_encrypted', $value, $this->attributes);
         $this->attributes['national_id_hash'] = (new HashedCast)->set($this, 'national_id_hash', $value, $this->attributes);
@@ -89,10 +92,15 @@ final class Citizen extends Model
 
     public function getMobileAttribute(): ?string
     {
-        return $this->mobile_encrypted;
+        $value = $this->attributes['mobile_encrypted'] ?? null;
+        if ($value === null) {
+            return null;
+        }
+
+        return (new EncryptedCast)->get($this, 'mobile_encrypted', $value, $this->attributes);
     }
 
-    public function setMobileAttribute(string $value): void
+    public function setMobileAttribute(?string $value): void
     {
         $this->attributes['mobile_encrypted'] = (new EncryptedCast)->set($this, 'mobile_encrypted', $value, $this->attributes);
         $this->attributes['mobile_hash'] = (new HashedCast)->set($this, 'mobile_hash', $value, $this->attributes);
