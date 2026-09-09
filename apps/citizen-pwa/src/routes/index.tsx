@@ -12,14 +12,20 @@ const Login = lazy(async () => {
   return { default: mod.AuthFlow };
 });
 
+const ServiceCatalog = lazy(async () => {
+  const mod = await import('@/features/service-catalog');
+  return { default: mod.ServiceCatalogView };
+});
+
 /**
  * All 26 Citizen Routes defined in Architecture §4.4
  */
 export const routes: RouteObject[] = [
   { path: '/', Component: Placeholder('home') },
-  { path: '/services', Component: Placeholder('services') },
-  { path: '/services/:categoryId', Component: Placeholder('category') },
-  { path: '/services/:categoryId/:serviceId', Component: Placeholder('service_detail') },
+  { path: '/services', Component: ServiceCatalog },
+  { path: '/services/:categoryId', Component: ServiceCatalog },
+  { path: '/services/:categoryId/:serviceId', Component: ServiceCatalog },
+
   { path: '/request/:serviceId', Component: Placeholder('request') },
   { path: '/map', Component: Placeholder('map') },
   { path: '/map/offices/:officeId', Component: Placeholder('office_detail') },
