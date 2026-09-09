@@ -7,6 +7,7 @@ namespace App\Exceptions;
 use App\Shared\Errors\ErrorCode;
 use App\Shared\Http\Middleware\RequestId;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -20,6 +21,13 @@ final class Handler
      */
     public static function render(Throwable $e, Request $request): JsonResponse
     {
+        if ($e instanceof HttpResponseException) {
+            $response = $e->getResponse();
+            if ($response instanceof JsonResponse) {
+                return $response;
+            }
+        }
+
         $requestId = (string) $request->header(RequestId::HEADER_NAME, 'req_unknown');
         $instance = $request->path();
 

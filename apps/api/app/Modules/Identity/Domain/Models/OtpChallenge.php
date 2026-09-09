@@ -66,7 +66,7 @@ final class OtpChallenge extends Model
     ): self {
         $challenge = new self;
         $challenge->mobile_hash = $mobile;
-        $challenge->code_hash = Hash::make($rawCode);
+        $challenge->code_hash = Hash::driver('bcrypt')->make($rawCode);
         $challenge->purpose = $purpose;
         $challenge->attempts = 0;
         $challenge->expires_at = CarbonImmutable::now()->addSeconds($ttlSeconds);
@@ -99,7 +99,7 @@ final class OtpChallenge extends Model
 
         $this->increment('attempts');
 
-        if (Hash::check($rawCode, $this->code_hash)) {
+        if (password_verify($rawCode, $this->code_hash)) {
             $this->update(['verified_at' => CarbonImmutable::now()]);
 
             return true;
