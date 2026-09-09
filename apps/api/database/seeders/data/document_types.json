@@ -1,0 +1,248 @@
+[
+  {
+    "code": "DOC_NATIONAL_CARD",
+    "title": "کارت هوشمند ملی",
+    "accepted_mimes": [
+      "image/jpeg",
+      "image/png",
+      "application/pdf"
+    ],
+    "requires_original": true,
+    "validity_months": 120
+  },
+  {
+    "code": "DOC_BIRTH_CERT",
+    "title": "شناسنامه عکس‌دار",
+    "accepted_mimes": [
+      "image/jpeg",
+      "image/png",
+      "application/pdf"
+    ],
+    "requires_original": true,
+    "validity_months": null
+  },
+  {
+    "code": "DOC_PERSONAL_PHOTO",
+    "title": "عکس پرسنلی جدید ۴×۳",
+    "accepted_mimes": [
+      "image/jpeg",
+      "image/png"
+    ],
+    "requires_original": false,
+    "validity_months": 6
+  },
+  {
+    "code": "DOC_POSTAL_CERT",
+    "title": "تاییدیه کد پستی معتبر",
+    "accepted_mimes": [
+      "image/jpeg",
+      "application/pdf"
+    ],
+    "requires_original": false,
+    "validity_months": 3
+  },
+  {
+    "code": "DOC_DRIVER_LICENSE",
+    "title": "گواهینامه رانندگی",
+    "accepted_mimes": [
+      "image/jpeg",
+      "image/png"
+    ],
+    "requires_original": true,
+    "validity_months": 120
+  },
+  {
+    "code": "DOC_MILITARY_SERVICE",
+    "title": "کارت پایان خدمت یا معافیت",
+    "accepted_mimes": [
+      "image/jpeg",
+      "image/png"
+    ],
+    "requires_original": true,
+    "validity_months": null
+  },
+  {
+    "code": "DOC_HEALTH_CARD",
+    "title": "کارت بهداشت اصناف",
+    "accepted_mimes": [
+      "image/jpeg",
+      "application/pdf"
+    ],
+    "requires_original": false,
+    "validity_months": 12
+  },
+  {
+    "code": "DOC_PROPERTY_DEED",
+    "title": "سند رسمی مالکیت ملک",
+    "accepted_mimes": [
+      "application/pdf",
+      "image/jpeg"
+    ],
+    "requires_original": true,
+    "validity_months": null
+  },
+  {
+    "code": "DOC_LEASE_AGREEMENT",
+    "title": "اجاره‌نامه رسمی با کد رهگیری",
+    "accepted_mimes": [
+      "application/pdf"
+    ],
+    "requires_original": false,
+    "validity_months": 12
+  },
+  {
+    "code": "DOC_BUSINESS_LICENSE",
+    "title": "پروانه کسب یا مجوز فعالیت",
+    "accepted_mimes": [
+      "application/pdf",
+      "image/jpeg"
+    ],
+    "requires_original": true,
+    "validity_months": 60
+  },
+  {
+    "code": "DOC_TAX_STATEMENT",
+    "title": "اظهارنامه یا مفاصا حساب مالیاتی",
+    "accepted_mimes": [
+      "application/pdf"
+    ],
+    "requires_original": false,
+    "validity_months": 12
+  },
+  {
+    "code": "DOC_CRIMINAL_CLEARANCE",
+    "title": "گواهی عدم سوء پیشینه کیفری",
+    "accepted_mimes": [
+      "application/pdf",
+      "image/jpeg"
+    ],
+    "requires_original": false,
+    "validity_months": 1
+  },
+  {
+    "code": "DOC_HEALTH_BOOKLET",
+    "title": "دفترچه بیمه سلامت",
+    "accepted_mimes": [
+      "image/jpeg",
+      "application/pdf"
+    ],
+    "requires_original": false,
+    "validity_months": 12
+  },
+  {
+    "code": "DOC_MARRIAGE_CERT",
+    "title": "سند رسمی ازدواج",
+    "accepted_mimes": [
+      "application/pdf",
+      "image/jpeg"
+    ],
+    "requires_original": true,
+    "validity_months": null
+  },
+  {
+    "code": "DOC_DEATH_CERT",
+    "title": "گواهی رسمی فوت",
+    "accepted_mimes": [
+      "application/pdf",
+      "image/jpeg"
+    ],
+    "requires_original": true,
+    "validity_months": null
+  },
+  {
+    "code": "DOC_POWER_OF_ATTORNEY",
+    "title": "وکالت‌نامه رسمی محضری",
+    "accepted_mimes": [
+      "application/pdf"
+    ],
+    "requires_original": true,
+    "validity_months": 24
+  },
+  {
+    "code": "DOC_DEGREE_CERT",
+    "title": "مدرک یا دانشنامه تحصیلی",
+    "accepted_mimes": [
+      "application/pdf",
+      "image/jpeg"
+    ],
+    "requires_original": true,
+    "validity_months": null
+  },
+  {
+    "code": "DOC_VEHICLE_TITLE",
+    "title": "برگ سبز خودرو (سند مالکیت)",
+    "accepted_mimes": [
+      "image/jpeg",
+      "application/pdf"
+    ],
+    "requires_original": true,
+    "validity_months": null
+  },
+  {
+    "code": "DOC_TECHNICAL_INSPECTION",
+    "title": "گواهی معاینه فنی خودرو",
+    "accepted_mimes": [
+      "image/jpeg",
+      "application/pdf"
+    ],
+    "requires_original": false,
+    "validity_months": 12
+  },
+  {
+    "code": "DOC_TRAFFIC_CLEARANCE",
+    "title": "مفاصا حساب جرائم رانندگی",
+    "accepted_mimes": [
+      "application/pdf"
+    ],
+    "requires_original": false,
+    "validity_months": 1
+  },
+  {
+    "code": "DOC_INSURANCE_POLICY",
+    "title": "بیمه‌نامه معتبر",
+    "accepted_mimes": [
+      "application/pdf",
+      "image/jpeg"
+    ],
+    "requires_original": false,
+    "validity_months": 12
+  },
+  {
+    "code": "DOC_COMPANY_REGISTRATION",
+    "title": "آگهی روزنامه رسمی شرکت",
+    "accepted_mimes": [
+      "application/pdf"
+    ],
+    "requires_original": false,
+    "validity_months": 24
+  },
+  {
+    "code": "DOC_OFFICIAL_PLEDGE",
+    "title": "تعهدنامه رسمی محضری",
+    "accepted_mimes": [
+      "application/pdf"
+    ],
+    "requires_original": true,
+    "validity_months": null
+  },
+  {
+    "code": "DOC_PROMISSORY_NOTE",
+    "title": "سفته یا ضمانت‌نامه بانکی",
+    "accepted_mimes": [
+      "application/pdf",
+      "image/jpeg"
+    ],
+    "requires_original": true,
+    "validity_months": 12
+  },
+  {
+    "code": "DOC_MEDICAL_REPORT",
+    "title": "گواهی پزشکی یا آزمایشگاهی",
+    "accepted_mimes": [
+      "application/pdf",
+      "image/jpeg"
+    ],
+    "requires_original": false,
+    "validity_months": 3
+  }
+]

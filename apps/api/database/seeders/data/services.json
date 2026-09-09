@@ -1,0 +1,1647 @@
+[
+  {
+    "id": "id-birth-cert",
+    "category_id": "identity",
+    "slug": "id-birth-cert",
+    "title": "تعویض و صدور المثنی شناسنامه",
+    "description": "ثبت اطلاعات و مدارک اولیه آنلاین + مراجعه به دفتر جهت تطبیق چهره و تحویل پستی شناسنامه جدید",
+    "tags": [
+      "semi-online",
+      "in-person"
+    ],
+    "requirements": [
+      "تصویر شناسنامه قدیمی",
+      "۲ قطعه عکس جدید پرسنلی",
+      "کد پستی تایید شده"
+    ],
+    "estimated_days_min": 3,
+    "estimated_days_max": 5,
+    "fee_rials": 950000,
+    "office_share_percent": 70,
+    "department": "سازمان ثبت احوال کشور",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "id-national-card",
+    "category_id": "identity",
+    "slug": "id-national-card",
+    "title": "کارت هوشمند ملی (صدور و تمدید)",
+    "description": "نوبت‌گیری آنلاین و مراجعه کامل به دفتر پیشخوان جهت اسکن اثر انگشت و بیومتریک چهره",
+    "tags": [
+      "in-person"
+    ],
+    "requirements": [
+      "اصل شناسنامه عکس‌دار",
+      "کد پستی معتبر",
+      "حضور شخص متقاضی"
+    ],
+    "estimated_days_min": 15,
+    "estimated_days_max": 30,
+    "fee_rials": 1200000,
+    "office_share_percent": 70,
+    "department": "سازمان ثبت احوال کشور",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "id-single-cert",
+    "category_id": "identity",
+    "slug": "id-single-cert",
+    "title": "گواهی تجرد و عدم سابقه ازدواج",
+    "description": "صدور فوری گواهی تجرد با امضای الکترونیک بدون نیاز به مراجعه حضوری به دفتر",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "شناسنامه و کارت ملی فعال در سامانه"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 450000,
+    "office_share_percent": 70,
+    "department": "سازمان ثبت احوال کشور",
+    "is_popular": false,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "id-name-change",
+    "category_id": "identity",
+    "slug": "id-name-change",
+    "title": "درخواست تغییر نام و نام خانوادگی",
+    "description": "بررسی آنلاین در کمیسیون ثبت احوال و اعلام نتیجه نهایی جهت امضا در دفتر پیشخوان",
+    "tags": [
+      "semi-online"
+    ],
+    "requirements": [
+      "درخواست کتبی",
+      "استعلام سجل کیفری"
+    ],
+    "estimated_days_min": 10,
+    "estimated_days_max": 20,
+    "fee_rials": 1800000,
+    "office_share_percent": 70,
+    "department": "سازمان ثبت احوال کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "hl-health-card",
+    "category_id": "health",
+    "slug": "hl-health-card",
+    "title": "صدور و تمدید کارت بهداشت اصناف",
+    "description": "ثبت درخواست و پرداخت کارمزد به صورت آنلاین، ارسال پرونده آزمایشگاهی از طریق شبکه سلامت",
+    "tags": [
+      "semi-online",
+      "online"
+    ],
+    "requirements": [
+      "گواهی آزمایش عدم اعتیاد و انگل‌شناسی",
+      "عکس پرسنلی"
+    ],
+    "estimated_days_min": 2,
+    "estimated_days_max": 4,
+    "fee_rials": 850000,
+    "office_share_percent": 70,
+    "department": "وزارت بهداشت، درمان و آموزش پزشکی",
+    "is_popular": true,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "hl-insurance",
+    "category_id": "health",
+    "slug": "hl-insurance",
+    "title": "صدور و تمدید دفترچه بیمه سلامت",
+    "description": "استعلام آنی و تمدید آنلاین اعتبار بیمه سلامت همگانی ایرانیان بدون مراجعه حضوری",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی و شماره تلفن سرپرست خانوار"
+    ],
+    "estimated_days_min": 10,
+    "estimated_days_max": 10,
+    "fee_rials": 300000,
+    "office_share_percent": 70,
+    "department": "سازمان بیمه سلامت ایران",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "hl-prescriptions",
+    "category_id": "health",
+    "slug": "hl-prescriptions",
+    "title": "مشاهده پرونده و نسخ الکترونیک",
+    "description": "استعلام داروهای تجویزی پزشک، سوابق بستری و پاراکلینیک از سامانه سپاس",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی و ارسال رمز یکبار مصرف امنیتی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 0,
+    "office_share_percent": 70,
+    "department": "وزارت بهداشت",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "vh-penalties",
+    "category_id": "vehicle",
+    "slug": "vh-penalties",
+    "title": "استعلام و پرداخت تجمیعی خلافی خودرو",
+    "description": "نمایش جزئیات ریز تخلفات به همراه عکس دوربین و تسویه آنی در شبکه راهور ناجا",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "شماره پلاک",
+      "شماره VIN خودرو",
+      "کد ملی مالک"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 150000,
+    "office_share_percent": 70,
+    "department": "پلیس راهنمایی و رانندگی فراجا",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "vh-toll",
+    "category_id": "vehicle",
+    "slug": "vh-toll",
+    "title": "پرداخت عوارض سالیانه شهرداری و آزادراهی",
+    "description": "تسویه عوارض سالیانه خودرو و تردد آزادراهی به همراه مفاصاحساب آنی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "شماره پلاک و شماره شاسی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 80000,
+    "office_share_percent": 70,
+    "department": "شهرداری و راهداری کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "vh-plate-transfer",
+    "category_id": "vehicle",
+    "slug": "vh-plate-transfer",
+    "title": "نوبت‌دهی و انتقال تعویض پلاک",
+    "description": "احراز هویت آنلاین خریدار و فروشنده، پرداخت نقل و انتقال و رزرو نوبت مرکز تعویض پلاک",
+    "tags": [
+      "in-person",
+      "semi-online"
+    ],
+    "requirements": [
+      "برگ سبز خودرو",
+      "بیمه‌نامه شخص ثالث معتبر",
+      "معاینه فنی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 1100000,
+    "office_share_percent": 70,
+    "department": "پلیس راهور فراجا",
+    "is_popular": true,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "vh-fuel-card",
+    "category_id": "vehicle",
+    "slug": "vh-fuel-card",
+    "title": "درخواست صدور کارت سوخت المثنی",
+    "description": "ثبت مشخصات و اتصال به کارت بانکی یا درخواست صدور فیزیکی به دفتر پیشخوان",
+    "tags": [
+      "semi-online",
+      "in-person"
+    ],
+    "requirements": [
+      "سند مالکیت خودرو",
+      "کارت شناسایی خودرو"
+    ],
+    "estimated_days_min": 7,
+    "estimated_days_max": 14,
+    "fee_rials": 650000,
+    "office_share_percent": 70,
+    "department": "شرکت ملی پخش فرآورده‌های نفتی",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "wf-subsidy",
+    "category_id": "welfare",
+    "slug": "wf-subsidy",
+    "title": "استعلام دهک‌بندی و یارانه نقدی",
+    "description": "مشاهده دهک درآمدی خانوار در پایگاه رفاه ایرانیان و ثبت اعتراض دهک‌بندی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی و شماره شبا سرپرست"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 0,
+    "office_share_percent": 70,
+    "department": "وزارت تعاون، کار و رفاه اجتماعی",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "wf-kalabarg",
+    "category_id": "welfare",
+    "slug": "wf-kalabarg",
+    "title": "طرح کالابرگ الکترونیک و اعتبار خرید",
+    "description": "استعلام مانده اعتبار خرید کالاهای اساسی و نمایش نزدیک‌ترین فروشگاه‌های متصل",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی سرپرست خانوار"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 0,
+    "office_share_percent": 70,
+    "department": "وزارت تعاون و رفاه",
+    "is_popular": true,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "wf-justice-shares",
+    "category_id": "welfare",
+    "slug": "wf-justice-shares",
+    "title": "سامانه سهام عدالت و واریز سود",
+    "description": "مشاهده ارزش روز دارایی سهام عدالت، وضعیت واریز سود و تغییر شماره شبا",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "شماره شبا بانکی تایید شده در سامانه سجام"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 0,
+    "office_share_percent": 70,
+    "department": "سازمان بورس و اوراق بهادار",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "gv-pension",
+    "category_id": "government",
+    "slug": "gv-pension",
+    "title": "خدمات صندوق بازنشستگان کشوری و لشکری",
+    "description": "دریافت فیش حقوقی، حکم کارگزینی، ثبت‌نام وام بازنشستگان و بیمه تکمیلی",
+    "tags": [
+      "online",
+      "semi-online"
+    ],
+    "requirements": [
+      "شماره دفترکل یا شماره پرسنلی",
+      "کد ملی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 200000,
+    "office_share_percent": 70,
+    "department": "صندوق بازنشستگی کشوری",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "gv-business-permit",
+    "category_id": "government",
+    "slug": "gv-business-permit",
+    "title": "صدور مجوز کسب‌وکار (درگاه ملی مجوزها)",
+    "description": "ثبت استعلام، دریافت کد رهگیری ملی پروانه کسب و ارسال جهت تایید اتحادیه مربوطه",
+    "tags": [
+      "semi-online",
+      "online"
+    ],
+    "requirements": [
+      "کد پستی واحد صنفی",
+      "گواهی عدم سوء‌پیشینه",
+      "کارت پایان خدمت یا معافیت"
+    ],
+    "estimated_days_min": 3,
+    "estimated_days_max": 7,
+    "fee_rials": 1400000,
+    "office_share_percent": 70,
+    "department": "وزارت امور اقتصادی و دارایی",
+    "is_popular": true,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "gv-sana",
+    "category_id": "government",
+    "slug": "gv-sana",
+    "title": "احراز هویت و ابلاغیه قضایی ثنا",
+    "description": "احراز هویت بیومتریک آنلاین و مشاهده ابلاغیه‌های دادگستری و شورای حل اختلاف",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی",
+      "ویدیو تایید هویت چهره"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 350000,
+    "office_share_percent": 70,
+    "department": "قوه قضائیه جمهوری اسلامی ایران",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "gv-tax-return",
+    "category_id": "government",
+    "slug": "gv-tax-return",
+    "title": "ثبت اظهارنامه مالیاتی مشاغل و املاک",
+    "description": "محاسبه خودکار مالیات بر درآمد مقطوع (تبصره ۱۰۰) و ارسال تاییدیه مالیاتی",
+    "tags": [
+      "semi-online",
+      "online"
+    ],
+    "requirements": [
+      "کد اقتصادی و پرونده مالیاتی فعال"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 1200000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "hs-national-housing",
+    "category_id": "housing",
+    "slug": "hs-national-housing",
+    "title": "ثبت‌نام طرح نهضت ملی مسکن",
+    "description": "ثبت اطلاعات خانوار و بارگذاری مدارک احراز سابقه سکونت جهت تخصیص پروژه",
+    "tags": [
+      "semi-online"
+    ],
+    "requirements": [
+      "گواهی سابقه ۵ سال سکونت",
+      "سند ازدواج",
+      "مدارک هویتی سرپرست"
+    ],
+    "estimated_days_min": 10,
+    "estimated_days_max": 30,
+    "fee_rials": 500000,
+    "office_share_percent": 70,
+    "department": "وزارت راه و شهرسازی",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "hs-postal-cert",
+    "category_id": "housing",
+    "slug": "hs-postal-cert",
+    "title": "استعلام و تاییدیه کد پستی ۱۰ رقمی",
+    "description": "صدور گواهی پستی تایید شده با مهر دیجیتال اداره پست جهت ارائه به بانک‌ها و ادارات",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد پستی ۱۰ رقمی"
+    ],
+    "estimated_days_min": 5,
+    "estimated_days_max": 5,
+    "fee_rials": 250000,
+    "office_share_percent": 70,
+    "department": "شرکت ملی پست جمهوری اسلامی ایران",
+    "is_popular": true,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "bk-safteh",
+    "category_id": "banking",
+    "slug": "bk-safteh",
+    "title": "صدور و ظهرنویسی سفته الکترونیک",
+    "description": "صدور سفته دیجیتال با کد شناسه معتبر بانک مرکزی و امضای دیجیتال برای وام و ضمانت",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "امضای دیجیتال فعال یا احراز هویت ثنا"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 400000,
+    "office_share_percent": 70,
+    "department": "بانک مرکزی جمهوری اسلامی ایران",
+    "is_popular": true,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "bk-credit-score",
+    "category_id": "banking",
+    "slug": "bk-credit-score",
+    "title": "استعلام رتبه اعتبارسنجی بانکی (سامانه صیاد)",
+    "description": "دریافت گزارش جامع خوش‌حسابی، چک‌های برگشتی و اقساط معوق در شبکه بانکی کشور",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی مالک شماره تلفن"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 280000,
+    "office_share_percent": 70,
+    "department": "شرکت اعتبارسنجی بانکی ایران",
+    "is_popular": false,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "ps-tracking",
+    "category_id": "postal",
+    "slug": "ps-tracking",
+    "title": "رهگیری هوشمند مرسولات پستی سازمانی",
+    "description": "ردیابی گواهینامه، کارت خودرو، گذرنامه و اسناد دولتی با شماره مرسوله و کد ملی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد رهگیری ۲۴ رقمی پستی یا کد ملی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 0,
+    "office_share_percent": 70,
+    "department": "شرکت ملی پست",
+    "is_popular": false,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "ps-lost-docs",
+    "category_id": "postal",
+    "slug": "ps-lost-docs",
+    "title": "سامانه پست‌یافته (مدارک مفقودی)",
+    "description": "استعلام شناسنامه، کارت ملی و مدارک پیدا شده در باجه‌های سراسر کشور و درخواست تحویل درب منزل",
+    "tags": [
+      "online",
+      "semi-online"
+    ],
+    "requirements": [
+      "کد ملی صاحب مدرک مفقودی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 350000,
+    "office_share_percent": 70,
+    "department": "شرکت ملی پست",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-mikhak",
+    "category_id": "internet",
+    "slug": "net-mikhak",
+    "title": "ثبت نام در سامانه میخک(امور خارجه)",
+    "description": "ثبت نام و تشکیل پرونده در سامانه مدیریت یکپارچه خدمات کنسولی (میخک) جهت وکالت‌نامه، ترجمه و امور هموطنان خارج از کشور",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "اطلاعات هویتی متقاضی",
+      "شماره گذرنامه و مدرک اقامتی",
+      "شماره تلفن همراه فعال"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 650000,
+    "office_share_percent": 70,
+    "department": "وزارت امور خارجه",
+    "is_popular": true,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "net-kasr-aghsat-keshvari",
+    "category_id": "internet",
+    "slug": "net-kasr-aghsat-keshvari",
+    "title": "نامه کسر از اقساط بازنشستگان (کشوری)",
+    "description": "صدور و دریافت اینترنتی گواهی کسر از حقوق و اقساط بازنشستگان و موظفین صندوق بازنشستگی کشوری با بارکد اصالت",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "شماره دفترکل یا کد ملی بازنشسته",
+      "شماره حساب حقوقی",
+      "مشخصات مرجع دریافت‌کننده (بانک)"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 350000,
+    "office_share_percent": 70,
+    "department": "صندوق بازنشستگی کشوری",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-khodnevis",
+    "category_id": "internet",
+    "slug": "net-khodnevis",
+    "title": "سامانه خودنویس",
+    "description": "ثبت رایگان و اخذ کد رهگیری قانونی قراردادهای اجاره مسکن بین موجر و مستاجر در سامانه ملی خودنویس",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد پستی و اطلاعات سند ملک",
+      "کد ملی و شماره موبایل موجر و مستاجر",
+      "مشخصات دو نفر شاهد"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 550000,
+    "office_share_percent": 70,
+    "department": "وزارت راه و شهرسازی",
+    "is_popular": true,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "net-mudian-factor",
+    "category_id": "internet",
+    "slug": "net-mudian-factor",
+    "title": "ثبت فاکتور مالیاتی در مودیان",
+    "description": "ارسال و ثبت صورتحساب الکترونیکی فروش کالا و خدمات در کارپوشه سامانه مودیان مطابق استانداردهای سازمان مالیاتی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کلید خصوصی و شناسه یکتا حافظه مالیاتی",
+      "فایل اقلام فاکتور فروش",
+      "شناسه کالا / خدمت"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 750000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-shenase-yekta-mojavvez",
+    "category_id": "internet",
+    "slug": "net-shenase-yekta-mojavvez",
+    "title": "دریافت شناسه یکتا برای مجوزهای قدیمی",
+    "description": "تبدیل مجوزهای کاغذی و پروانه‌های کسب سنتی به شناسه یکتای الکترونیکی در درگاه ملی مجوزها (QR Code رسمی)",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "تصویر پروانه کسب قدیمی معتبر",
+      "کد پستی محل کسب",
+      "کد ملی و شماره صنفی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 2,
+    "fee_rials": 450000,
+    "office_share_percent": 70,
+    "department": "درگاه ملی مجوزهای کشور",
+    "is_popular": false,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "net-nezam-mohandesi",
+    "category_id": "internet",
+    "slug": "net-nezam-mohandesi",
+    "title": "عضویت نظام مهندسی",
+    "description": "ثبت‌نام اولیه، بارگذاری مدارک تحصیلی و تشکیل پرونده الکترونیک عضویت در سازمان نظام مهندسی ساختمان",
+    "tags": [
+      "online",
+      "semi-online"
+    ],
+    "requirements": [
+      "مدرک تحصیلی مهندسی معتبر",
+      "کارت ملی و شناسنامه",
+      "تصویر پرسنلی",
+      "گواهی عدم سوءپیشینه"
+    ],
+    "estimated_days_min": 3,
+    "estimated_days_max": 5,
+    "fee_rials": 1200000,
+    "office_share_percent": 70,
+    "department": "سازمان نظام مهندسی ساختمان",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-sepamak",
+    "category_id": "internet",
+    "slug": "net-sepamak",
+    "title": "سامانه سپامک",
+    "description": "ثبت درخواست صدور، تمدید یا ارتقای پایه پروانه اشتغال به کار مهندسی در سامانه سپامک وزارت راه و شهرسازی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کارنامه قبولی آزمون ورود به حرفه",
+      "کارت عضویت نظام مهندسی",
+      "گواهی دوره‌های آموزشی"
+    ],
+    "estimated_days_min": 3,
+    "estimated_days_max": 7,
+    "fee_rials": 850000,
+    "office_share_percent": 70,
+    "department": "وزارت راه و شهرسازی",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-patmak",
+    "category_id": "internet",
+    "slug": "net-patmak",
+    "title": "سامانه پاتمک",
+    "description": "پرداخت الکترونیک عوارض و تعرفه‌های صدور و تمدید پروانه اشتغال در سامانه پاتمک امور مقررات ملی ساختمان",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد رهگیری سپامک یا شماره پرونده",
+      "کد ملی متقاضی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 250000,
+    "office_share_percent": 70,
+    "department": "دفتر مقررات ملی و کنترل ساختمان",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-amoozesh-pezeshki",
+    "category_id": "internet",
+    "slug": "net-amoozesh-pezeshki",
+    "title": "تکمیل اطلاعات سامانه جامع آموزش پزشکی",
+    "description": "ثبت و به‌روزرسانی پرونده آموزشی، مدارک دانش‌آموختگان و احراز مدارک رشته‌های علوم پزشکی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی و شماره دانشجویی / نظام پزشکی",
+      "تصاویر مدارک تحصیلی و ریز نمرات"
+    ],
+    "estimated_days_min": 2,
+    "estimated_days_max": 4,
+    "fee_rials": 600000,
+    "office_share_percent": 70,
+    "department": "وزارت بهداشت، درمان و آموزش پزشکی",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-sameh-behdasht",
+    "category_id": "internet",
+    "slug": "net-sameh-behdasht",
+    "title": "ثبت نام صلاحیت بهداشتی در سامانه سامح",
+    "description": "ثبت‌نام درخواست گواهی صلاحیت و ممیزی بهداشتی اصناف و اماکن تهیه و توزیع غذا در سامانه سامح وزارت بهداشت",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "پروانه کسب یا درخواست مجوز",
+      "کد پستی واحد صنفی",
+      "اطلاعات هویتی متصدی"
+    ],
+    "estimated_days_min": 2,
+    "estimated_days_max": 5,
+    "fee_rials": 700000,
+    "office_share_percent": 70,
+    "department": "مرکز سلامت محیط و کار وزارت بهداشت",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-kelas-asnaf",
+    "category_id": "internet",
+    "slug": "net-kelas-asnaf",
+    "title": "ثبت نام کلاس اصناف",
+    "description": "ثبت‌نام دوره‌های آموزشی الزامی احکام تجارت و کسب‌وکار متقاضیان صدور و تمدید پروانه کسب",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد رهگیری درگاه ملی مجوزها",
+      "کد ملی و شماره همراه به نام متقاضی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 500000,
+    "office_share_percent": 70,
+    "department": "اتاق اصناف ایران",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-novin-asnaf-hoghooghi",
+    "category_id": "internet",
+    "slug": "net-novin-asnaf-hoghooghi",
+    "title": "ثبت نام مراحل اشخاص حقوقی در نوین اصناف",
+    "description": "تکمیل فرایند صدور پروانه کسب برای شرکت‌ها و اشخاص حقوقی در سامانه نوین اصناف و اتصال به درگاه ملی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "شناسه ملی شرکت و آگهی تاسیس",
+      "اسناد مالکیت/اجاره شرکت",
+      "کد پستی دفتر مرکزی",
+      "مدارک مدیرعامل"
+    ],
+    "estimated_days_min": 3,
+    "estimated_days_max": 7,
+    "fee_rials": 1800000,
+    "office_share_percent": 70,
+    "department": "سامانه نوین اصناف کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-novin-asnaf-haghighi",
+    "category_id": "internet",
+    "slug": "net-novin-asnaf-haghighi",
+    "title": "ثبت نام مراحل اشخاص حقیقی در نوین اصناف",
+    "description": "ثبت درخواست پروانه کسب صنفی اشخاص حقیقی، تعیین رسته شغلی و استعلامات دوازده‌گانه در نوین اصناف",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد رهگیری درگاه ملی مجوزها",
+      "اجاره‌نامه یا سند ملک تجاری با کد رهگیری",
+      "کارت پایان خدمت (آقایان)"
+    ],
+    "estimated_days_min": 2,
+    "estimated_days_max": 5,
+    "fee_rials": 1300000,
+    "office_share_percent": 70,
+    "department": "سامانه نوین اصناف کشور",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-police-man-amaken",
+    "category_id": "internet",
+    "slug": "net-police-man-amaken",
+    "title": "درخواست بازدید اماکن در پلیس من",
+    "description": "ثبت درخواست استعلام صلاحیت انتظامی و ترافیکی و تعیین نوبت بازدید پلیس نظارت بر اماکن عمومی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "شماره پرونده صنفی نوین اصناف",
+      "کد پستی دقیق محل کسب",
+      "شماره همراه به نام متقاضی"
+    ],
+    "estimated_days_min": 2,
+    "estimated_days_max": 4,
+    "fee_rials": 550000,
+    "office_share_percent": 70,
+    "department": "پلیس نظارت بر اماکن عمومی فراجا",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-186-maliyati-payankhedmat",
+    "category_id": "internet",
+    "slug": "net-186-maliyati-payankhedmat",
+    "title": "استعلام گواهی ۱۸۶ مالیاتی و کارت پایان خدمت",
+    "description": "اخذ گواهی ماده ۱۸۶ قانون مالیات‌های مستقیم (عدم بدهی مالیاتی) و استعلام اصالت کارت پایان خدمت نظام وظیفه",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی و پرونده مالیاتی فعال",
+      "شماره کارت هوشمند پایان خدمت / معافیت"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 400000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی / نظام وظیفه فراجا",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-polomp-dafater",
+    "category_id": "internet",
+    "slug": "net-polomp-dafater",
+    "title": "پلمپ دفاتر قانونی",
+    "description": "ثبت‌نام و درخواست پلمپ دفاتر تجاری سالانه اشخاص حقیقی و حقوقی در سامانه اداره ثبت شرکت‌ها و تحویل پستی",
+    "tags": [
+      "online",
+      "semi-online"
+    ],
+    "requirements": [
+      "شناسه ملی شرکت یا کد ملی متقاضی",
+      "آدرس پستی دقیق با کد ۱۰ رقمی",
+      "تصویر آگهی آخرین تغییرات"
+    ],
+    "estimated_days_min": 3,
+    "estimated_days_max": 6,
+    "fee_rials": 1600000,
+    "office_share_percent": 70,
+    "department": "سازمان ثبت اسناد و املاک کشور",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-monaghesseh",
+    "category_id": "internet",
+    "slug": "net-monaghesseh",
+    "title": "ثبت مناقصه",
+    "description": "جستجو، بارگذاری اسناد و ضمانت‌نامه‌ها و ثبت پیشنهاد قیمت در مناقصات دولتی سامانه ستاد ایران",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "توکن امضای الکترونیک فعال",
+      "حساب کاربری تامین‌کننده ستاد",
+      "اسناد و ضمانت‌نامه مناقصه"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 1500000,
+    "office_share_percent": 70,
+    "department": "سامانه تدارکات الکترونیکی دولت (ستاد)",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-mozayedeh",
+    "category_id": "internet",
+    "slug": "net-mozayedeh",
+    "title": "ثبت مزایده",
+    "description": "ثبت پیشنهاد و ارائه فیش ودیعه در مزایده‌های اموال منقول و غیرمنقول دولتی در سامانه ستاد",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "گواهی امضای دیجیتال",
+      "اطلاعات هویتی و حساب بانکی",
+      "فیش واریز سپرده مزایده"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 1500000,
+    "office_share_percent": 70,
+    "department": "سامانه تدارکات الکترونیکی دولت (ستاد)",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-setad-iran-avvaliye",
+    "category_id": "internet",
+    "slug": "net-setad-iran-avvaliye",
+    "title": "ثبت نام اولیه ستاد ایران",
+    "description": "ثبت‌نام و عضویت متقاضیان و کسب‌وکارها در سامانه ستاد ایران به عنوان تامین‌کننده یا مزایده‌گر",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "مدارک هویتی و آدرس پستی",
+      "اطلاعات حساب بانکی شبا",
+      "گواهی مالیاتی و پروانه فعالیت"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 2,
+    "fee_rials": 900000,
+    "office_share_percent": 70,
+    "department": "مرکز توسعه تجارت الکترونیکی",
+    "is_popular": false,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "net-kart-sookht",
+    "category_id": "internet",
+    "slug": "net-kart-sookht",
+    "title": "کارت سوخت",
+    "description": "ثبت درخواست صدور کارت هوشمند سوخت خودرو و موتورسیکلت، تغییر مالکیت و پیگیری مرسوله پستی",
+    "tags": [
+      "online",
+      "semi-online"
+    ],
+    "requirements": [
+      "کارت شناسایی خودرو (برگ سبز)",
+      "بیمه‌نامه شخص ثالث معتبر",
+      "کد ملی و شماره موبایل مالک"
+    ],
+    "estimated_days_min": 15,
+    "estimated_days_max": 30,
+    "fee_rials": 1100000,
+    "office_share_percent": 70,
+    "department": "شرکت ملی پخش فرآورده‌های نفتی ایران",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-eskan-amlak",
+    "category_id": "internet",
+    "slug": "net-eskan-amlak",
+    "title": "ثبت نام سامانه اسکان و املاک",
+    "description": "ثبت اطلاعات سکونت و مالکیت تمامی املاک تحت تملک یا استیجاری در سامانه ملی املاک و اسکان کشور",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی و شماره همراه سرپرست",
+      "کد پستی ۱۰ رقمی محل سکونت",
+      "شناسه قبض برق ملک"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 400000,
+    "office_share_percent": 70,
+    "department": "وزارت راه و شهرسازی",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-taeedie-tahsili",
+    "category_id": "internet",
+    "slug": "net-taeedie-tahsili",
+    "title": "تائیدیه تحصیلی",
+    "description": "درخواست صدور تاییدیه تحصیلی مدرک دیپلم و پیش‌دانشگاهی جهت ارائه به دانشگاه‌ها، ادارات و سازمان‌ها",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "مشخصات شناسنامه‌ای",
+      "نام استان و منطقه آموزش و پرورش فارغ‌التحصیلی",
+      "سال فارغ‌التحصیلی"
+    ],
+    "estimated_days_min": 24,
+    "estimated_days_max": 48,
+    "fee_rials": 450000,
+    "office_share_percent": 70,
+    "department": "وزارت آموزش و پرورش",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-nobat-pelak",
+    "category_id": "internet",
+    "slug": "net-nobat-pelak",
+    "title": "نوبت دهی تعویض پلاک",
+    "description": "رزرو اینترنتی نوبت مراکز تعویض پلاک خودرو و موتورسیکلت در تمامی استان‌ها و شهرهای کشور",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "شماره پلاک خودرو",
+      "شماره VIN مندرج در کارت خودرو",
+      "کد ملی خریدار یا فروشنده"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 350000,
+    "office_share_percent": 70,
+    "department": "پلیس راهور فراجا",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-ehraz-neshani-post",
+    "category_id": "internet",
+    "slug": "net-ehraz-neshani-post",
+    "title": "احراز نشانی پست",
+    "description": "ثبت درخواست احراز سکونت برخط و اعزام مامور پست به محل سکونت جهت تایید نشانی و صدور تاییدیه",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد پستی ۱۰ رقمی",
+      "شماره تماس متقاضی",
+      "نشانی دقیق"
+    ],
+    "estimated_days_min": 24,
+    "estimated_days_max": 48,
+    "fee_rials": 500000,
+    "office_share_percent": 70,
+    "department": "شرکت ملی پست جمهوری اسلامی ایران",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-pardakht-khelafi",
+    "category_id": "internet",
+    "slug": "net-pardakht-khelafi",
+    "title": "پرداخت خلافی",
+    "description": "استعلام ریز جرایم رانندگی و تخلفات ثبت‌شده دوربین‌ها و پرداخت آنی با تسویه فوری راهور",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "شماره بارکد کارت خودرو یا پلاک + کد ملی مالک"
+    ],
+    "estimated_days_min": 5,
+    "estimated_days_max": 5,
+    "fee_rials": 200000,
+    "office_share_percent": 70,
+    "department": "پلیس راهور فراجا",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-maliyat-khodro-naql",
+    "category_id": "internet",
+    "slug": "net-maliyat-khodro-naql",
+    "title": "ثبت نام و پرداخت مالیات نقل و انتقال خودرو",
+    "description": "محاسبه و پرداخت برخط مالیات نقل و انتقال انواع خودرو و موتورسیکلت قبل از تعویض پلاک و انتقال سند",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "شماره پلاک انتظامی",
+      "کد ملی فروشنده",
+      "شماره همراه مالک"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 350000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-eblaghiye-maliyati",
+    "category_id": "internet",
+    "slug": "net-eblaghiye-maliyati",
+    "title": "ابلاغیه های مالیاتی (به ازای هر ابلاغ)",
+    "description": "مشاهده، دریافت و ثبت رسید برگ تشخیص، برگ قطعی و اوراق ابلاغیه الکترونیک در درگاه ملی مالیات",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "نام کاربری و رمز سامانه my.tax.gov.ir یا کد ملی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 250000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-maliyat-lux-khodro-maskan",
+    "category_id": "internet",
+    "slug": "net-maliyat-lux-khodro-maskan",
+    "title": "ثبت نام و پرداخت و اعتراض مالیات خودرو و خانه لوکس",
+    "description": "استعلام، پرداخت یا ثبت لایحه اعتراضی نسبت به مالیات بر واحدهای مسکونی و خودروهای گران‌قیمت و لوکس",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی مالک",
+      "کد پستی ملک یا شماره پلاک خودرو",
+      "مستندات و دلایل اعتراض"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 650000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-maliyat-hoghoogh-personel",
+    "category_id": "internet",
+    "slug": "net-maliyat-hoghoogh-personel",
+    "title": "ارسال لیست مالیات حقوق کارکنان (هر نفر)",
+    "description": "تنظیم و بارگذاری ماهانه فایل اطلاعات حقوق و دستمزد و ارسال لیست مالیات حقوق پرسنل در سامانه حقوق مالیاتی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "لیست اطلاعات پرسنل و مبالغ ناخالص حقوق",
+      "کد ملی و شماره بیمه کارکنان"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 200000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-moamelat-fasli",
+    "category_id": "internet",
+    "slug": "net-moamelat-fasli",
+    "title": "ارسال لیست معاملات فصلی (یک رکورد)",
+    "description": "ثبت صورت معاملات فصلی خرید، فروش و قراردادها (ماده ۱۶۹ مکرر) در سامانه الکترونیکی معاملات فصلی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "اطلاعات فاکتور خرید یا فروش",
+      "شناسه ملی/کد اقتصادی طرف معامله",
+      "مبالغ و مالیات ارزش افزوده"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 250000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-arzesh-afzoodeh",
+    "category_id": "internet",
+    "slug": "net-arzesh-afzoodeh",
+    "title": "ارسال اظهارنامه ارزش افزوده",
+    "description": "محاسبه، تکمیل جداول و تسلیم اظهارنامه مالیات بر ارزش افزوده دوره‌های فصلی و دریافت قبض پرداخت",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "مجموع مبالغ خرید و فروش فصل",
+      "گواهی‌ها و اعتبارات مالیاتی دوره",
+      "پرونده فعال ارزش افزوده"
+    ],
+    "estimated_days_min": 24,
+    "estimated_days_max": 48,
+    "fee_rials": 1100000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-mudian-code-yekta",
+    "category_id": "internet",
+    "slug": "net-mudian-code-yekta",
+    "title": "ثبت نام سامانه مودیان و دریافت کد یکتا",
+    "description": "تولید کلیدهای عمومی و اختصاصی CSR، ثبت در سامانه مودیان و اخذ شناسه یکتای حافظه مالیاتی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "اطلاعات هویتی مودی یا شرکت",
+      "پرونده مالیاتی فعال",
+      "مشخصات شعب یا محل فعالیت"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 1400000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": true,
+    "is_new": true,
+    "is_active": true
+  },
+  {
+    "id": "net-code-eghtesadi-kamel",
+    "category_id": "internet",
+    "slug": "net-code-eghtesadi-kamel",
+    "title": "ثبت نام کد اقتصادی کامل",
+    "description": "تشکیل پرونده مالیاتی، پیش‌ثبت‌نام و ثبت‌نام نهایی دریافت کد اقتصادی ۱۲ رقمی جدید اشخاص حقیقی و حقوقی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "اسناد هویتی متقاضی یا شرکت",
+      "سند یا اجاره‌نامه با کد رهگیری",
+      "کد پستی تایید شده"
+    ],
+    "estimated_days_min": 2,
+    "estimated_days_max": 4,
+    "fee_rials": 1200000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-pardakht-ghabz-maliyat",
+    "category_id": "internet",
+    "slug": "net-pardakht-ghabz-maliyat",
+    "title": "پرداخت قبض مالیات",
+    "description": "استعلام شناسه ۳۰ رقمی قبض مالیاتی، پرداخت برخط و اخذ آنی مفاصاحساب و تاییدیه بانکی پرداخت",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "شناسه قبض و شناسه پرداخت مالیاتی ۳۰ رقمی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 200000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-ezharnamah-ers",
+    "category_id": "internet",
+    "slug": "net-ezharnamah-ers",
+    "title": "اظهارنامه ارث",
+    "description": "تنظیم، ثبت ماترک و دارایی‌های متوفی و تسلیم اظهارنامه مالیات بر ارث در سامانه سازمان امور مالیاتی",
+    "tags": [
+      "online",
+      "semi-online"
+    ],
+    "requirements": [
+      "گواهی فوت و گواهی حصر وراثت",
+      "مدارک هویتی تمام وراث",
+      "اسناد اموال، حساب‌ها و املاک متوفی"
+    ],
+    "estimated_days_min": 3,
+    "estimated_days_max": 7,
+    "fee_rials": 1900000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-tabsareh-100-sefr",
+    "category_id": "internet",
+    "slug": "net-tabsareh-100-sefr",
+    "title": "اظهارنامه تبصره ۱۰۰ صفر",
+    "description": "ارسال فرم توافق تبصره ماده ۱۰۰ قانون مالیات‌های مستقیم با مالیات صفر برای مشاغل با گردش مالی مشمول معافیت",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی و پرونده مالیاتی فعال",
+      "اطلاعات درگاه‌ها و کارتخوان‌های متصل"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 700000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-madeh-95-aadi",
+    "category_id": "internet",
+    "slug": "net-madeh-95-aadi",
+    "title": "اظهارنامه عادی ماده ۹۵",
+    "description": "تکمیل و ارسال اظهارنامه جامع مالیات بر درآمد مشاغل گروه‌های اول، دوم و سوم ماده ۹۵ با درج درآمد و هزینه‌ها",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "دفاتر و اسناد درآمد و هزینه سالانه",
+      "ترازنامه و سود و زیان (گروه ۱)",
+      "پرونده مالیاتی معتبر"
+    ],
+    "estimated_days_min": 2,
+    "estimated_days_max": 5,
+    "fee_rials": 1600000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-eteraz-maliyati",
+    "category_id": "internet",
+    "slug": "net-eteraz-maliyati",
+    "title": "ثبت اعتراض مالیاتی",
+    "description": "تنظیم لایحه دفاعیه و ثبت اعتراض به برگ تشخیص مالیاتی جهت بررسی مجدد در ممیزی کل یا هیات حل اختلاف",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "شماره برگ تشخیص مورد اعتراض",
+      "متن لایحه دفاعیه مستدل",
+      "مدارک و فاکتورهای مثبته"
+    ],
+    "estimated_days_min": 2,
+    "estimated_days_max": 4,
+    "fee_rials": 950000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-faramooshi-ramz-maliyat",
+    "category_id": "internet",
+    "slug": "net-faramooshi-ramz-maliyat",
+    "title": "فراموشی رمز سامانه مالیاتی",
+    "description": "بازیابی و بازنشانی فوری کلمه عبور و نام کاربری درگاه ملی خدمات الکترونیک سازمان امور مالیاتی کشور",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی یا شناسه ملی",
+      "شماره همراه ثبت‌شده در پرونده مالیاتی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 300000,
+    "office_share_percent": 70,
+    "department": "سازمان امور مالیاتی کشور",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-bazresi-dafater-ghanuni",
+    "category_id": "internet",
+    "slug": "net-bazresi-dafater-ghanuni",
+    "title": "ثبت بازرسی دفاتر قانونی",
+    "description": "ثبت درخواست و پیگیری فرایند بازرسی و حسابرسی دفاتر قانونی شرکت‌ها در سازمان تامین اجتماعی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد کارگاهی معتبر",
+      "اسناد پلمپ دفاتر تجاری سال مورد نظر",
+      "تراز مالی تایید شده"
+    ],
+    "estimated_days_min": 3,
+    "estimated_days_max": 7,
+    "fee_rials": 1400000,
+    "office_share_percent": 70,
+    "department": "سازمان تامین اجتماعی",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-eteraz-kargahi",
+    "category_id": "internet",
+    "slug": "net-eteraz-kargahi",
+    "title": "اعتراض به بدهی های کارگاهی",
+    "description": "ثبت اعتراض الکترونیکی به اعلامیه بدهی و جرایم حق بیمه کارگاه‌ها جهت طرح در هیات‌های بدوی تشخیص مطالبات",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد کارگاهی و شماره اعلامیه بدهی",
+      "لایحه اعتراضی و مستندات پرداخت حقوق"
+    ],
+    "estimated_days_min": 2,
+    "estimated_days_max": 4,
+    "fee_rials": 900000,
+    "office_share_percent": 70,
+    "department": "سازمان تامین اجتماعی",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-ehraz-jame-kar",
+    "category_id": "internet",
+    "slug": "net-ehraz-jame-kar",
+    "title": "احراز هویت سامانه جامع کار",
+    "description": "احراز هویت الکترونیک کارگران و کارفرمایان و ایجاد پروفایل رسمی در سامانه جامع روابط کار",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کارت ملی و شناسنامه",
+      "شماره موبایل به نام شخص",
+      "کد پستی محل سکونت یا کارگاه"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 550000,
+    "office_share_percent": 70,
+    "department": "وزارت تعاون، کار و رفاه اجتماعی",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-bimeh-bikari",
+    "category_id": "internet",
+    "slug": "net-bimeh-bikari",
+    "title": "ثبت درخواست بیمه بیکاری",
+    "description": "ثبت دادخواست و تقاضای برقراری مقرری بیمه بیکاری در سامانه جامع روابط کار پس از اتمام قرارداد یا اخراج",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "نامه عدم نیاز کارفرما یا قرارداد کار",
+      "احراز هویت سامانه جامع کار",
+      "تصویر آخرین مدرک تحصیلی"
+    ],
+    "estimated_days_min": 3,
+    "estimated_days_max": 7,
+    "fee_rials": 950000,
+    "office_share_percent": 70,
+    "department": "وزارت تعاون، کار و رفاه اجتماعی",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-fish-hoghoogh-bazneshastegi",
+    "category_id": "internet",
+    "slug": "net-fish-hoghoogh-bazneshastegi",
+    "title": "دریافت فیش حقوق و حکم بازنشستگی",
+    "description": "مشاهده، استعلام و دریافت آخرین فیش حقوقی و حکم افزایش مستمری بازنشستگان و مستمری‌بگیران تامین اجتماعی",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی و شماره مستمری بازنشسته",
+      "رمز عبور سامانه eservices.tamin.ir"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 250000,
+    "office_share_percent": 70,
+    "department": "سازمان تامین اجتماعی",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-savabeghe-tamin",
+    "category_id": "internet",
+    "slug": "net-savabeghe-tamin",
+    "title": "دریافت سوابق تامین اجتماعی",
+    "description": "استعلام مجموع سوابق پرداخت حق بیمه، ریز دستمزد سالانه و صدور گواهی سابقه ممهور به کد رهگیری",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی و شماره تلفن همراه به نام متقاضی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 350000,
+    "office_share_percent": 70,
+    "department": "سازمان تامین اجتماعی",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-kasr-aghsat-tamin",
+    "category_id": "internet",
+    "slug": "net-kasr-aghsat-tamin",
+    "title": "نامه کسر از اقساط بازنشستگان تامین اجتماعی",
+    "description": "صدور اینترنتی گواهی کسر از حقوق بازنشستگان سازمان تامین اجتماعی برای بانک‌ها و موسسات اعتباری",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی و شماره مستمری",
+      "نام و شعبه بانک یا موسسه وام‌دهنده",
+      "مبلغ قسط"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 3,
+    "fee_rials": 350000,
+    "office_share_percent": 70,
+    "department": "سازمان تامین اجتماعی",
+    "is_popular": false,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-profile-tamin",
+    "category_id": "internet",
+    "slug": "net-profile-tamin",
+    "title": "ثبت نام پروفایل تامین اجتماعی",
+    "description": "ایجاد حساب کاربری و فعال‌سازی پرتال خدمات غیرحضوری سازمان تامین اجتماعی برای بیمه‌شدگان و مستمری‌بگیران",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی",
+      "شماره همراه به نام بیمه‌شده",
+      "پاسخ به سوالات امنیتی هویتی"
+    ],
+    "estimated_days_min": 1,
+    "estimated_days_max": 1,
+    "fee_rials": 400000,
+    "office_share_percent": 70,
+    "department": "سازمان تامین اجتماعی",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-enhesar-verasat",
+    "category_id": "internet",
+    "slug": "net-enhesar-verasat",
+    "title": "درخواست انحصار وراثت",
+    "description": "تنظیم دادخواست گواهی انحصار وراثت، ثبت مدارک وراث و ارسال پرونده به شورای حل اختلاف در سامانه عدل ایران",
+    "tags": [
+      "online",
+      "semi-online"
+    ],
+    "requirements": [
+      "گواهی فوت و استشهادیه محضری فوت",
+      "شناسنامه و کارت ملی متوفی و تمامی وراث",
+      "حساب ثنا فعال"
+    ],
+    "estimated_days_min": 5,
+    "estimated_days_max": 10,
+    "fee_rials": 1800000,
+    "office_share_percent": 70,
+    "department": "قوه قضائیه - عدل ایران",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  },
+  {
+    "id": "net-adam-sooe-pishine",
+    "category_id": "internet",
+    "slug": "net-adam-sooe-pishine",
+    "title": "ثبت عدم سوء پیشینه",
+    "description": "درخواست صدور گواهی عدم سوءپیشینه کیفری با امضای الکترونیک قوه قضائیه بدون نیاز به مراجعه حضوری",
+    "tags": [
+      "online"
+    ],
+    "requirements": [
+      "کد ملی و حساب کاربری ثنا فعال",
+      "تصویر پرسنلی جدید"
+    ],
+    "estimated_days_min": 24,
+    "estimated_days_max": 48,
+    "fee_rials": 750000,
+    "office_share_percent": 70,
+    "department": "قوه قضائیه - سامانه ثنا",
+    "is_popular": true,
+    "is_new": false,
+    "is_active": true
+  }
+]

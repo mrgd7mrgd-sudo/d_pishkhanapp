@@ -1,0 +1,74 @@
+[
+  {
+    "id": "adv-tax-1",
+    "name": "دکتر محمدرضا شایگان",
+    "specialty": "امور مالیاتی و مودیان",
+    "specialty_id": "tax",
+    "rating": 4.95,
+    "review_count": 840,
+    "fee_per_session_rials": 950000,
+    "is_online": true,
+    "experience_years": 18,
+    "bio": "۱۸ سال سابقه در حوزه دعاوی مالیاتی، ممیزی ارشد سابق و مشاور بیش از ۵۰۰ شرکت و صنف در زمینه اجرای قانون پایانه‌های فروشگاهی و سامانه مودیان."
+  },
+  {
+    "id": "adv-labor-1",
+    "name": "استاد علی‌اکبر فروتن",
+    "specialty": "بیمه، بازنشستگی و اداره کار",
+    "specialty_id": "insurance_labor",
+    "rating": 4.92,
+    "review_count": 1150,
+    "fee_per_session_rials": 850000,
+    "is_online": true,
+    "experience_years": 22,
+    "bio": "۲۲ سال خدمت در سازمان تامین اجتماعی و هیئت‌های حل اختلاف وزارت کار. متخصص تدوین دادخواست و لوایح دفاعیه کارگاهی و حقوق پرسنلی."
+  },
+  {
+    "id": "adv-legal-1",
+    "name": "سرکار خانم دکتر مریم سلیمانی",
+    "specialty": "حقوقی، ثبتی و اسناد",
+    "specialty_id": "legal_registry",
+    "rating": 4.89,
+    "review_count": 620,
+    "fee_per_session_rials": 1100000,
+    "is_online": true,
+    "experience_years": 14,
+    "bio": "وکیل پایه یک دادگستری با بیش از ۱۴ سال سابقه در دعاوی ملکی، ثبتی، تقسیم ارث و پرونده‌های کمیسیون‌های ثبتی اسناد."
+  },
+  {
+    "id": "adv-tenders-1",
+    "name": "مهندس نوید مهرآرا",
+    "specialty": "مناقصات و درگاه ملی مجوزها",
+    "specialty_id": "tenders_permits",
+    "rating": 4.88,
+    "review_count": 530,
+    "fee_per_session_rials": 900000,
+    "is_online": false,
+    "experience_years": 10,
+    "bio": "مشاور تخصصی پیاده‌سازی و اتصال به درگاه ملی مجوزها (G4B) و سامانه تدارکات الکترونیکی دولت (ستاد). تسهیل‌گر صدور صدها پروانه صنفی و صنعتی."
+  },
+  {
+    "id": "adv-muni-1",
+    "name": "دکتر هادی فلاحی",
+    "specialty": "شهرداری و کمیسیون ماده ۱۰۰",
+    "specialty_id": "municipal",
+    "rating": 4.96,
+    "review_count": 710,
+    "fee_per_session_rials": 1200000,
+    "is_online": true,
+    "experience_years": 16,
+    "bio": "۱۶ سال فعالیت در پرونده‌های کلان شهرداری‌های مناطق تهران و کلان‌شهرها، مشاور ارشد دفاعیات ماده ۱۰۰ و احقاق حقوق مالکین."
+  },
+  {
+    "id": "adv-tax-2",
+    "name": "سرکار خانم فاطمه دادخواه",
+    "specialty": "امور مالیاتی و مودیان",
+    "specialty_id": "tax",
+    "rating": 4.91,
+    "review_count": 490,
+    "fee_per_session_rials": 900000,
+    "is_online": true,
+    "experience_years": 12,
+    "bio": "متخصص حل گره‌های کارپوشه سامانه مودیان، تنظیم دفاتر و صورت‌های مالی قانونی و لوایح بخشودگی جرایم مالیاتی."
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "tax",
+    "title": "امور مالیاتی و مودیان",
+    "description": "سامانه مودیان، پایانه‌ها، تراکنش بانکی و اظهارنامه",
+    "icon": "Calculator",
+    "is_active": true
+  },
+  {
+    "id": "insurance_labor",
+    "title": "بیمه، بازنشستگی و اداره کار",
+    "description": "اختلافات کارگری، سوابق بیمه، بیمه بیکاری و مشاغل سخت",
+    "icon": "ShieldAlert",
+    "is_active": true
+  },
+  {
+    "id": "legal_registry",
+    "title": "حقوقی، ثبتی و اسناد",
+    "description": "نقل‌وانتقال سند، انحصار وراثت، ثبت شرکت و تغییرات",
+    "icon": "Gavel",
+    "is_active": true
+  },
+  {
+    "id": "tenders_permits",
+    "title": "مناقصات و درگاه ملی مجوزها",
+    "description": "سامانه ستاد ایران، صدور پروانه کسب و گواهی صلاحیت",
+    "icon": "FileCheck2",
+    "is_active": true
+  },
+  {
+    "id": "municipal",
+    "title": "شهرداری و کمیسیون ماده ۱۰۰",
+    "description": "خلافی ساختمان، طرح تفصیلی، پایان‌کار و تغییر کاربری",
+    "icon": "Building2",
+    "is_active": true
+  },
+  {
+    "id": "business_startup",
+    "title": "شرکت‌ها و استارتاپ‌ها",
+    "description": "قراردادهای تجاری، پلمپ دفاتر و تکالیف قانونی",
+    "icon": "Briefcase",
+    "is_active": true
+  }
+]

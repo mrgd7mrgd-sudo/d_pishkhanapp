@@ -1,0 +1,102 @@
+[
+  {
+    "id": "consultation",
+    "title": "مشاوره آنلاین دولتی و حقوقی",
+    "short_title": "مشاوره آنلاین دولتی و حقوقی",
+    "color": "bg-emerald-600",
+    "badge": "آنلاین",
+    "description": "خدمات جامع دسته مشاوره آنلاین دولتی و حقوقی",
+    "sort_order": 1,
+    "is_active": true
+  },
+  {
+    "id": "identity",
+    "title": "هویتی و ثبت احوال",
+    "short_title": "هویتی و ثبت احوال",
+    "color": "bg-emerald-600",
+    "badge": "پرکاربرد",
+    "description": "خدمات جامع دسته هویتی و ثبت احوال",
+    "sort_order": 2,
+    "is_active": true
+  },
+  {
+    "id": "vehicle",
+    "title": "خدمات خودرویی و ترافیک",
+    "short_title": "خدمات خودرویی و ترافیک",
+    "color": "bg-blue-600",
+    "badge": null,
+    "description": "خدمات جامع دسته خدمات خودرویی و ترافیک",
+    "sort_order": 3,
+    "is_active": true
+  },
+  {
+    "id": "health",
+    "title": "خدمات سلامت و درمان",
+    "short_title": "خدمات سلامت و درمان",
+    "color": "bg-teal-600",
+    "badge": null,
+    "description": "خدمات جامع دسته خدمات سلامت و درمان",
+    "sort_order": 4,
+    "is_active": true
+  },
+  {
+    "id": "welfare",
+    "title": "خدمات رفاهی و معیشتی",
+    "short_title": "خدمات رفاهی و معیشتی",
+    "color": "bg-amber-600",
+    "badge": null,
+    "description": "خدمات جامع دسته خدمات رفاهی و معیشتی",
+    "sort_order": 5,
+    "is_active": true
+  },
+  {
+    "id": "government",
+    "title": "خدمات دولتی و کسب‌وکار",
+    "short_title": "خدمات دولتی و کسب‌وکار",
+    "color": "bg-indigo-600",
+    "badge": "جدید",
+    "description": "خدمات جامع دسته خدمات دولتی و کسب‌وکار",
+    "sort_order": 6,
+    "is_active": true
+  },
+  {
+    "id": "housing",
+    "title": "مسکن و شهرداری",
+    "short_title": "مسکن و شهرداری",
+    "color": "bg-emerald-700",
+    "badge": null,
+    "description": "خدمات جامع دسته مسکن و شهرداری",
+    "sort_order": 7,
+    "is_active": true
+  },
+  {
+    "id": "banking",
+    "title": "خدمات مالی و اعتباری",
+    "short_title": "خدمات مالی و اعتباری",
+    "color": "bg-slate-700",
+    "badge": null,
+    "description": "خدمات جامع دسته خدمات مالی و اعتباری",
+    "sort_order": 8,
+    "is_active": true
+  },
+  {
+    "id": "postal",
+    "title": "پست و مدارک مفقودی",
+    "short_title": "پست و مدارک مفقودی",
+    "color": "bg-orange-600",
+    "badge": null,
+    "description": "خدمات جامع دسته پست و مدارک مفقودی",
+    "sort_order": 9,
+    "is_active": true
+  },
+  {
+    "id": "internet",
+    "title": "خدمات اینترنتی و سامانه‌ای",
+    "short_title": "خدمات اینترنتی و سامانه‌ای",
+    "color": "bg-cyan-600",
+    "badge": "جامع",
+    "description": "خدمات جامع دسته خدمات اینترنتی و سامانه‌ای",
+    "sort_order": 10,
+    "is_active": true
+  }
+]

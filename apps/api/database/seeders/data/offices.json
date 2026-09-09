@@ -1,0 +1,929 @@
+[
+  {
+    "id": "off-teh-mehregan",
+    "code": "1402",
+    "name": "پیشخوان مهرگان ونک",
+    "manager_name": "مهندس سهراب صامتی",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.8,
+    "review_count": 428,
+    "address": "تهران، خیابان ولی‌عصر، بالاتر از میدان ونک، پلاک ۲۱۴",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.7592,
+    "longitude": 51.4083,
+    "phone": "021-88776655",
+    "working_hours": {
+      "text": "۰۷:۳۰ الی ۱۹:۳۰ (یکسره)"
+    },
+    "active_counters": 8,
+    "current_waiting_queue": 2,
+    "sla_score": 95,
+    "specialties": [
+      "ثبت احوال و شناسنامه VIP",
+      "خدمات خودرو و راهور",
+      "کارت بهداشت اصناف"
+    ],
+    "medals": [
+      "عضو طلایی سامانه ملی",
+      "پاسخگویی زیر ۱۵ دقیقه",
+      "رضایت ۹۹٪ مراجعین",
+      "رتبه ۱ خدمات هویتی"
+    ],
+    "supported_category_ids": [
+      "identity",
+      "health",
+      "vehicle",
+      "welfare",
+      "government",
+      "housing",
+      "banking",
+      "postal",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-mirdamad",
+    "code": "1890",
+    "name": "پیشخوان تخصصی میرداماد",
+    "manager_name": "مهندس آرش طاهری",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.9,
+    "review_count": 395,
+    "address": "تهران، بلوار میرداماد، جنب ایستگاه مترو میرداماد، پلاک ۱۸۲",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.7565,
+    "longitude": 51.423,
+    "phone": "021-22904512",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۹:۰۰"
+    },
+    "active_counters": 7,
+    "current_waiting_queue": 1,
+    "sla_score": 95,
+    "specialties": [
+      "ثبت احوال و صدور فوری شناسنامه",
+      "امضای دیجیتال و توکن امنیتی",
+      "کد پستی",
+      "خدمات جامع اینترنتی"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "رتبه ۱ سرعت باجه الکترونیک",
+      "رضایت ۱۰۰٪ ثبت احوال"
+    ],
+    "supported_category_ids": [
+      "identity",
+      "banking",
+      "government",
+      "postal",
+      "health",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-parsian",
+    "code": "2088",
+    "name": "دفتر خدمات پارسیان سعادت‌آباد",
+    "manager_name": "خانم دکتر مریم انصاری",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.6,
+    "review_count": 312,
+    "address": "تهران، سعادت‌آباد، میدان کاج، بلوار سرو غربی، مجتمع نیلوفر، طبقه همکف",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.7812,
+    "longitude": 51.3789,
+    "phone": "021-22334455",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۲۰:۰۰"
+    },
+    "active_counters": 6,
+    "current_waiting_queue": 1,
+    "sla_score": 95,
+    "specialties": [
+      "درگاه ملی مجوزها و کسب‌وکار",
+      "امور مالیاتی و ثبت شرکت",
+      "سفته الکترونیک",
+      "سامانه مودیان و خودنویس"
+    ],
+    "medals": [
+      "عضو نقره‌ای پلتفرم",
+      "امضای دیجیتال طلایی",
+      "پذیرش فوری الکترونیک"
+    ],
+    "supported_category_ids": [
+      "identity",
+      "government",
+      "banking",
+      "housing",
+      "welfare",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-1105",
+    "code": "1105",
+    "name": "مرکز جامع خدمات پیشخوان آزادی",
+    "manager_name": "علیرضا شمس",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.7,
+    "review_count": 540,
+    "address": "تهران، خیابان آزادی، نرسیده به میدان انقلاب، نبش کوچه نور",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.7005,
+    "longitude": 51.3812,
+    "phone": "021-66554433",
+    "working_hours": {
+      "text": "۰۷:۳۰ الی ۲۰:۰۰"
+    },
+    "active_counters": 10,
+    "current_waiting_queue": 4,
+    "sla_score": 95,
+    "specialties": [
+      "تعویض پلاک و کارت سوخت",
+      "عوارض و خلافی خودرو",
+      "ثبت‌نام نهضت ملی مسکن"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "بزرگترین پایگاه خدمات خودرویی",
+      "مدال سرعت صدور مدارک"
+    ],
+    "supported_category_ids": [
+      "vehicle",
+      "identity",
+      "welfare",
+      "health",
+      "postal",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-3419",
+    "code": "3419",
+    "name": "دفتر پیشخوان تجریش و نیاوران",
+    "manager_name": "مهندس نوید رفیعی",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.9,
+    "review_count": 289,
+    "address": "تهران، میدان تجریش، ابتدای خیابان باهنر (نیاوران)، جنب بانک ملی",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.8055,
+    "longitude": 51.4312,
+    "phone": "021-22778899",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۷:۰۰"
+    },
+    "active_counters": 5,
+    "current_waiting_queue": 2,
+    "sla_score": 95,
+    "specialties": [
+      "صندوق بازنشستگی و احکام",
+      "کارت ملی هوشمند",
+      "پست و اسناد مفقودی",
+      "خدمات اینترنتی"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "دفتر نمونه خدمات بازنشستگان",
+      "پاسخگویی برخط سریع"
+    ],
+    "supported_category_ids": [
+      "identity",
+      "government",
+      "welfare",
+      "health",
+      "postal",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-shahrak-gharb",
+    "code": "4022",
+    "name": "مرکز پیشخوان شهرک غرب (ایران‌زمین)",
+    "manager_name": "دکتر کامران شایسته",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.85,
+    "review_count": 410,
+    "address": "تهران، شهرک غرب، خیابان ایران‌زمین، مجتمع تجاری مروارید، طبقه ۱",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.762,
+    "longitude": 51.365,
+    "phone": "021-88371900",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۲۰:۰۰"
+    },
+    "active_counters": 8,
+    "current_waiting_queue": 2,
+    "sla_score": 95,
+    "specialties": [
+      "امور مالیاتی و ثبت شرکت",
+      "سفته الکترونیک و تسهیلات",
+      "کارت ملی",
+      "سامانه‌های برخط"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "دفتر درجه یک هوشمند",
+      "پشتیبانی VIP مراجعین"
+    ],
+    "supported_category_ids": [
+      "banking",
+      "government",
+      "identity",
+      "welfare",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-pasdaran",
+    "code": "3301",
+    "name": "پیشخوان پاسداران و دروس",
+    "manager_name": "مهندس بهزاد ناصری",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.75,
+    "review_count": 320,
+    "address": "تهران، خیابان پاسداران، نبش بوستان پنجم، برج تندیس، همکف",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.7725,
+    "longitude": 51.461,
+    "phone": "021-22589001",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۹:۰۰"
+    },
+    "active_counters": 6,
+    "current_waiting_queue": 2,
+    "sla_score": 95,
+    "specialties": [
+      "خلافی و نقل و انتقال پلاک",
+      "دفترچه بیمه سلامت",
+      "کارت هوشمند ملی"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "نشان طلایی سرعت راهور",
+      "باجه برتر سلامت"
+    ],
+    "supported_category_ids": [
+      "vehicle",
+      "health",
+      "identity",
+      "postal",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-sadeghiyeh",
+    "code": "6110",
+    "name": "دفتر پیشخوان فلکه دوم صادقیه",
+    "manager_name": "محمدرضا حیدری",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.65,
+    "review_count": 512,
+    "address": "تهران، فلکه دوم صادقیه، ابتدای بلوار آیت‌الله کاشانی، پلاک ۴۴",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.721,
+    "longitude": 51.338,
+    "phone": "021-44098230",
+    "working_hours": {
+      "text": "۰۷:۳۰ الی ۱۹:۳۰"
+    },
+    "active_counters": 9,
+    "current_waiting_queue": 3,
+    "sla_score": 95,
+    "specialties": [
+      "کارت سوخت و خلافی",
+      "ثبت‌نام مسکن ملی",
+      "شناسنامه"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "پراستقبال‌ترین دفتر غرب تهران"
+    ],
+    "supported_category_ids": [
+      "vehicle",
+      "housing",
+      "identity",
+      "welfare",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-seyed-khandan",
+    "code": "7720",
+    "name": "مرکز خدمات پیشخوان سیدخندان",
+    "manager_name": "مهندس نادر کریمیان",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.7,
+    "review_count": 290,
+    "address": "تهران، زیر پل سیدخندان، ابتدای خیابان سهروردی شمالی، پلاک ۵۹۰",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.742,
+    "longitude": 51.446,
+    "phone": "021-88741020",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۸:۳۰"
+    },
+    "active_counters": 6,
+    "current_waiting_queue": 2,
+    "sla_score": 95,
+    "specialties": [
+      "رهگیری مرسولات و اسناد مفقودی",
+      "کد پستی و احراز نشانی",
+      "ثبت شرکت"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "قطب خدمات پستی و تاییدیه نشانی"
+    ],
+    "supported_category_ids": [
+      "postal",
+      "housing",
+      "government",
+      "identity",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-piroozi",
+    "code": "9014",
+    "name": "پیشخوان بزرگ شرق پیروزی",
+    "manager_name": "مهدی داوودی",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.6,
+    "review_count": 480,
+    "address": "تهران، خیابان پیروزی، روبه‌روی مترو نبرد، پلاک ۳۲۲",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.694,
+    "longitude": 51.479,
+    "phone": "021-33129080",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۲۰:۰۰"
+    },
+    "active_counters": 8,
+    "current_waiting_queue": 3,
+    "sla_score": 95,
+    "specialties": [
+      "عوارض و خلافی خودرو",
+      "تعویض پلاک",
+      "کالابرگ الکترونیک و یارانه"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "بزرگترین پایگاه خدمات خودرویی شرق"
+    ],
+    "supported_category_ids": [
+      "vehicle",
+      "welfare",
+      "identity",
+      "postal",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-punak",
+    "code": "3904",
+    "name": "پیشخوان پونک و سردار جنگل",
+    "manager_name": "مهندس احسان رستمی",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.8,
+    "review_count": 340,
+    "address": "تهران، میدان پونک، بلوار میرزابابایی، جنب بانک ملت، پلاک ۸۸",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.768,
+    "longitude": 51.341,
+    "phone": "021-44498010",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۹:۳۰"
+    },
+    "active_counters": 7,
+    "current_waiting_queue": 1,
+    "sla_score": 95,
+    "specialties": [
+      "کارت هوشمند ملی و شناسنامه",
+      "درگاه ملی مجوزها",
+      "سفته الکترونیک"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "پاسخگویی برخط زیر ۱۰ دقیقه",
+      "برگزیده شهروندان غرب"
+    ],
+    "supported_category_ids": [
+      "identity",
+      "government",
+      "banking",
+      "housing",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-ekbatan",
+    "code": "8230",
+    "name": "پیشخوان شهرک اکباتان",
+    "manager_name": "رویا کیانی",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.75,
+    "review_count": 375,
+    "address": "تهران، شهرک اکباتان، فاز ۱، بازارچه شماره ۳، طبقه اول",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.708,
+    "longitude": 51.312,
+    "phone": "021-44669012",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۹:۰۰"
+    },
+    "active_counters": 6,
+    "current_waiting_queue": 2,
+    "sla_score": 95,
+    "specialties": [
+      "احراز هویت ثنا و ابلاغیه",
+      "استعلام اعتبارسنجی بانکی",
+      "عوارض خودرو"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "باجه مجهز الکترونیک",
+      "امضای دیجیتال و ثنا"
+    ],
+    "supported_category_ids": [
+      "government",
+      "banking",
+      "vehicle",
+      "identity",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-5512",
+    "code": "5512",
+    "name": "دفتر پیشخوان بازار بزرگ خیام",
+    "manager_name": "حاج محمود معتمدی",
+    "membership_status": "registered_online",
+    "is_online": true,
+    "rating": 4.6,
+    "review_count": 620,
+    "address": "تهران، خیابان خیام، روبه‌روی درب ورودی بازار بزرگ، پاساژ صدری",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.6792,
+    "longitude": 51.4199,
+    "phone": "021-55667788",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۶:۳۰"
+    },
+    "active_counters": 7,
+    "current_waiting_queue": 4,
+    "sla_score": 95,
+    "specialties": [
+      "کارت بهداشت اصناف",
+      "اظهارنامه مالیاتی",
+      "مجوزهای کسب‌وکار"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "مرکز تخصصی اصناف بازار",
+      "تسویه آنی سفته الکترونیک"
+    ],
+    "supported_category_ids": [
+      "government",
+      "health",
+      "banking",
+      "identity",
+      "internet"
+    ]
+  },
+  {
+    "id": "off-teh-motahari",
+    "code": "2460",
+    "name": "دفتر پیشخوان مطهری و قائم‌مقام",
+    "manager_name": "فاطمه ابراهیمی",
+    "membership_status": "registered_offline",
+    "is_online": false,
+    "rating": 4.3,
+    "review_count": 142,
+    "address": "تهران، خیابان استاد مطهری، تقاطع قائم‌مقام فراهانی، پلاک ۳۱۰",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.7268,
+    "longitude": 51.4172,
+    "phone": "021-88849012",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۴:۳۰ (پایان شیفت کاری امروز)"
+    },
+    "active_counters": 3,
+    "current_waiting_queue": 0,
+    "sla_score": 95,
+    "specialties": [
+      "عوارض شهرداری و نوسازی",
+      "تاییدیه پستی و نشانی"
+    ],
+    "medals": [
+      "عضو رسمی سامانه پلتفرم",
+      "سابقه ۷ ساله خدمت‌رسانی"
+    ],
+    "supported_category_ids": [
+      "housing",
+      "postal",
+      "welfare"
+    ]
+  },
+  {
+    "id": "off-teh-0941",
+    "code": "0941",
+    "name": "دفتر پیشخوان تهرانپارس",
+    "manager_name": "حسین توکلی",
+    "membership_status": "registered_offline",
+    "is_online": false,
+    "rating": 4.5,
+    "review_count": 198,
+    "address": "تهران، فلکه اول تهرانپارس، خیابان رشید جنوبی، پلاک ۵۶",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.7312,
+    "longitude": 51.5289,
+    "phone": "021-77889900",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۵:۰۰ (هم‌اکنون غیرفعال)"
+    },
+    "active_counters": 4,
+    "current_waiting_queue": 0,
+    "sla_score": 95,
+    "specialties": [
+      "خدمات بیمه و سلامت",
+      "شهرداری و کد پستی"
+    ],
+    "medals": [
+      "عضو رسمی سامانه پلتفرم",
+      "سابقه درخشان ۱۰ ساله"
+    ],
+    "supported_category_ids": [
+      "health",
+      "housing",
+      "postal",
+      "identity"
+    ]
+  },
+  {
+    "id": "off-teh-yousef-abad",
+    "code": "5188",
+    "name": "پیشخوان یوسف‌آباد (ابن‌سینا)",
+    "manager_name": "زهره مقدسی",
+    "membership_status": "registered_offline",
+    "is_online": false,
+    "rating": 4.4,
+    "review_count": 168,
+    "address": "تهران، یوسف‌آباد، خیابان اسدآبادی، نبش خیابان ۳۴، پلاک ۱۱۰",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.738,
+    "longitude": 51.405,
+    "phone": "021-88065544",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۵:۰۰ (هم‌اکنون غیرفعال)"
+    },
+    "active_counters": 4,
+    "current_waiting_queue": 0,
+    "sla_score": 95,
+    "specialties": [
+      "صندوق بازنشستگی",
+      "ثبت احوال و گواهی تجرد"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "تکریم ارباب رجوع"
+    ],
+    "supported_category_ids": [
+      "government",
+      "identity",
+      "welfare"
+    ]
+  },
+  {
+    "id": "off-teh-haft-tir",
+    "code": "8812",
+    "name": "دفتر پیشخوان میدان هفت‌تیر",
+    "manager_name": "سعید صبوری",
+    "membership_status": "registered_offline",
+    "is_online": false,
+    "rating": 4.35,
+    "review_count": 220,
+    "address": "تهران، ضلع شمال غربی میدان شهدای هفتم تیر، کوچه مهاجر، پلاک ۱۲",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.718,
+    "longitude": 51.425,
+    "phone": "021-88301144",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۴:۰۰ (هم‌اکنون غیرفعال)"
+    },
+    "active_counters": 3,
+    "current_waiting_queue": 0,
+    "sla_score": 95,
+    "specialties": [
+      "کارت بهداشت اصناف",
+      "اظهارنامه مالیاتی مشاغل"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "دسترسی آسان مترو"
+    ],
+    "supported_category_ids": [
+      "health",
+      "government",
+      "banking"
+    ]
+  },
+  {
+    "id": "off-teh-narmak",
+    "code": "1643",
+    "name": "دفتر پیشخوان نارمک (هفت‌حوض)",
+    "manager_name": "حمیدرضا زمانی",
+    "membership_status": "registered_offline",
+    "is_online": false,
+    "rating": 4.45,
+    "review_count": 265,
+    "address": "تهران، نارمک، میدان نبوت (هفت‌حوض)، کوچه عظیمی، پلاک ۴",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.735,
+    "longitude": 51.498,
+    "phone": "021-77941200",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۵:۰۰ (هم‌اکنون غیرفعال)"
+    },
+    "active_counters": 4,
+    "current_waiting_queue": 0,
+    "sla_score": 95,
+    "specialties": [
+      "صندوق بازنشستگی کشوری",
+      "سهام عدالت و یارانه",
+      "بیمه سلامت"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "خدمت‌رسانی تخصصی بازنشستگان شرق"
+    ],
+    "supported_category_ids": [
+      "government",
+      "welfare",
+      "health",
+      "identity"
+    ]
+  },
+  {
+    "id": "off-teh-nazi-abad",
+    "code": "7102",
+    "name": "مرکز پیشخوان نازی‌آباد (بازار دوم)",
+    "manager_name": "حاج علی اکبری",
+    "membership_status": "registered_offline",
+    "is_online": false,
+    "rating": 4.25,
+    "review_count": 210,
+    "address": "تهران، نازی‌آباد، بازار دوم، خیابان مدائن، پلاک ۱۷۰",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.642,
+    "longitude": 51.398,
+    "phone": "021-55067890",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۳:۳۰ (هم‌اکنون غیرفعال)"
+    },
+    "active_counters": 3,
+    "current_waiting_queue": 0,
+    "sla_score": 95,
+    "specialties": [
+      "یارانه و کالابرگ",
+      "کارت بهداشت اصناف",
+      "گواهی پستی"
+    ],
+    "medals": [
+      "عضو رسمی پلتفرم",
+      "خدمات معیشتی و رفاهی جنوب"
+    ],
+    "supported_category_ids": [
+      "welfare",
+      "health",
+      "postal",
+      "identity"
+    ]
+  },
+  {
+    "id": "off-teh-jannat-abad",
+    "code": "3510",
+    "name": "دفتر پیشخوان جنت‌آباد مرکزی",
+    "manager_name": "سید رضا حسینی",
+    "membership_status": "registered_offline",
+    "is_online": false,
+    "rating": 4.5,
+    "review_count": 175,
+    "address": "تهران، جنت‌آباد مرکزی، بالاتر از تقاطع همت، کوچه اقاقیا، پلاک ۱۲",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.753,
+    "longitude": 51.312,
+    "phone": "021-44412390",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۴:۳۰ (هم‌اکنون غیرفعال)"
+    },
+    "active_counters": 4,
+    "current_waiting_queue": 0,
+    "sla_score": 95,
+    "specialties": [
+      "تاییدیه پستی و نشانی",
+      "عوارض خودرو و طرح ترافیک"
+    ],
+    "medals": [
+      "عضو رسمی سامانه پلتفرم"
+    ],
+    "supported_category_ids": [
+      "vehicle",
+      "postal",
+      "identity"
+    ]
+  },
+  {
+    "id": "off-teh-unreg-fatemi",
+    "code": "0112",
+    "name": "دفتر پیشخوان میدان فاطمی (سنتی)",
+    "manager_name": "قاسم فراهانی",
+    "membership_status": "unregistered",
+    "is_online": false,
+    "rating": 3.8,
+    "review_count": 45,
+    "address": "تهران، میدان جهاد (فاطمی)، ابتدای خیابان جویبار، پلاک ۳۸",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.7205,
+    "longitude": 51.4075,
+    "phone": "021-88965412",
+    "working_hours": {
+      "text": "۰۸:۳۰ الی ۱۳:۳۰ (پذیرش صرفاً حضوری سنتی)"
+    },
+    "active_counters": 2,
+    "current_waiting_queue": 0,
+    "sla_score": 95,
+    "specialties": [
+      "خدمات سنتی پستی و سیم‌کارت"
+    ],
+    "medals": [
+      "دایرکتوری کشوری دفاتر (غیرعضو پلتفرم)"
+    ],
+    "supported_category_ids": [
+      "postal",
+      "identity"
+    ]
+  },
+  {
+    "id": "off-teh-unreg-jomhoori",
+    "code": "0440",
+    "name": "دفتر خدمات پیشخوان جمهوری و حافظ",
+    "manager_name": "بهرام کاظمی",
+    "membership_status": "unregistered",
+    "is_online": false,
+    "rating": 3.9,
+    "review_count": 62,
+    "address": "تهران، خیابان جمهوری اسلامی، تقاطع پل حافظ، پاساژ معتمدی، همکف",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.696,
+    "longitude": 51.411,
+    "phone": "021-66708912",
+    "working_hours": {
+      "text": "۰۹:۰۰ الی ۱۴:۰۰ (پذیرش صرفاً حضوری سنتی)"
+    },
+    "active_counters": 2,
+    "current_waiting_queue": 0,
+    "sla_score": 95,
+    "specialties": [
+      "امور امور مشترکین تلفن همراه و عوارض"
+    ],
+    "medals": [
+      "دایرکتوری کشوری دفاتر (غیرعضو پلتفرم)"
+    ],
+    "supported_category_ids": [
+      "government",
+      "postal"
+    ]
+  },
+  {
+    "id": "off-teh-unreg-qazvin",
+    "code": "0789",
+    "name": "دفتر پیشخوان میدان قزوین",
+    "manager_name": "حسین جودکی",
+    "membership_status": "unregistered",
+    "is_online": false,
+    "rating": 3.7,
+    "review_count": 38,
+    "address": "تهران، میدان قزوین، خیابان کارگر جنوبی، پلاک ۵۸۰",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.672,
+    "longitude": 51.393,
+    "phone": "021-55418902",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۳:۰۰ (پذیرش صرفاً حضوری سنتی)"
+    },
+    "active_counters": 1,
+    "current_waiting_queue": 0,
+    "sla_score": 95,
+    "specialties": [
+      "گواهی پستی و امور هویتی حضوری"
+    ],
+    "medals": [
+      "دایرکتوری کشوری دفاتر (غیرعضو پلتفرم)"
+    ],
+    "supported_category_ids": [
+      "identity",
+      "postal"
+    ]
+  },
+  {
+    "id": "off-teh-unreg-emam-hossein",
+    "code": "0315",
+    "name": "دفتر پیشخوان میدان امام حسین",
+    "manager_name": "علی‌اصغر مرادی",
+    "membership_status": "unregistered",
+    "is_online": false,
+    "rating": 3.6,
+    "review_count": 51,
+    "address": "تهران، ضلع جنوب شرقی میدان امام حسین، ابتدای خیابان ۱۷ شهریور",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.703,
+    "longitude": 51.455,
+    "phone": "021-77531245",
+    "working_hours": {
+      "text": "۰۸:۳۰ الی ۱۴:۰۰ (پذیرش صرفاً حضوری سنتی)"
+    },
+    "active_counters": 2,
+    "current_waiting_queue": 0,
+    "sla_score": 95,
+    "specialties": [
+      "خدمات بیمه و قبوض شهری"
+    ],
+    "medals": [
+      "دایرکتوری کشوری دفاتر (غیرعضو پلتفرم)"
+    ],
+    "supported_category_ids": [
+      "welfare",
+      "postal"
+    ]
+  },
+  {
+    "id": "off-teh-unreg-ray",
+    "code": "0690",
+    "name": "دفتر پیشخوان شهرری (فرمانداری)",
+    "manager_name": "محسن کرمی",
+    "membership_status": "unregistered",
+    "is_online": false,
+    "rating": 4,
+    "review_count": 78,
+    "address": "شهرری، میدان فرمانداری، بلوار امام حسین، پلاک ۴۲",
+    "province_code": "THR",
+    "city": "تهران",
+    "latitude": 35.592,
+    "longitude": 51.439,
+    "phone": "021-55904510",
+    "working_hours": {
+      "text": "۰۸:۰۰ الی ۱۳:۳۰ (پذیرش صرفاً حضوری سنتی)"
+    },
+    "active_counters": 2,
+    "current_waiting_queue": 0,
+    "sla_score": 95,
+    "specialties": [
+      "ثبت‌نام سیم‌کارت و تاییدیه پستی"
+    ],
+    "medals": [
+      "دایرکتوری کشوری دفاتر (غیرعضو پلتفرم)"
+    ],
+    "supported_category_ids": [
+      "identity",
+      "postal",
+      "government"
+    ]
+  }
+]
