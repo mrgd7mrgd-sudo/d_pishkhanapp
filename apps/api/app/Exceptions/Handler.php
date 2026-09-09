@@ -74,9 +74,11 @@ final class Handler
         $title = 'خطای داخلی سرور';
         $code = 'INTERNAL_SERVER_ERROR';
         $detail = 'متأسفانه خطایی در پردازش درخواست شما رخ داد.';
+        $headers = [];
 
         if ($e instanceof HttpExceptionInterface) {
             $status = $e->getStatusCode();
+            $headers = $e->getHeaders();
             if ($status === 404) {
                 $title = 'منبع مورد نظر یافت نشد';
                 $code = 'RESOURCE_NOT_FOUND';
@@ -92,7 +94,7 @@ final class Handler
             }
         }
 
-        return new JsonResponse([
+        $payload = [
             'type' => 'https://api.pishkhan.ir/problems/'.strtolower(str_replace('_', '-', $code)),
             'title' => $title,
             'status' => $status,
@@ -101,6 +103,12 @@ final class Handler
             'instance' => $instance,
             'request_id' => $requestId,
             'errors' => null,
-        ], $status);
+        ];
+
+        if ($status === 429 && isset($headers['Retry-After'])) {
+            $payload['retry_after'] = (int) $headers['Retry-After'];
+        }
+
+        return new JsonResponse($payload, $status, $headers);
     }
 }

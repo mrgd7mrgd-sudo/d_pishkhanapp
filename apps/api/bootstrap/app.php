@@ -30,6 +30,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->api(prepend: [
             ForceJson::class,
+        ], append: [
+            'throttle:global',
         ]);
 
         $middleware->alias([
