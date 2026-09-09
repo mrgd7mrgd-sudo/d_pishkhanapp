@@ -1,4 +1,5 @@
 import { QueryClient } from '@tanstack/react-query';
+import { initQueryClientPersistence } from '@/shared/pwa/sw-strategies';
 
 /**
  * QueryClient configured according to Architecture §4.3:
@@ -32,3 +33,5 @@ export const queryClient = new QueryClient({
     },
   },
 });
+
+initQueryClientPersistence(queryClient);
