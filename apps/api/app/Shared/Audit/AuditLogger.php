@@ -6,6 +6,7 @@ namespace App\Shared\Audit;
 
 use App\Shared\Http\Middleware\RequestId;
 use Carbon\CarbonImmutable;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -50,7 +51,7 @@ final class AuditLogger
      */
     public static function record(
         AuditableAction|string $action,
-        Model|string|null $subject = null,
+        Model|Authenticatable|string|null $subject = null,
         array $changes = [],
         array $context = [],
         ?string $actorType = null,
@@ -66,6 +67,9 @@ final class AuditLogger
         if ($subject instanceof Model) {
             $subjectType = $subject->getMorphClass();
             $subjectId = (string) $subject->getKey();
+        } elseif ($subject instanceof Authenticatable) {
+            $subjectType = get_class($subject);
+            $subjectId = (string) $subject->getAuthIdentifier();
         } elseif (is_string($subject) && $subject !== '') {
             $subjectType = 'Resource';
             $subjectId = $subject;

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Shared\Logging\PiiRedactionProcessor;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -58,6 +59,7 @@ return [
             'driver' => 'stack',
             'channels' => explode(',', env('LOG_STACK', 'single')),
             'ignore_exceptions' => false,
+            'processors' => [PiiRedactionProcessor::class],
         ],
 
         'single' => [
@@ -65,6 +67,7 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'replace_placeholders' => true,
+            'processors' => [PiiRedactionProcessor::class],
         ],
 
         'daily' => [
@@ -73,6 +76,7 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => env('LOG_DAILY_DAYS', 14),
             'replace_placeholders' => true,
+            'processors' => [PiiRedactionProcessor::class],
         ],
 
         'slack' => [

@@ -10,6 +10,8 @@ use App\Modules\Identity\Domain\Models\OtpChallenge;
 use App\Modules\Identity\Infrastructure\Policies\CitizenPolicy;
 use App\Modules\Identity\Infrastructure\Policies\OperatorPolicy;
 use App\Modules\Identity\Infrastructure\Policies\OtpChallengePolicy;
+use App\Modules\Identity\Listeners\AuditAuthEventsListener;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,5 +24,7 @@ final class IdentityServiceProvider extends ServiceProvider
         Gate::policy(Citizen::class, CitizenPolicy::class);
         Gate::policy(Operator::class, OperatorPolicy::class);
         Gate::policy(OtpChallenge::class, OtpChallengePolicy::class);
+
+        Event::subscribe(AuditAuthEventsListener::class);
     }
 }
