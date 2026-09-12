@@ -27,6 +27,16 @@ const ServiceRequest = lazy(async () => {
   return { default: mod.ServiceRequestFlow };
 });
 
+const CaseList = lazy(async () => {
+  const mod = await import('@/features/case-tracking');
+  return { default: mod.CaseListPage };
+});
+
+const CaseDetail = lazy(async () => {
+  const mod = await import('@/features/case-tracking');
+  return { default: mod.CaseDetailPage };
+});
+
 /**
  * All 26 Citizen Routes defined in Architecture §4.4
  */
@@ -39,8 +49,8 @@ export const routes: RouteObject[] = [
   { path: '/request/:serviceId', Component: ServiceRequest },
   { path: '/map', Component: OfficesMap },
   { path: '/map/offices/:officeId', Component: OfficesMap },
-  { path: '/cases', Component: Placeholder('cases') },
-  { path: '/cases/:trackingCode', Component: Placeholder('case_detail') },
+  { path: '/cases', Component: CaseList },
+  { path: '/cases/:trackingCode', Component: CaseDetail },
   { path: '/cases/:trackingCode/chat', Component: Placeholder('case_chat') },
   { path: '/consultation', Component: Placeholder('consultation') },
   { path: '/consultation/advisors/:advisorId', Component: Placeholder('advisor_detail') },

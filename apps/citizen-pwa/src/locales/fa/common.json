@@ -218,6 +218,52 @@
     "steps_nav": "مراحل ثبت درخواست",
     "connecting_network": "در حال برقراری ارتباط با شبکه دفاتر پیشخوان...",
     "select_doc_prefix": "انتخاب"
+  },
+  "common": {
+    "close": "بستن"
+  },
+  "cases": {
+    "page_title": "پرونده‌های من",
+    "page_subtitle": "رهگیری وضعیت پیشرفت خدمات درخواستی و اقدامات نیازمند نوبت",
+    "filter_all": "همه پرونده‌ها",
+    "filter_active": "در جریان",
+    "search_placeholder": "جستجوی کد رهگیری یا عنوان خدمت...",
+    "search_aria_label": "جستجوی پرونده",
+    "empty_list_title": "پرونده‌ای یافت نشد",
+    "empty_list_desc": "شما تاکنون پرونده فعالی ثبت نکرده‌اید یا با این مشخصات رکوردی وجود ندارد.",
+    "of": "از",
+    "view_details": "مشاهده و پیگیری",
+    "back_to_list": "بازگشت به لیست پرونده‌ها",
+    "not_found_title": "پرونده مورد نظر یافت نشد",
+    "turn_owner_status_label": "وضعیت نوبت اقدام",
+    "sla_remaining_label": "مهلت باقی‌مانده اقدام",
+    "action_required_title": "نقص مدرک / نیازمند اقدام شما",
+    "view_sample_image": "مشاهده نمونه صحیح",
+    "fix_document_btn": "بارگذاری مجدد مدرک",
+    "sample_image_modal_title": "نمونه تصویر صحیح مدرک",
+    "sample_image_alt": "تصویر نمونه مدرک استاندارد",
+    "sample_image_guide": "لطفاً مدرک خود را مشابه نمونه فوق، با وضوح کامل، نور مناسب و بدون حاشیه زائد ارسال فرمایید.",
+    "timeline_title": "روند پیشرفت مراحل اداری",
+    "timeline_aria_label": "تایم‌لاین مراحل اداری پرونده",
+    "office_note_label": "توضیح دفتر: ",
+    "office_assigned_title": "دفتر پیشخوان مجری",
+    "actions_panel_label": "اقدامات مجاز برای این پرونده",
+    "actions_available_title": "اقدامات مجاز:",
+    "action_executed_prefix": "عملیات فراخوانی شد",
+    "action_upload_fix_document": "رفع نقص و ارسال مدرک",
+    "action_open_chat": "گفتگو با دفتر",
+    "action_cancel_case": "لغو درخواست",
+    "action_view_receipt": "مشاهده رسید پذیرش",
+    "action_track_courier": "رهگیری پیک / مرسوله",
+    "action_download_result": "دریافت سند نهایی",
+    "action_rate_service": "ثبت نظر و امتیاز",
+    "action_view_rejection_reason": "مشاهده دلیل رد",
+    "action_submit_objection": "ثبت اعتراض",
+    "action_view_cancellation_details": "جزئیات لغو",
+    "action_edit_case": "ویرایش پیش‌نویس",
+    "action_submit_case": "ارسال نهایی پرونده",
+    "action_discard_case": "حذف پیش‌نویس"
   }
 }
+
 
