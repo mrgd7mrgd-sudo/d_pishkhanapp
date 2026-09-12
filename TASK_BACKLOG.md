@@ -4,7 +4,7 @@
 > **منبع:** `ARCHITECTURE.md` نسخه ۱.۰.۱ — تمام ۱۲ فصل
 > **بازبینی ۱.۰.۱ (۱۴۰۵/۰۶/۱۷):** همگام‌سازی با اصلاحات سند معماری — نرخ OTP، توکن Service Worker، سقف متد، مسیر جداول مرجع، اتصال Deferred Dispatch، استرداد بین‌فازی، نقش پیک و نگاشت پوشش کامل ۲۵ تصمیم
 > **تاریخ تولید:** ۱۴۰۵/۰۶/۱۷ — 2026-09-08
-> **وضعیت:** 🔧 در حال اجرا — فاز ۲ تکمیل شد (GATE-P2 پاس شد)؛ آماده ورود به فاز ۳ (تسک TASK-049)
+> **وضعیت:** 🔧 در حال اجرا — فاز ۳ (تسک‌های TASK-049 و TASK-049-T تکمیل شدند؛ آماده ورود به TASK-050)
 
 ---
 
@@ -208,8 +208,8 @@
 
 | ID | Type | عنوان | Arch § | فایل‌ها | Deps | Definition of Done |
 |---|:---:|---|---|---|---|---|
-| **TASK-049** | 🔨 | مهاجرت `case_requests` با پارتیشن‌بندی استانی | §۶.۱، §۶.۵ | `app/Modules/CaseWorkflow/Database/Migrations/*_create_case_requests_table.php`, `Domain/Models/CaseRequest.php` | TASK-040 | `PARTITION BY LIST (province_code)` با **۳۱ پارتیشن + `default`** · کلید اصلی مرکب `(id, province_code)` · Enum `case_status` با **۱۱ مقدار** (شامل `draft`, `delivering`, `cancelled` — D-08) · Enum `turn_owner` · همه ستون‌های ERD §۶.۱ · `citizen_location geography(POINT,4326)` |
-| TASK-049-T | 🧪 | تست پارتیشن‌بندی و Pruning | §۶.۵ | `tests/Feature/CaseWorkflow/PartitioningTest.php` | TASK-049 | تست: `\d+ case_requests` ۳۲ پارتیشن نشان می‌دهد (خروجی واقعی) · تست: `EXPLAIN` روی کوئری با `province_code = 'THR'` فقط یک پارتیشن اسکن می‌کند (**Partition Pruning** اثبات شود) · تست: درج با `province_code` ناشناخته به پارتیشن `default` می‌رود |
+| **TASK-049** | ✅ | مهاجرت `case_requests` با پارتیشن‌بندی استانی | §۶.۱، §۶.۵ | `app/Modules/CaseWorkflow/Database/Migrations/*_create_case_requests_table.php`, `Domain/Models/CaseRequest.php` | TASK-040 | `PARTITION BY LIST (province_code)` با **۳۱ پارتیشن + `default`** · کلید اصلی مرکب `(id, province_code)` · Enum `case_status` با **۱۱ مقدار** (شامل `draft`, `delivering`, `cancelled` — D-08) · Enum `turn_owner` · همه ستون‌های ERD §۶.۱ · `citizen_location geography(POINT,4326)` — ✅ Completed |
+| TASK-049-T | ✅ | تست پارتیشن‌بندی و Pruning | §۶.۵ | `tests/Feature/CaseWorkflow/PartitioningTest.php` | TASK-049 | تست: `\d+ case_requests` ۳۲ پارتیشن نشان می‌دهد (خروجی واقعی) · تست: `EXPLAIN` روی کوئری با `province_code = 'THR'` فقط یک پارتیشن اسکن می‌کند (**Partition Pruning** اثبات شود) · تست: درج با `province_code` ناشناخته به پارتیشن `default` می‌رود — ✅ Completed |
 | **TASK-050** | 🔨 | مهاجرت‌های تایم‌لاین و مدارک پرونده | §۶.۱، §۶.۲ | `CaseWorkflow/Database/Migrations/*_create_case_timeline_steps_table.php`, `*_create_case_documents_table.php`, `Domain/Models/{CaseTimelineStep,CaseDocument}.php` | TASK-049 | تایم‌لاین **جدول جداگانه**، نه JSON تودرتو (D — §۶.۲) · `actor_type`/`actor_id` برای Audit · `duration_actual_minutes`/`duration_typical_minutes` · `case_documents` با **نسخه‌بندی** (`version`)، `storage_key`, `encrypted_data_key`, `content_sha256`, `quality_warnings jsonb` · ایندکس‌های §۶.۴ |
 | TASK-050-T | 🧪 | تست Schema تایم‌لاین و مدارک | §۶.۲، §۶.۴ | `tests/Feature/CaseWorkflow/TimelineSchemaTest.php` | TASK-050 | تست: نسخه رد شده مدرک پس از آپلود نسخه جدید **باقی می‌ماند** · تست: ایندکس `idx_timeline_case_seq` استفاده می‌شود (`EXPLAIN`) · تست: `sequence` در هر پرونده یکتاست |
 | **TASK-051** | 🔨 | جدول مرجع `return_reasons` + `case_returns` + Seed ۱۰ کد | §۶.۱، §۶.۲، §۶.۳ | `CaseWorkflow/Database/Migrations/*_create_return_reasons_table.php`, `*_create_case_returns_table.php`, `Database/Seeders/ReturnReasonSeeder.php` | TASK-050, TASK-039 | **دقیقاً ۱۰ کد** با متن `default_message` فارسی از `RETURN_REASON_DICTIONARY` پروتوتایپ: `DOC_BLUR`, `DOC_CROP`, `DOC_EXPIRED`, `DOC_MISMATCH`, `DOC_MISSING`, `DOC_WRONG_TYPE`, `FORM_INVALID`, `INQUIRY_MISMATCH`, `ELIGIBILITY_FAIL`, `PRESENCE_REQUIRED` · Seeder مرجع، در تولید اجرا می‌شود · `case_returns` با `deadline_at`, `operator_id`, `target_document_type_code` |
