@@ -93,6 +93,14 @@ final class CaseDocument extends Model
     }
 
     /**
+     * @return BelongsTo<CaseRequest, $this>
+     */
+    public function caseRequest(): BelongsTo
+    {
+        return $this->belongsTo(CaseRequest::class, 'case_id');
+    }
+
+    /**
      * @return BelongsTo<DocumentType, $this>
      */
     public function documentType(): BelongsTo
