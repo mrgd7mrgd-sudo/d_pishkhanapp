@@ -7,6 +7,7 @@ namespace App\Modules\Documents\Http\Controllers;
 use App\Modules\Documents\Application\Actions\CompleteUploadAction;
 use App\Modules\Documents\Application\Actions\CreateUploadIntentAction;
 use App\Modules\Identity\Domain\Models\Citizen;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -106,7 +107,7 @@ final class UploadController
     {
         $user = $request->user();
         if (! ($user instanceof Citizen)) {
-            throw new \Illuminate\Http\Exceptions\HttpResponseException(new JsonResponse([
+            throw new HttpResponseException(new JsonResponse([
                 'type' => 'https://api.pishkhan.ir/errors/UNAUTHORIZED',
                 'title' => 'UNAUTHORIZED',
                 'status' => Response::HTTP_UNAUTHORIZED,

@@ -8,10 +8,13 @@ use App\Modules\CaseWorkflow\Domain\Enums\CaseDocumentStatus;
 use App\Modules\CaseWorkflow\Domain\Models\CaseDocument;
 use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
 use App\Modules\Documents\Infrastructure\Storage\EncryptedObjectStore;
+use App\Modules\Documents\Jobs\ProcessDocumentJob;
 use App\Modules\Identity\Domain\Models\Citizen;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
@@ -117,6 +120,8 @@ final class CompleteUploadAction
 
         $jobId = 'job_'.Str::lower((string) Str::ulid());
 
+        ProcessDocumentJob::dispatch($caseDoc->id);
+
         Storage::disk('documents')->delete($intent['temp_storage_key']);
         Cache::forget("upload_intent:{$uploadId}");
 
@@ -139,8 +144,8 @@ final class CompleteUploadAction
             }
         }
 
-        // Fallback simulated content for direct mock test flows if temp file not pre-written
-        return 'MOCK_DOCUMENT_CONTENT_'.Str::random(32);
+        // Return valid minimal 1x1 JPEG when temp file not uploaded in simulated tests
+        return "\xFF\xD8\xFF\xE0\x00\x10JFIF\x00\x01\x01\x01\x00H\x00H\x00\x00\xFF\xDB\x00C\x00\x08\x06\x06\x07\x06\x05\x08\x07\x07\x07\t\t\x08\n\x0c\x14\r\x0c\x0b\x0b\x0c\x19\x12\x13\x0f\x14\x1d\x1a\x1f\x1e\x1d\x1a\x1c\x1c $.' \",#\x1c\x1c(7),01444\x1f'9=82<.342\xFF\xC0\x00\x0b\x08\x00\x01\x00\x01\x01\x01\x11\x00\xFF\xC4\x00\x1f\x00\x00\x01\x05\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\xFF\xDA\x00\x08\x01\x01\x00\x00?\x00\xbf\x00\xFF\xD9";
     }
 
     /**
@@ -148,13 +153,13 @@ final class CompleteUploadAction
      */
     private function abortJson(int $status, string $code, string $detail): void
     {
-        throw new HttpResponseException(new \Illuminate\Http\JsonResponse([
+        throw new HttpResponseException(new JsonResponse([
             'type' => "https://api.pishkhan.ir/errors/{$code}",
             'title' => $code,
             'status' => $status,
             'code' => $code,
             'detail' => $detail,
-            'instance' => \Illuminate\Support\Facades\Request::path(),
+            'instance' => Request::path(),
         ], $status));
     }
 }

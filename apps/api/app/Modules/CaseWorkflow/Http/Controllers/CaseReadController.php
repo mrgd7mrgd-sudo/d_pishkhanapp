@@ -21,6 +21,7 @@ use App\Modules\Payments\Domain\Enums\LedgerOwnerType;
 use App\Modules\Payments\Domain\Enums\LedgerTransactionType;
 use App\Modules\Payments\Domain\LedgerEntryData;
 use App\Modules\Payments\Domain\LedgerService;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -134,7 +135,7 @@ final class CaseReadController
             ->first();
 
         if ($case === null) {
-            throw new \Illuminate\Http\Exceptions\HttpResponseException(new JsonResponse([
+            throw new HttpResponseException(new JsonResponse([
                 'status' => 404,
                 'detail' => 'پرونده مورد نظر یافت نشد.',
             ], 404));
@@ -143,7 +144,7 @@ final class CaseReadController
         $user = $request->user();
         if ($user instanceof Citizen && $user->id !== $case->citizen_id) {
             // Conceal existence to prevent ID enumeration (§7.3)
-            throw new \Illuminate\Http\Exceptions\HttpResponseException(new JsonResponse([
+            throw new HttpResponseException(new JsonResponse([
                 'status' => 404,
                 'detail' => 'پرونده مورد نظر یافت نشد.',
             ], 404));

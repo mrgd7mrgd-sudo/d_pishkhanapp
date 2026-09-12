@@ -11,8 +11,10 @@ use App\Modules\Identity\Domain\Models\Citizen;
 use App\Shared\Errors\ErrorCode;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -181,13 +183,13 @@ final class CreateUploadIntentAction
      */
     private function abortJson(int $status, string $code, string $detail): void
     {
-        throw new HttpResponseException(new \Illuminate\Http\JsonResponse([
+        throw new HttpResponseException(new JsonResponse([
             'type' => "https://api.pishkhan.ir/errors/{$code}",
             'title' => $code,
             'status' => $status,
             'code' => $code,
             'detail' => $detail,
-            'instance' => \Illuminate\Support\Facades\Request::path(),
+            'instance' => Request::path(),
         ], $status));
     }
 }

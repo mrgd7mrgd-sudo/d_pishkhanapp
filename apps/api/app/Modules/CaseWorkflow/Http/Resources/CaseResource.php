@@ -9,6 +9,7 @@ use App\Modules\CaseWorkflow\Domain\Enums\CaseStatus;
 use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\App;
 
 /**
  * @mixin CaseRequest
@@ -32,7 +33,7 @@ final class CaseResource extends JsonResource
             $serviceTag = count($tags) > 0 ? (string) $tags[0] : 'in-person';
         }
 
-        $resolver = \Illuminate\Support\Facades\App::make(AvailableActionsResolver::class);
+        $resolver = App::make(AvailableActionsResolver::class);
         $actions = $resolver->resolve($this->resource, $request->user());
 
         $assignedOffice = null;

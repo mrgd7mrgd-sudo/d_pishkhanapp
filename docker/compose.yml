@@ -66,6 +66,20 @@ services:
       timeout: 5s
       retries: 5
 
+  clamav:
+    image: clamav/clamav:latest
+    container_name: pishkhan_clamav
+    restart: unless-stopped
+    ports:
+      - "${CLAMAV_PORT:-3310}:3310"
+    volumes:
+      - clamav_data:/var/lib/clamav
+    healthcheck:
+      test: ["CMD", "clamdscan", "--version"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   postgres_data:
     name: pishkhan_postgres_data
@@ -73,3 +87,6 @@ volumes:
     name: pishkhan_redis_data
   minio_data:
     name: pishkhan_minio_data
+  clamav_data:
+    name: pishkhan_clamav_data
+
