@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -123,6 +124,22 @@ final class CaseRequest extends Model
     public function office(): BelongsTo
     {
         return $this->belongsTo(Office::class, 'office_id');
+    }
+
+    /**
+     * @return HasMany<CaseTimelineStep, $this>
+     */
+    public function timelineSteps(): HasMany
+    {
+        return $this->hasMany(CaseTimelineStep::class, 'case_id')->orderBy('sequence');
+    }
+
+    /**
+     * @return HasMany<CaseDocument, $this>
+     */
+    public function documents(): HasMany
+    {
+        return $this->hasMany(CaseDocument::class, 'case_id');
     }
 
     /**
