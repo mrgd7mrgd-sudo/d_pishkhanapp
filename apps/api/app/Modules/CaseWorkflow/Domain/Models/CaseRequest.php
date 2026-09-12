@@ -143,6 +143,22 @@ final class CaseRequest extends Model
     }
 
     /**
+     * @return HasMany<CaseReturn, $this>
+     */
+    public function returns(): HasMany
+    {
+        return $this->hasMany(CaseReturn::class, 'case_id');
+    }
+
+    /**
+     * @return HasMany<GovInquiry, $this>
+     */
+    public function govInquiries(): HasMany
+    {
+        return $this->hasMany(GovInquiry::class, 'case_id');
+    }
+
+    /**
      * Scope query to single province for Partition Pruning (§6.5).
      *
      * @param  Builder<static>  $query
