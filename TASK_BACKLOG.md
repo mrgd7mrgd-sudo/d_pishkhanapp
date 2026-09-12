@@ -253,8 +253,8 @@
 
 | ID | Type | عنوان | Arch § | فایل‌ها | Deps | Definition of Done |
 |---|:---:|---|---|---|---|---|
-| **TASK-066** | 🔨 | مهاجرت `dispatch_offers` | §۶.۱، §۵.۸ | `CaseWorkflow/Database/Migrations/*_create_dispatch_offers_table.php`, `Domain/Models/DispatchOffer.php` | TASK-049 | `round`, `status` (`pending`/`accepted`/`declined`/`expired`), `expires_at`, `responded_by` · ایندکس جزئی `idx_offers_office_pending` §۶.۴ · مفهومی که پروتوتایپ نداشت (§۵.۳) |
-| TASK-066-T | 🧪 | تست Schema پیشنهاد | §۶.۴ | `tests/Feature/CaseWorkflow/DispatchOfferSchemaTest.php` | TASK-066 | تست: ایندکس جزئی روی `status='pending'` استفاده می‌شود (`EXPLAIN` واقعی) · تست: یک پرونده نمی‌تواند دو پیشنهاد `pending` به یک دفتر داشته باشد |
+| **TASK-066** | ✅ | مهاجرت `dispatch_offers` | §۶.۱، §۵.۸ | `CaseWorkflow/Database/Migrations/*_create_dispatch_offers_table.php`, `Domain/Models/DispatchOffer.php` | TASK-049 | `round`, `status` (`pending`/`accepted`/`declined`/`expired`), `expires_at`, `responded_by` · ایندکس جزئی `idx_offers_office_pending` §۶.۴ · مفهومی که پروتوتایپ نداشت (§۵.۳) — ✅ Completed |
+| TASK-066-T | ✅ | تست Schema پیشنهاد | §۶.۴ | `tests/Feature/CaseWorkflow/DispatchOfferSchemaTest.php` | TASK-066 | تست: ایندکس جزئی روی `status='pending'` استفاده می‌شود (`EXPLAIN` واقعی) · تست: یک پرونده نمی‌تواند دو پیشنهاد `pending` به یک دفتر داشته باشد — ✅ Completed |
 | **TASK-067** | 🔨 | `DispatchCaseJob` — قلب فلوی Snapp-style | §۵.۸ | `CaseWorkflow/Jobs/DispatchCaseJob.php`, `config/pishkhan.php` (بخش dispatch) | TASK-066, TASK-042, TASK-053 | **کپی دقیق منطق §۵.۸**: ۵ دور، شعاع افزایشی `[5,10,15,25,40]` کیلومتر، دسته ۳ دفتری، TTL ۹۰ ثانیه · پس از ۵ دور بی‌نتیجه → `cancelled` + `RefundCaseFeeJob` (در این فاز: فقط ورودی معکوس دفتر کل با `LedgerService`؛ پشتیبان‌های درگاهی فاز ۵ به آن اضافه می‌شوند) · صف `dispatch` با اولویت ۱ · `tries=3`, `backoff=[5,15,45]` |
 | TASK-067-T | 🧪 | تست موتور Dispatch | §۵.۸، §۹.۵ | `tests/Feature/CaseWorkflow/DispatchCaseJobTest.php` | TASK-067 | تست: پیشنهاد به **دقیقاً ۳ نزدیک‌ترین دفتر آنلاین پشتیبان دسته** می‌رود · تست: هر دور شعاع را افزایش می‌دهد · تست: پس از ۵ دور، پرونده `cancelled` و **استرداد کامل** ثبت می‌شود · **تست: زمان اساین <۵ ثانیه** (SLO §۹.۵) · تست: دفتر رد کرده در دورهای بعد پیشنهاد نمی‌گیرد |
 | **TASK-068** | 🔨 | انقضای پیشنهاد | §۵.۸، §۵.۹ | `CaseWorkflow/Jobs/ExpireDispatchOfferJob.php`, `Console/Commands/ExpireDispatchOffersCommand.php` | TASK-067 | Job تأخیری روی `expires_at` + Command پشتیبان هر دقیقه (دفاع دولایه در برابر از دست رفتن Job) · انقضا، دور بعدی را می‌آغازد |
@@ -437,14 +437,14 @@
 | ۱ — هویت | TASK-022 … TASK-035 | ۲۸ | ۰ | ۰ | ✅ GATE-P1 |
 | ۲ — کاتالوگ و نقشه | TASK-036 … TASK-048 | ۲۶ | ۰ | ۰ | ✅ GATE-P2 |
 | ۳ — پرونده و مدارک | TASK-049 … TASK-065 | ۳۴ | ۰ | ۰ | ✅ GATE-P3 |
-| **۴ — Dispatch و میز کار** 🎯 | TASK-066 … TASK-083 | ۰ | ۰ | ۳۶ | ⬜ **GATE-P4 = MVP** |
+| **۴ — Dispatch و میز کار** 🎯 | TASK-066 … TASK-083 | ۲ | ۰ | ۳۴ | ⬜ **GATE-P4 = MVP** |
 | ۵ — پرداخت | TASK-084 … TASK-093 | ۰ | ۰ | ۲۰ | ⬜ GATE-P5 |
 | ۶ — تحویل و نوبت | TASK-094 … TASK-106 | ۰ | ۰ | ۲۶ | ⬜ GATE-P6 |
 | ۷ — هوش مصنوعی | TASK-107 … TASK-115 | ۰ | ۰ | ۱۸ | ⬜ GATE-P7 |
 | ۸ — مشاوره و مقیاس | TASK-116 … TASK-129 | ۰ | ۰ | ۲۸ | ⬜ GATE-P8 |
-| | **مجموع** | **۱۳۰** | **۰** | **۱۲۸** | **۴/۹ دروازه** |
+| | **مجموع** | **۱۳۲** | **۰** | **۱۲۶** | **۴/۹ دروازه** |
 
-**تسک جاری:** TASK-066 (آغاز فاز ۴ پس از تأیید دروازه فاز ۳)
+**تسک جاری:** TASK-067 (`DispatchCaseJob` — قلب فلوی Snapp-style)
 
 ---
 

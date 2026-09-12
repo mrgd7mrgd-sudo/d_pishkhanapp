@@ -106,3 +106,17 @@ it('verifies exact parity between PHP and TypeScript ledger enums (§6.1, §6.3,
     expect(LedgerTransactionType::values())->toBe($tsTxTypes)
         ->and(count($tsTxTypes))->toBe(7);
 });
+
+it('verifies exact parity between PHP DispatchOfferStatus and TypeScript DISPATCH_OFFER_STATUSES (§5.8, §6.1, TASK-066)', function (): void {
+    $tsPath = realpath(__DIR__.'/../../../../packages/domain/src/dispatch.ts');
+    expect($tsPath)->not->toBeFalse();
+
+    $tsStatuses = extractTsStringArray($tsPath, 'DISPATCH_OFFER_STATUSES');
+    expect($tsStatuses)->not->toBeEmpty();
+
+    $phpStatuses = \App\Modules\CaseWorkflow\Domain\Enums\DispatchOfferStatus::values();
+
+    expect($phpStatuses)->toBe($tsStatuses)
+        ->and(count($phpStatuses))->toBe(4);
+});
+

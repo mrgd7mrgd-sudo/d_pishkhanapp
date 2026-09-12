@@ -7,6 +7,7 @@ namespace App\Modules\CaseWorkflow\Domain\Models;
 use App\Modules\CaseWorkflow\Domain\CaseStateMachine;
 use App\Modules\CaseWorkflow\Domain\Enums\CaseStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\DeliveryPreference;
+use App\Modules\CaseWorkflow\Domain\Enums\DispatchOfferStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\TurnOwner;
 use App\Modules\Identity\Domain\Models\Citizen;
 use App\Modules\OfficeNetwork\Domain\Models\Office;
@@ -194,6 +195,32 @@ final class CaseRequest extends Model
     public function govInquiries(): HasMany
     {
         return $this->hasMany(GovInquiry::class, 'case_id');
+    }
+
+    /**
+     * @return HasMany<DispatchOffer, $this>
+     */
+    public function dispatchOffers(): HasMany
+    {
+        return $this->hasMany(DispatchOffer::class, 'case_id');
+    }
+
+    /**
+     * Get IDs of offices that declined or let offer expire for this case.
+     *
+     * @return list<string>
+     */
+    public function declinedOfficeIds(): array
+    {
+        return $this->dispatchOffers()
+            ->whereIn('status', [
+                DispatchOfferStatus::DECLINED->value,
+                DispatchOfferStatus::EXPIRED->value,
+            ])
+            ->pluck('office_id')
+            ->unique()
+            ->values()
+            ->all();
     }
 
     /**

@@ -8,12 +8,14 @@ use App\Modules\CaseWorkflow\Domain\Models\CaseDocument;
 use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
 use App\Modules\CaseWorkflow\Domain\Models\CaseReturn;
 use App\Modules\CaseWorkflow\Domain\Models\CaseTimelineStep;
+use App\Modules\CaseWorkflow\Domain\Models\DispatchOffer;
 use App\Modules\CaseWorkflow\Domain\Models\GovInquiry;
 use App\Modules\CaseWorkflow\Domain\Models\ReturnReason;
 use App\Modules\CaseWorkflow\Infrastructure\Policies\CaseDocumentPolicy;
 use App\Modules\CaseWorkflow\Infrastructure\Policies\CaseRequestPolicy;
 use App\Modules\CaseWorkflow\Infrastructure\Policies\CaseReturnPolicy;
 use App\Modules\CaseWorkflow\Infrastructure\Policies\CaseTimelineStepPolicy;
+use App\Modules\CaseWorkflow\Infrastructure\Policies\DispatchOfferPolicy;
 use App\Modules\CaseWorkflow\Infrastructure\Policies\GovInquiryPolicy;
 use App\Modules\CaseWorkflow\Infrastructure\Policies\ReturnReasonPolicy;
 use Illuminate\Support\Facades\Gate;
@@ -31,5 +33,6 @@ final class CaseWorkflowServiceProvider extends ServiceProvider
         Gate::policy(ReturnReason::class, ReturnReasonPolicy::class);
         Gate::policy(CaseReturn::class, CaseReturnPolicy::class);
         Gate::policy(GovInquiry::class, GovInquiryPolicy::class);
+        Gate::policy(DispatchOffer::class, DispatchOfferPolicy::class);
     }
 }
