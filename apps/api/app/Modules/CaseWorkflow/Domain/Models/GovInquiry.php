@@ -7,6 +7,7 @@ namespace App\Modules\CaseWorkflow\Domain\Models;
 use App\Modules\CaseWorkflow\Domain\Enums\GovInquiryProvider;
 use App\Modules\CaseWorkflow\Domain\Enums\GovInquiryStatus;
 use App\Shared\Security\PiiRedactor;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
@@ -136,7 +137,7 @@ final class GovInquiry extends Model
         $this->update([
             'status' => GovInquiryStatus::SUCCEEDED,
             'response_snapshot' => $response,
-            'completed_at' => now(),
+            'completed_at' => CarbonImmutable::now(),
             'last_error' => null,
         ]);
     }
@@ -150,7 +151,7 @@ final class GovInquiry extends Model
             'status' => GovInquiryStatus::MISMATCH,
             'last_error' => $reason,
             'response_snapshot' => $response,
-            'completed_at' => now(),
+            'completed_at' => CarbonImmutable::now(),
         ]);
     }
 
@@ -163,7 +164,7 @@ final class GovInquiry extends Model
             'status' => GovInquiryStatus::FAILED,
             'last_error' => $error,
             'response_snapshot' => $response,
-            'completed_at' => now(),
+            'completed_at' => CarbonImmutable::now(),
         ]);
     }
 }

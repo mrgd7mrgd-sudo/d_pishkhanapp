@@ -10,7 +10,9 @@ use App\Modules\CaseWorkflow\Domain\Events\CaseStatusChanged;
 use App\Modules\CaseWorkflow\Domain\Exceptions\InvalidCaseTransitionException;
 use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
 use App\Shared\Audit\AuditLogger;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 
 /**
  * Single source of truth for case status transitions (Architecture §3.5, §5.4).
@@ -102,7 +104,7 @@ final class CaseStateMachine
         $case->turn_owner = $targetOwner;
 
         if (in_array($to, [CaseStatus::COMPLETED, CaseStatus::REJECTED, CaseStatus::CANCELLED], true)) {
-            $case->closed_at = now();
+            $case->closed_at = CarbonImmutable::now();
         }
 
         $case->save();
@@ -121,7 +123,7 @@ final class CaseStateMachine
             'turn_owner_label' => $targetOwner->label(),
             'actor_type' => $ctx->actorType,
             'actor_id' => $ctx->actorId,
-            'occurred_at' => now(),
+            'occurred_at' => CarbonImmutable::now(),
         ]);
     }
 
@@ -142,6 +144,6 @@ final class CaseStateMachine
 
     private function fireDomainEvent(CaseRequest $case, CaseStatus $from, CaseStatus $to, TransitionContext $ctx): void
     {
-        event(new CaseStatusChanged($case, $from, $to, $ctx));
+        Event::dispatch(new CaseStatusChanged($case, $from, $to, $ctx));
     }
 }

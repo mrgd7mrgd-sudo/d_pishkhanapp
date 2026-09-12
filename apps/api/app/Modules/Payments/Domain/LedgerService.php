@@ -56,10 +56,10 @@ final class LedgerService
                 'case_id' => $caseId,
                 'payment_intent_id' => $paymentIntentId,
                 'description' => $description,
-                'posted_at' => $postedAt ?? now(),
+                'posted_at' => $postedAt ?? CarbonImmutable::now(),
             ]);
 
-            $entryTimestamp = now();
+            $entryTimestamp = CarbonImmutable::now();
 
             foreach ($entries as $entryData) {
                 LedgerEntry::create([

@@ -12,5 +12,6 @@ arch('modules communicate only via contracts')
         'Laravel\\Sanctum',
         'Carbon',
         'Symfony',
-        'Spatie\Permission',
+        'Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface',
+        'Spatie\\Permission',
     ]);

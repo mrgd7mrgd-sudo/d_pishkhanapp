@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Modules\ServiceCatalog\Http\Controllers\CategoryController;
 use App\Modules\ServiceCatalog\Http\Controllers\DocumentTypeController;
 use App\Modules\ServiceCatalog\Http\Controllers\ServiceController;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +13,7 @@ Route::get('/services/ping', function () {
     return new JsonResponse([
         'module' => 'ServiceCatalog',
         'status' => 'active',
-        'timestamp' => now()->toIso8601String(),
+        'timestamp' => CarbonImmutable::now()->toIso8601String(),
     ]);
 });
 
