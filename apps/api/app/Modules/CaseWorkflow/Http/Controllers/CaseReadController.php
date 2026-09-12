@@ -24,7 +24,6 @@ use App\Modules\Payments\Domain\LedgerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class CaseReadController
 {
@@ -135,13 +134,19 @@ final class CaseReadController
             ->first();
 
         if ($case === null) {
-            throw new NotFoundHttpException('پرونده مورد نظر یافت نشد.');
+            throw new \Illuminate\Http\Exceptions\HttpResponseException(new JsonResponse([
+                'status' => 404,
+                'detail' => 'پرونده مورد نظر یافت نشد.',
+            ], 404));
         }
 
         $user = $request->user();
         if ($user instanceof Citizen && $user->id !== $case->citizen_id) {
             // Conceal existence to prevent ID enumeration (§7.3)
-            throw new NotFoundHttpException('پرونده مورد نظر یافت نشد.');
+            throw new \Illuminate\Http\Exceptions\HttpResponseException(new JsonResponse([
+                'status' => 404,
+                'detail' => 'پرونده مورد نظر یافت نشد.',
+            ], 404));
         }
 
         return $case;

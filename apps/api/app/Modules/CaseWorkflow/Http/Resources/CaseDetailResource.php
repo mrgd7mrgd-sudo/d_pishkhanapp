@@ -38,7 +38,7 @@ final class CaseDetailResource extends JsonResource
             $serviceTag = count($tags) > 0 ? (string) $tags[0] : 'in-person';
         }
 
-        $resolver = app(AvailableActionsResolver::class);
+        $resolver = \Illuminate\Support\Facades\App::make(AvailableActionsResolver::class);
         $actions = $resolver->resolve($this->resource, $request->user());
 
         /** @var CaseReturn|null $latestReturn */
