@@ -12,3 +12,4 @@ export * from './primitives/Sheet';
 export * from './primitives/OtpInput';
 export * from './primitives/ServiceTagBadge';
 export * from './primitives/ResponsiveImage';
+export * from './primitives/FileDropzone';

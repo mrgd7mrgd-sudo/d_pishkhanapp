@@ -22,6 +22,11 @@ const OfficesMap = lazy(async () => {
   return { default: mod.OfficesMapView };
 });
 
+const ServiceRequest = lazy(async () => {
+  const mod = await import('@/features/service-request');
+  return { default: mod.ServiceRequestFlow };
+});
+
 /**
  * All 26 Citizen Routes defined in Architecture §4.4
  */
@@ -31,7 +36,7 @@ export const routes: RouteObject[] = [
   { path: '/services/:categoryId', Component: ServiceCatalog },
   { path: '/services/:categoryId/:serviceId', Component: ServiceCatalog },
 
-  { path: '/request/:serviceId', Component: Placeholder('request') },
+  { path: '/request/:serviceId', Component: ServiceRequest },
   { path: '/map', Component: OfficesMap },
   { path: '/map/offices/:officeId', Component: OfficesMap },
   { path: '/cases', Component: Placeholder('cases') },
