@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ProvinceSeeder::class,
             ServiceCategorySeeder::class,
             DocumentTypeSeeder::class,
+            ReturnReasonSeeder::class,
             ServiceSeeder::class,
             OfficeSeeder::class,
         ]);
