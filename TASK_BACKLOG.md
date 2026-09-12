@@ -242,7 +242,7 @@
 | TASK-064-T | ✅ | تست مخزن مدارک UI | §۴.۶، §۱۰.۲ | `features/documents-vault/**/*.test.tsx` | TASK-064 | پوشش ≥۷۵٪ · **تست: محتوای مدرک در Cache Storage ذخیره نمی‌شود** (بازرسی واقعی Cache API) · تست: در حالت Offline فراداده دیده می‌شود ولی مشاهده مدرک پیام مناسب می‌دهد · تست axe — ✅ Completed |
 | **TASK-065** | ✅ | صف ارسال Offline (Outbox) با Background Sync | §۴.۶ | `apps/citizen-pwa/src/shared/offline/{outbox.ts,sync.ts,useOutbox.ts}`, `src/shared/pwa/sw-background-sync.ts` | TASK-064, TASK-048 | ساختار `OutboxItem` **دقیقاً** §۴.۶ · **`id` از نوع UUID v7 که همان `Idempotency-Key` است** · Dexie 4 روی IndexedDB · Background Sync API با Fallback به `online` event · نشان «⏳ در انتظار ارسال» در UI · Retry نمایی، سقف ۵ تلاش سپس `failed` با امکان تلاش دستی · ارسال از SW با PAT کوتاه‌عمر ۱۵ دقیقه‌ای از `POST /auth/refresh` (کوکی refresh) — هرگز `localStorage` — ✅ Completed |
 | TASK-065-T | ✅ | تست صف Offline — سناریو بحرانی | §۴.۶، §۵.۶ | `apps/citizen-pwa/e2e/offline-submit.spec.ts` | TASK-065 | **E2E: قطع شبکه → ثبت درخواست → صف شدن → وصل شدن → ارسال خودکار، دقیقاً یک پرونده** (سناریو E5) · **E2E: ارسال دوباره همان کلید → بدون کسر مجدد وجه** (سناریو E6) · تست: مرورگر بدون Background Sync به `online` event برمی‌گردد · بررسی دستی روی گوشی واقعی در حالت پرواز — ✅ Completed |
-| **GATE-P3** | 🚪 | **دروازه بازبینی فاز ۳** | فصل ۱۱ فاز ۳ | — | TASK-065-T | همه ۱۲ معیار پذیرش فاز ۳ فصل ۱۱ اجرا و سبز · **پوشش `CaseStateMachine` و `LedgerService` = ۱۰۰٪** · رگرسیون فازهای ۰–۲ سبز · **توقف تا «approved»** |
+| **GATE-P3** | ✅ | **دروازه بازبینی فاز ۳** | فصل ۱۱ فاز ۳ | — | TASK-065-T | همه ۱۲ معیار پذیرش فاز ۳ فصل ۱۱ اجرا و سبز · **پوشش `CaseStateMachine` و `LedgerService` = ۱۰۰٪** · رگرسیون فازهای ۰–۲ سبز (۲۸۵ تست API و ۸۱ تست فرانت) — ✅ Approved |
 
 ---
 
@@ -433,18 +433,18 @@
 
 | فاز | تسک‌ها | ✅ | 🔧 | ⬜ | وضعیت دروازه |
 |---|---|:---:|:---:|:---:|---|
-| ۰ — زیرساخت | TASK-001 … TASK-021 | ۰ | ۰ | ۴۲ | ⬜ GATE-P0 |
-| ۱ — هویت | TASK-022 … TASK-035 | ۰ | ۰ | ۲۸ | ⬜ GATE-P1 |
-| ۲ — کاتالوگ و نقشه | TASK-036 … TASK-048 | ۰ | ۰ | ۲۶ | ⬜ GATE-P2 |
-| ۳ — پرونده و مدارک | TASK-049 … TASK-065 | ۰ | ۰ | ۳۴ | ⬜ GATE-P3 |
+| ۰ — زیرساخت | TASK-001 … TASK-021 | ۴۲ | ۰ | ۰ | ✅ GATE-P0 |
+| ۱ — هویت | TASK-022 … TASK-035 | ۲۸ | ۰ | ۰ | ✅ GATE-P1 |
+| ۲ — کاتالوگ و نقشه | TASK-036 … TASK-048 | ۲۶ | ۰ | ۰ | ✅ GATE-P2 |
+| ۳ — پرونده و مدارک | TASK-049 … TASK-065 | ۳۴ | ۰ | ۰ | ✅ GATE-P3 |
 | **۴ — Dispatch و میز کار** 🎯 | TASK-066 … TASK-083 | ۰ | ۰ | ۳۶ | ⬜ **GATE-P4 = MVP** |
 | ۵ — پرداخت | TASK-084 … TASK-093 | ۰ | ۰ | ۲۰ | ⬜ GATE-P5 |
 | ۶ — تحویل و نوبت | TASK-094 … TASK-106 | ۰ | ۰ | ۲۶ | ⬜ GATE-P6 |
 | ۷ — هوش مصنوعی | TASK-107 … TASK-115 | ۰ | ۰ | ۱۸ | ⬜ GATE-P7 |
 | ۸ — مشاوره و مقیاس | TASK-116 … TASK-129 | ۰ | ۰ | ۲۸ | ⬜ GATE-P8 |
-| | **مجموع** | **۰** | **۰** | **۲۵۸** | **۰/۹ دروازه** |
+| | **مجموع** | **۱۳۰** | **۰** | **۱۲۸** | **۴/۹ دروازه** |
 
-**تسک جاری:** — (در انتظار تأیید بک‌لاگ)
+**تسک جاری:** TASK-066 (آغاز فاز ۴ پس از تأیید دروازه فاز ۳)
 
 ---
 
