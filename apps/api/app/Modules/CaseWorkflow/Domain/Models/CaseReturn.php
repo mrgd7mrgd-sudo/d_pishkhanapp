@@ -84,6 +84,14 @@ final class CaseReturn extends Model
     }
 
     /**
+     * @return BelongsTo<ReturnReason, $this>
+     */
+    public function returnReason(): BelongsTo
+    {
+        return $this->reason();
+    }
+
+    /**
      * @return BelongsTo<Operator, $this>
      */
     public function operator(): BelongsTo
