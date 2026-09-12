@@ -8,6 +8,10 @@ use App\Modules\CaseWorkflow\Domain\Enums\CaseStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\ReturnReasonCode;
 use App\Modules\CaseWorkflow\Domain\Enums\TimelineStepStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\TurnOwner;
+use App\Modules\Payments\Domain\Enums\LedgerAccountKind;
+use App\Modules\Payments\Domain\Enums\LedgerDirection;
+use App\Modules\Payments\Domain\Enums\LedgerOwnerType;
+use App\Modules\Payments\Domain\Enums\LedgerTransactionType;
 use Illuminate\Support\Facades\File;
 
 function extractTsStringArray(string $filePath, string $arrayName): array
@@ -76,4 +80,29 @@ it('verifies exact parity between PHP TimelineStepStatus and TypeScript TIMELINE
 
     expect($phpStepStatuses)->toBe($tsStepStatuses)
         ->and(count($phpStepStatuses))->toBe(5);
+});
+
+it('verifies exact parity between PHP and TypeScript ledger enums (§6.1, §6.3, TASK-054)', function (): void {
+    $tsPath = realpath(__DIR__.'/../../../../packages/domain/src/ledger.ts');
+    expect($tsPath)->not->toBeFalse();
+
+    // Directions
+    $tsDirections = extractTsStringArray($tsPath, 'LEDGER_DIRECTIONS');
+    expect(LedgerDirection::values())->toBe($tsDirections)
+        ->and(count($tsDirections))->toBe(2);
+
+    // Account Kinds
+    $tsKinds = extractTsStringArray($tsPath, 'LEDGER_ACCOUNT_KINDS');
+    expect(LedgerAccountKind::values())->toBe($tsKinds)
+        ->and(count($tsKinds))->toBe(5);
+
+    // Owner Types
+    $tsOwnerTypes = extractTsStringArray($tsPath, 'LEDGER_OWNER_TYPES');
+    expect(LedgerOwnerType::values())->toBe($tsOwnerTypes)
+        ->and(count($tsOwnerTypes))->toBe(5);
+
+    // Transaction Types
+    $tsTxTypes = extractTsStringArray($tsPath, 'LEDGER_TRANSACTION_TYPES');
+    expect(LedgerTransactionType::values())->toBe($tsTxTypes)
+        ->and(count($tsTxTypes))->toBe(7);
 });
