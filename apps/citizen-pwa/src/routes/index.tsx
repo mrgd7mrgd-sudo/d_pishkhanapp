@@ -37,6 +37,11 @@ const CaseDetail = lazy(async () => {
   return { default: mod.CaseDetailPage };
 });
 
+const DocumentsVault = lazy(async () => {
+  const mod = await import('@/features/documents-vault');
+  return { default: mod.DocumentsVaultView };
+});
+
 /**
  * All 26 Citizen Routes defined in Architecture §4.4
  */
@@ -57,7 +62,7 @@ export const routes: RouteObject[] = [
   { path: '/consultation/sessions/:sessionId', Component: Placeholder('session_live') },
   { path: '/profile', Component: Placeholder('profile') },
   { path: '/profile/personal-info', Component: Placeholder('personal_info') },
-  { path: '/profile/documents', Component: Placeholder('documents') },
+  { path: '/profile/documents', Component: DocumentsVault },
   { path: '/profile/appointments', Component: Placeholder('appointments') },
   { path: '/profile/reminders', Component: Placeholder('reminders') },
   { path: '/profile/messages', Component: Placeholder('messages') },

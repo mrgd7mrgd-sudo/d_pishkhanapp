@@ -263,7 +263,46 @@
     "action_edit_case": "ویرایش پیش‌نویس",
     "action_submit_case": "ارسال نهایی پرونده",
     "action_discard_case": "حذف پیش‌نویس"
+  },
+  "vault": {
+    "page_title": "مخزن امن مدارک من",
+    "page_subtitle": "مدیریت اسناد شخصی، نسخه‌بندی امن و استفاده مجدد در خدمات پیشخوان",
+    "add_doc_btn": "افزودن مدرک جدید",
+    "categories_aria_label": "دسته‌بندی مدارک مخزن",
+    "cat_all": "همه مدارک",
+    "cat_identity": "هویتی",
+    "cat_education": "تحصیلی",
+    "cat_finance": "مالی و شغلی",
+    "cat_legal": "حقوقی و ملکی",
+    "cat_medical": "پزشکی و سلامت",
+    "cat_general": "عمومی",
+    "empty_title": "مدرکی در این دسته یافت نشد",
+    "empty_desc": "برای سهولت در ثبت خدمات آتی، مدارک هویتی و پرکاربرد خود را بارگذاری نمایید.",
+    "verified_badge": "تأییدشده",
+    "unverified_badge": "در انتظار استعلام",
+    "expired_badge": "منقضی شده",
+    "near_expiry_badge": "نزدیک به انقضا",
+    "doc_number_label": "شماره سند",
+    "view_btn": "مشاهده سند",
+    "delete_btn": "حذف",
+    "view_modal_title": "مشاهده امن مدرک",
+    "signed_url_notice": "پیوند مشاهده این مدرک به دلایل امنیتی موقت و ۶۰ ثانیه‌ای است.",
+    "offline_view_title": "عدم دسترسی در حالت آفلاین",
+    "offline_view_desc": "طبق سیاست‌های امنیتی و حریم خصوصی (§۴.۶)، محتوای اسناد هویتی در حافظه دستگاه ذخیره نمی‌شود و فقط به‌صورت آنلاین قابل مشاهده است.",
+    "no_view_url": "فایلی برای نمایش موجود نیست.",
+    "upload_modal_title": "بارگذاری مدرک در مخزن امن",
+    "input_title_placeholder": "عنوان مدرک (مثلاً: کارت ملی هوشمند)",
+    "input_title_label": "عنوان مدرک",
+    "input_doc_number_placeholder": "شماره یا شناسه سند (اختیاری)",
+    "input_doc_number_label": "شماره سند",
+    "category_select_label": "دسته‌بندی مدرک",
+    "dropzone_label": "انتخاب یا کشیدن فایل مدرک",
+    "dropzone_desc": "فرمت‌های مجاز JPG، PNG یا PDF تا حداکثر ۱۰ مگابایت",
+    "upload_missing_fields": "لطفاً عنوان مدرک و فایل را انتخاب فرمایید.",
+    "upload_failed": "خطا در بارگذاری مدرک در مخزن.",
+    "submit_upload": "بارگذاری و ذخیره در مخزن"
   }
 }
+
 
 
