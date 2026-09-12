@@ -131,7 +131,9 @@ it('creates and retrieves a case request with casts, relationships, and scopes',
         ->and(CaseRequest::byProvince('ESF')->count())->toBe(0)
         ->and(CaseRequest::active()->count())->toBe(1);
 
+    CaseRequest::$allowDirectStatusAssignment = true;
     $case->update(['status' => CaseStatus::COMPLETED]);
+    CaseRequest::$allowDirectStatusAssignment = false;
     expect(CaseRequest::active()->count())->toBe(0);
 });
 

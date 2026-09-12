@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\CaseWorkflow\Domain\Models;
 
+use App\Modules\CaseWorkflow\Domain\CaseStateMachine;
 use App\Modules\CaseWorkflow\Domain\Enums\CaseStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\DeliveryPreference;
 use App\Modules\CaseWorkflow\Domain\Enums\TurnOwner;
@@ -98,8 +99,37 @@ final class CaseRequest extends Model
             'sla_deadline_at' => 'datetime',
             'closed_at' => 'datetime',
             'created_at' => 'datetime',
-            'updated_at' => 'datetime',
         ];
+    }
+
+    public static bool $allowDirectStatusAssignment = false;
+
+    /**
+     * Guard against direct mutation of case status outside CaseStateMachine (§5.4).
+     */
+    public function setStatusAttribute(mixed $value): void
+    {
+        if (! self::$allowDirectStatusAssignment && ! $this->isStateTransitionAllowed()) {
+            throw new \LogicException('Direct mutation of CaseRequest::$status is prohibited. Use CaseStateMachine.');
+        }
+
+        $this->attributes['status'] = $value instanceof CaseStatus ? $value->value : $value;
+    }
+
+    private function isStateTransitionAllowed(): bool
+    {
+        if (! $this->exists) {
+            return true;
+        }
+
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10);
+        foreach ($trace as $frame) {
+            if (isset($frame['class']) && $frame['class'] === CaseStateMachine::class) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -132,6 +162,14 @@ final class CaseRequest extends Model
     public function timelineSteps(): HasMany
     {
         return $this->hasMany(CaseTimelineStep::class, 'case_id')->orderBy('sequence');
+    }
+
+    /**
+     * @return HasMany<CaseTimelineStep, $this>
+     */
+    public function timeline(): HasMany
+    {
+        return $this->timelineSteps();
     }
 
     /**
