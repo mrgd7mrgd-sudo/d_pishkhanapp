@@ -13,3 +13,7 @@ Artisan::command('inspire', function () {
 Schedule::command('pishkhan:expire-action-required-cases')
     ->hourly()
     ->withoutOverlapping();
+
+Schedule::command('pishkhan:expire-dispatch-offers')
+    ->everyMinute()
+    ->withoutOverlapping();

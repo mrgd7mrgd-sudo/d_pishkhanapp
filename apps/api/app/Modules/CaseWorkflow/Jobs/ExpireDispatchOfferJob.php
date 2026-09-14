@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\CaseWorkflow\Jobs;
 
+use App\Modules\CaseWorkflow\Domain\Enums\CaseStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\DispatchOfferStatus;
+use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
 use App\Modules\CaseWorkflow\Domain\Models\DispatchOffer;
 use Carbon\CarbonImmutable;
 use Illuminate\Bus\Queueable;
@@ -43,11 +45,31 @@ final class ExpireDispatchOfferJob implements ShouldQueue
                 return;
             }
 
-            if ($offer->status === DispatchOfferStatus::PENDING) {
-                $offer->update([
-                    'status' => DispatchOfferStatus::EXPIRED,
-                    'responded_at' => CarbonImmutable::now(),
-                ]);
+            if ($offer->status !== DispatchOfferStatus::PENDING) {
+                return;
+            }
+
+            $offer->update([
+                'status' => DispatchOfferStatus::EXPIRED,
+                'responded_at' => CarbonImmutable::now(),
+            ]);
+
+            $remainingPending = DispatchOffer::query()
+                ->where('case_id', $offer->case_id)
+                ->where('round', $offer->round)
+                ->where('status', DispatchOfferStatus::PENDING->value)
+                ->count();
+
+            if ($remainingPending === 0) {
+                $nextRoundExists = DispatchOffer::query()
+                    ->where('case_id', $offer->case_id)
+                    ->where('round', '>=', $offer->round + 1)
+                    ->exists();
+
+                $case = CaseRequest::query()->find($offer->case_id);
+                if ($case !== null && CaseStatus::SEARCHING_OFFICE === $case->status && ! $nextRoundExists) {
+                    DispatchCaseJob::dispatch($case->id, $offer->round + 1);
+                }
             }
         });
     }
