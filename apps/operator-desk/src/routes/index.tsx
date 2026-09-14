@@ -22,6 +22,11 @@ const WorkspacePage = lazy(async () => {
   return { default: mod.WorkspacePage };
 });
 
+const QueuePage = lazy(async () => {
+  const mod = await import('@/features/queue');
+  return { default: mod.QueuePage };
+});
+
 /**
  * All 10 Operator Desk Routes defined in Architecture §4.4
  */
@@ -30,7 +35,7 @@ export const deskRoutes: RouteObject[] = [
   { path: '/offers', Component: OffersPanelPage },
   { path: '/workspace', Component: WorkspacePage },
   { path: '/workspace/:caseId', Component: WorkspacePage },
-  { path: '/queue', Component: DeskPlaceholder('queue') },
+  { path: '/queue', Component: QueuePage },
   { path: '/delivery', Component: DeskPlaceholder('delivery') },
   { path: '/delivery/:deliveryId/waybill', Component: DeskPlaceholder('waybill') },
   { path: '/finance', Component: DeskPlaceholder('finance') },
