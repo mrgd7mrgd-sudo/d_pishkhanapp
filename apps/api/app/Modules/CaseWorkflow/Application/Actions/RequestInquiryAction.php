@@ -10,6 +10,7 @@ use App\Modules\CaseWorkflow\Domain\Enums\TimelineActorType;
 use App\Modules\CaseWorkflow\Domain\Enums\TimelineStepStatus;
 use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
 use App\Modules\CaseWorkflow\Domain\TransitionContext;
+use App\Modules\CaseWorkflow\Jobs\GovernmentInquiryJob;
 use App\Modules\Identity\Domain\Models\Operator;
 use App\Shared\Audit\AuditableAction;
 use App\Shared\Audit\AuditLogger;
@@ -61,6 +62,8 @@ final class RequestInquiryAction
             'operator',
             $operator->id
         );
+
+        GovernmentInquiryJob::dispatch($updatedCase->id);
 
         return $updatedCase;
     }

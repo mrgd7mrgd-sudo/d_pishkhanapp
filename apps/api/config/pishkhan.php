@@ -47,4 +47,7 @@ return [
         'vapid_private_key' => env('VAPID_PRIVATE_KEY', 'test_vapid_private_key'),
         'subject' => env('VAPID_SUBJECT', 'mailto:admin@pishkhan.ir'),
     ],
+    'gov' => [
+        'driver' => env('GOV_DRIVER', 'simulator'),
+    ],
 ];

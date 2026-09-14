@@ -12,6 +12,7 @@ use App\Modules\CaseWorkflow\Domain\Enums\TurnOwner;
 use App\Modules\CaseWorkflow\Domain\Models\CaseDocument;
 use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
 use App\Modules\CaseWorkflow\Domain\Models\CaseReturn;
+use App\Modules\CaseWorkflow\Jobs\GovernmentInquiryJob;
 use App\Modules\Identity\Domain\Enums\CitizenTier;
 use App\Modules\Identity\Domain\Enums\OperatorRole;
 use App\Modules\Identity\Domain\Models\Citizen;
@@ -326,6 +327,8 @@ it('strictly conforms return response snapshot to Architecture §5.6 sample 7', 
 });
 
 it('requests government inquiry from expert review', function (): void {
+    Queue::fake();
+
     $case = createTestDeskCase($this->citizen, $this->service, $this->officeA, CaseStatus::EXPERT_REVIEW);
 
     Sanctum::actingAs($this->operatorA, ['*']);
@@ -336,6 +339,10 @@ it('requests government inquiry from expert review', function (): void {
     $case->refresh();
     expect($case->status)->toBe(CaseStatus::GOVERNMENT_INQUIRY)
         ->and($case->turn_owner)->toBe(TurnOwner::GOVERNMENT);
+
+    Queue::assertPushed(GovernmentInquiryJob::class, function (GovernmentInquiryJob $job) use ($case): bool {
+        return $job->caseId === $case->id;
+    });
 });
 
 it('completes case from ready_for_issue', function (): void {
