@@ -32,4 +32,20 @@ final class TransitionContext
             metadata: ['reason' => 'dispatch_exhausted']
         );
     }
+
+    public static function offerAccepted(string $operatorId, ?string $officeName = null): self
+    {
+        $desc = $officeName !== null
+            ? "پرونده توسط {$officeName} پذیرفته شد."
+            : 'پرونده توسط دفتر پیشخوان پذیرفته شد و آماده بررسی است.';
+
+        return new self(
+            title: 'پذیرش توسط دفتر پیشخوان',
+            description: $desc,
+            stepStatus: TimelineStepStatus::DONE,
+            actorType: TimelineActorType::OPERATOR,
+            actorId: $operatorId,
+            metadata: ['action' => 'offer_accepted']
+        );
+    }
 }

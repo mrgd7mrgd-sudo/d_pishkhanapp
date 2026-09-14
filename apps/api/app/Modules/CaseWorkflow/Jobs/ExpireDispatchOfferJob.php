@@ -67,7 +67,7 @@ final class ExpireDispatchOfferJob implements ShouldQueue
                     ->exists();
 
                 $case = CaseRequest::query()->find($offer->case_id);
-                if ($case !== null && CaseStatus::SEARCHING_OFFICE === $case->status && ! $nextRoundExists) {
+                if ($case !== null && $case->status->value === CaseStatus::SEARCHING_OFFICE->value && ! $nextRoundExists) {
                     DispatchCaseJob::dispatch($case->id, $offer->round + 1);
                 }
             }
