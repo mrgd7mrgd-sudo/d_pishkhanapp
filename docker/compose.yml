@@ -80,6 +80,33 @@ services:
       timeout: 5s
       retries: 5
 
+  reverb:
+    image: php:8.3-cli-alpine
+    container_name: pishkhan_reverb
+    restart: unless-stopped
+    command: php artisan reverb:start --host=0.0.0.0 --port=8080
+    working_dir: /var/www/html
+    volumes:
+      - ../apps/api:/var/www/html
+    environment:
+      APP_ENV: ${APP_ENV:-local}
+      APP_KEY: ${APP_KEY:-base64:randomkey}
+      REVERB_APP_ID: ${REVERB_APP_ID:-pishkhan-app}
+      REVERB_APP_KEY: ${REVERB_APP_KEY:-pishkhan-reverb-key}
+      REVERB_APP_SECRET: ${REVERB_APP_SECRET:-pishkhan-reverb-secret}
+      REVERB_HOST: ${REVERB_HOST:-0.0.0.0}
+      REVERB_PORT: ${REVERB_PORT:-8080}
+      REVERB_SERVER_HOST: 0.0.0.0
+      REVERB_SERVER_PORT: 8080
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REVERB_SCALING_ENABLED: "true"
+    ports:
+      - "${REVERB_PORT:-8080}:8080"
+    depends_on:
+      redis:
+        condition: service_healthy
+
 volumes:
   postgres_data:
     name: pishkhan_postgres_data
