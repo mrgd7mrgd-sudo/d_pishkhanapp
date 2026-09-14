@@ -30,4 +30,16 @@ return [
             'url_prefix' => env('TILE_PROXY_URL_PREFIX', '/tiles'),
         ],
     ],
+    'dispatch' => [
+        'max_rounds' => (int) env('DISPATCH_MAX_ROUNDS', 5),
+        'radius_km' => [
+            1 => 5.0,
+            2 => 10.0,
+            3 => 15.0,
+            4 => 25.0,
+            5 => 40.0,
+        ],
+        'batch_size' => (int) env('DISPATCH_BATCH_SIZE', 3),
+        'offer_ttl_seconds' => (int) env('DISPATCH_OFFER_TTL_SECONDS', 90),
+    ],
 ];

@@ -128,4 +128,3 @@ final class DispatchOffer extends Model
             ->where('expires_at', '>', Carbon::now());
     }
 }
-

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\CaseWorkflow;
 
 use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
+use App\Modules\CaseWorkflow\Jobs\DispatchCaseJob;
 use App\Modules\Identity\Domain\Enums\CitizenTier;
 use App\Modules\Identity\Domain\Models\Citizen;
 use App\Modules\Payments\Domain\Enums\LedgerAccountKind;
@@ -18,11 +19,13 @@ use App\Modules\ServiceCatalog\Domain\Models\Service;
 use App\Modules\ServiceCatalog\Domain\Models\ServiceCategory;
 use Database\Seeders\ProvinceSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Str;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
+    Queue::fake([DispatchCaseJob::class]);
     $this->seed(ProvinceSeeder::class);
 
     ServiceCategory::query()->firstOrCreate(

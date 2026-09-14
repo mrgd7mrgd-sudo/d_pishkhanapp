@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 /**
  * CaseRequest Domain Model (Architecture §6.1, §6.5, TASK-049).
@@ -104,6 +105,24 @@ final class CaseRequest extends Model
     }
 
     public static bool $allowDirectStatusAssignment = false;
+
+    public function setCitizenLocationAttribute(mixed $value): void
+    {
+        if (is_array($value) && isset($value['lat'], $value['lng'])) {
+            $lat = (float) $value['lat'];
+            $lng = (float) $value['lng'];
+
+            if (DB::connection()->getDriverName() === 'pgsql') {
+                $this->attributes['citizen_location'] = DB::raw("ST_SetSRID(ST_MakePoint({$lng}, {$lat}), 4326)::geography");
+            } else {
+                $this->attributes['citizen_location'] = "{$lat},{$lng}";
+            }
+
+            return;
+        }
+
+        $this->attributes['citizen_location'] = $value;
+    }
 
     /**
      * Guard against direct mutation of case status outside CaseStateMachine (§5.4).

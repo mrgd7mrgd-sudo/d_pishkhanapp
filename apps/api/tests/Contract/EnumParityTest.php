@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Contract;
 
 use App\Modules\CaseWorkflow\Domain\Enums\CaseStatus;
+use App\Modules\CaseWorkflow\Domain\Enums\DispatchOfferStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\ReturnReasonCode;
 use App\Modules\CaseWorkflow\Domain\Enums\TimelineStepStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\TurnOwner;
@@ -114,9 +115,8 @@ it('verifies exact parity between PHP DispatchOfferStatus and TypeScript DISPATC
     $tsStatuses = extractTsStringArray($tsPath, 'DISPATCH_OFFER_STATUSES');
     expect($tsStatuses)->not->toBeEmpty();
 
-    $phpStatuses = \App\Modules\CaseWorkflow\Domain\Enums\DispatchOfferStatus::values();
+    $phpStatuses = DispatchOfferStatus::values();
 
     expect($phpStatuses)->toBe($tsStatuses)
         ->and(count($phpStatuses))->toBe(4);
 });
-

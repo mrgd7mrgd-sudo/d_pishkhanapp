@@ -46,6 +46,77 @@ final class OfficeFinder
     }
 
     /**
+     * Find candidate offices for Snapp-style dispatching (§5.8, TASK-067).
+     * Returns Collection of Office models sorted by smart score, excluding declined offices.
+     *
+     * @param  mixed  $location  Coordinates object, array, or string
+     * @param  list<string>  $excludeOfficeIds
+     * @return Collection<int, Office>
+     */
+    public function findCandidates(
+        mixed $location,
+        string $categoryId,
+        float $radiusKm = 25.0,
+        array $excludeOfficeIds = [],
+        int $limit = 3
+    ): Collection {
+        $coords = $this->parseLocationCoordinates($location);
+        if ($coords === null) {
+            return new Collection;
+        }
+
+        $nearby = $this->findNearby(
+            lat: $coords['lat'],
+            lng: $coords['lng'],
+            radiusKm: $radiusKm,
+            categoryId: $categoryId,
+            limit: $limit + count($excludeOfficeIds),
+            bypassCache: true
+        );
+
+        $offices = new Collection;
+        foreach ($nearby as $item) {
+            /** @var Office $office */
+            $office = $item['office'];
+            if (in_array($office->id, $excludeOfficeIds, true)) {
+                continue;
+            }
+
+            $offices->push($office);
+            if ($offices->count() >= $limit) {
+                break;
+            }
+        }
+
+        return $offices;
+    }
+
+    /**
+     * @return array{lat: float, lng: float}|null
+     */
+    public function parseLocationCoordinates(mixed $location): ?array
+    {
+        if (is_array($location) && isset($location['lat'], $location['lng'])) {
+            return ['lat' => (float) $location['lat'], 'lng' => (float) $location['lng']];
+        }
+
+        if (is_string($location)) {
+            $decoded = json_decode($location, true);
+            if (is_array($decoded) && isset($decoded['lat'], $decoded['lng'])) {
+                return ['lat' => (float) $decoded['lat'], 'lng' => (float) $decoded['lng']];
+            }
+
+            $parts = explode(',', $location);
+            if (count($parts) === 2 && is_numeric($parts[0]) && is_numeric($parts[1])) {
+                return ['lat' => (float) $parts[0], 'lng' => (float) $parts[1]];
+            }
+        }
+
+        // Default Tehran center coordinates if unresolvable
+        return ['lat' => 35.6892, 'lng' => 51.3890];
+    }
+
+    /**
      * @return array<int, array<string, mixed>>
      */
     private function executeNearbyQuery(float $lat, float $lng, float $radiusKm, ?string $categoryId, int $limit): array

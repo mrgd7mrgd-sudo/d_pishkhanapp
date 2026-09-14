@@ -10,6 +10,7 @@ use App\Modules\CaseWorkflow\Domain\Enums\TurnOwner;
 use App\Modules\CaseWorkflow\Domain\Events\CaseCreated;
 use App\Modules\CaseWorkflow\Domain\Models\CaseDocument;
 use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
+use App\Modules\CaseWorkflow\Jobs\DispatchCaseJob;
 use App\Modules\Identity\Domain\Enums\CitizenTier;
 use App\Modules\Identity\Domain\Models\Citizen;
 use App\Modules\Payments\Domain\Enums\LedgerAccountKind;
@@ -23,11 +24,13 @@ use App\Modules\ServiceCatalog\Domain\Models\ServiceCategory;
 use Database\Seeders\ProvinceSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Str;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
+    Queue::fake([DispatchCaseJob::class]);
     $this->seed(ProvinceSeeder::class);
 
     ServiceCategory::query()->firstOrCreate(

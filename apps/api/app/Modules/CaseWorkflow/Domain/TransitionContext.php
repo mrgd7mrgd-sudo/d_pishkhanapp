@@ -21,4 +21,15 @@ final class TransitionContext
         public readonly ?string $reasonCode = null,
         public readonly array $metadata = [],
     ) {}
+
+    public static function dispatchExhausted(): self
+    {
+        return new self(
+            title: 'عدم پذیرش در مهلت مقرر و لغو خودکار',
+            description: 'هیچ دفتر پیشخوانی در شعاع و مهلت مقرر پرونده را نپذیرفت و پرونده لغو گردید.',
+            stepStatus: TimelineStepStatus::FAILED,
+            actorType: TimelineActorType::SYSTEM,
+            metadata: ['reason' => 'dispatch_exhausted']
+        );
+    }
 }
