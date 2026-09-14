@@ -42,4 +42,9 @@ return [
         'batch_size' => (int) env('DISPATCH_BATCH_SIZE', 3),
         'offer_ttl_seconds' => (int) env('DISPATCH_OFFER_TTL_SECONDS', 90),
     ],
+    'push' => [
+        'vapid_public_key' => env('VAPID_PUBLIC_KEY', 'test_vapid_public_key'),
+        'vapid_private_key' => env('VAPID_PRIVATE_KEY', 'test_vapid_private_key'),
+        'subject' => env('VAPID_SUBJECT', 'mailto:admin@pishkhan.ir'),
+    ],
 ];
