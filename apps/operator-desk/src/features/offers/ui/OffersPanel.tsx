@@ -119,7 +119,7 @@ export const OffersPanel: React.FC<OffersPanelProps> = ({ officeId, autoFetch = 
               : 'bg-gray-200 text-gray-700'
           }`}
         >
-          {offers.length.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[parseInt(d, 10)])} پیشنهاد فعال
+          {offers.length.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[parseInt(d, 10)] ?? d)} پیشنهاد فعال
         </span>
       </div>
 

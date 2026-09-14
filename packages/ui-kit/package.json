@@ -27,6 +27,7 @@
   "devDependencies": {
     "@pishkhan/config-eslint": "workspace:*",
     "@pishkhan/config-typescript": "workspace:*",
+    "@tanstack/react-virtual": "^3.14.13",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@types/react": "^19.0.10",

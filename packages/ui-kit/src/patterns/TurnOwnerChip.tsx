@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { type TurnOwner, getTurnOwnerMeta } from '@pishkhan/domain';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -22,8 +22,8 @@ const COLOR_MAP: Record<string, string> = {
  */
 export function TurnOwnerChip({ owner, labelOverride, className }: TurnOwnerChipProps): React.JSX.Element {
   const meta = getTurnOwnerMeta(owner);
-  const colorClass = COLOR_MAP[meta.color] ?? COLOR_MAP['slate'];
-  const text = labelOverride || meta.label;
+  const colorClass = meta?.color ? COLOR_MAP[meta.color] ?? COLOR_MAP['slate'] : COLOR_MAP['slate'];
+  const text = labelOverride || meta?.label || 'نوبت اقدام';
 
   return (
     <span

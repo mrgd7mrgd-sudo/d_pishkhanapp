@@ -12,19 +12,29 @@ const OperatorAuthFlowPage = lazy(async () => {
   return { default: mod.OperatorAuthFlow };
 });
 
+const OffersPanelPage = lazy(async () => {
+  const mod = await import('@/features/offers');
+  return { default: mod.OffersPanel };
+});
+
+const WorkspacePage = lazy(async () => {
+  const mod = await import('@/features/workspace');
+  return { default: mod.WorkspacePage };
+});
+
 /**
  * All 10 Operator Desk Routes defined in Architecture §4.4
  */
 export const deskRoutes: RouteObject[] = [
   { path: '/login', Component: OperatorAuthFlowPage },
-  { path: '/offers', Component: DeskPlaceholder('offers') },
-  { path: '/workspace', Component: DeskPlaceholder('workspace') },
-  { path: '/workspace/:caseId', Component: DeskPlaceholder('workspace_detail') },
+  { path: '/offers', Component: OffersPanelPage },
+  { path: '/workspace', Component: WorkspacePage },
+  { path: '/workspace/:caseId', Component: WorkspacePage },
   { path: '/queue', Component: DeskPlaceholder('queue') },
   { path: '/delivery', Component: DeskPlaceholder('delivery') },
   { path: '/delivery/:deliveryId/waybill', Component: DeskPlaceholder('waybill') },
   { path: '/finance', Component: DeskPlaceholder('finance') },
   { path: '/reviews', Component: DeskPlaceholder('reviews') },
   { path: '/office-profile', Component: DeskPlaceholder('office_profile') },
-  { path: '/', Component: DeskPlaceholder('workspace') }, // default workspace redirect
+  { path: '/', Component: WorkspacePage }, // default workspace redirect
 ];

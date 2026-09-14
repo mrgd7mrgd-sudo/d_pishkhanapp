@@ -14,7 +14,7 @@ export const OfferCountdown: React.FC<OfferCountdownProps> = ({
 
   // Convert English digits to Persian
   const toPersianDigits = (num: number): string => {
-    return num.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[parseInt(d, 10)]);
+    return num.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[parseInt(d, 10)] ?? d);
   };
 
   return (

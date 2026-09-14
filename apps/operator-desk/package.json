@@ -16,6 +16,7 @@
     "@pishkhan/domain": "workspace:*",
     "@pishkhan/ui-kit": "workspace:*",
     "@tanstack/react-query": "^5.66.9",
+    "@tanstack/react-virtual": "^3.14.13",
     "clsx": "^2.1.1",
     "i18next": "^26.4.2",
     "lucide-react": "^1.43.0",

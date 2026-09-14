@@ -6,7 +6,7 @@ import { CheckCircle2, XCircle, AlertTriangle, Loader2 } from 'lucide-react';
 interface OfferCardProps {
   offer: DispatchOfferItem;
   isLoading: boolean;
-  conflict?: string;
+  conflict?: string | undefined;
   onAccept: (id: string) => void;
   onDecline: (id: string) => void;
   onDismissConflict: (id: string) => void;
@@ -33,7 +33,7 @@ export const OfferCard: React.FC<OfferCardProps> = ({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
-              دور {offer.round.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[parseInt(d, 10)])}
+              دور {offer.round.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[parseInt(d, 10)] ?? d)}
             </span>
             <span
               id={`offer-title-${offer.id}`}
