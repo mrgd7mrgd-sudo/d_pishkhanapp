@@ -10,6 +10,7 @@ use App\Modules\CaseWorkflow\Domain\Enums\DeliveryPreference;
 use App\Modules\CaseWorkflow\Domain\Enums\DispatchOfferStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\TurnOwner;
 use App\Modules\Identity\Domain\Models\Citizen;
+use App\Modules\Messaging\Domain\Models\CaseMessage;
 use App\Modules\OfficeNetwork\Domain\Models\Office;
 use App\Modules\ServiceCatalog\Domain\Models\Service;
 use Illuminate\Database\Eloquent\Builder;
@@ -222,6 +223,14 @@ final class CaseRequest extends Model
     public function dispatchOffers(): HasMany
     {
         return $this->hasMany(DispatchOffer::class, 'case_id');
+    }
+
+    /**
+     * @return HasMany<CaseMessage, $this>
+     */
+    public function messages(): HasMany
+    {
+        return $this->hasMany(CaseMessage::class, 'case_id');
     }
 
     /**
