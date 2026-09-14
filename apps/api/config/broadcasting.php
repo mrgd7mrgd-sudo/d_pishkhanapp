@@ -1,6 +1,10 @@
 <?php
 
 declare(strict_types=1);
+use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 
 return [
 
@@ -43,9 +47,11 @@ return [
                 'scheme' => env('REVERB_SCHEME', 'http'),
                 'useTLS' => env('REVERB_SCHEME', 'http') === 'https',
             ],
-            'client_options' => [
-                // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html
-            ],
+            'client_options' => env('APP_ENV') === 'testing' ? [
+                'handler' => static fn (RequestInterface $request, array $options): PromiseInterface => new FulfilledPromise(
+                    new Response(200, ['Content-Type' => 'application/json'], '{}')
+                ),
+            ] : [],
         ],
 
         'pusher' => [

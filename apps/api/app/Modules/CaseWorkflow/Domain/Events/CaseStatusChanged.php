@@ -9,8 +9,14 @@ use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
 use App\Modules\CaseWorkflow\Domain\TransitionContext;
 use App\Shared\Events\DomainEvent;
 use Carbon\CarbonImmutable;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-final class CaseStatusChanged extends DomainEvent
+/**
+ * CaseStatusChanged Broadcast Event (Architecture §5.7, TASK-071).
+ * Broadcasts status changes to citizen and assigned office.
+ */
+final class CaseStatusChanged extends DomainEvent implements ShouldBroadcast
 {
     public function __construct(
         public readonly CaseRequest $case,
@@ -25,7 +31,31 @@ final class CaseStatusChanged extends DomainEvent
 
     public function eventName(): string
     {
-        return 'case.status_changed';
+        return 'case.status.changed';
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'case.status.changed';
+    }
+
+    /**
+     * @return list<PrivateChannel>
+     */
+    public function broadcastOn(): array
+    {
+        return [
+            new PrivateChannel("case.{$this->case->id}"),
+            new PrivateChannel("citizen.{$this->case->citizen_id}"),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function broadcastWith(): array
+    {
+        return $this->toPayload();
     }
 
     /**
@@ -39,7 +69,10 @@ final class CaseStatusChanged extends DomainEvent
             'from' => $this->from->value,
             'to' => $this->to->value,
             'turn_owner' => $this->case->turn_owner->value,
+            'turn_owner_label' => $this->case->turn_owner->label(),
             'reason_code' => $this->context->reasonCode,
+            'headline' => $this->context->title,
+            'at' => $this->occurredAt->toIso8601String(),
         ];
     }
 }

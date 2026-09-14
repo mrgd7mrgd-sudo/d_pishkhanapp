@@ -7,8 +7,10 @@ namespace App\Modules\CaseWorkflow\Domain;
 use App\Modules\CaseWorkflow\Domain\Enums\CaseStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\TurnOwner;
 use App\Modules\CaseWorkflow\Domain\Events\CaseStatusChanged;
+use App\Modules\CaseWorkflow\Domain\Events\CaseTimelineAppended;
 use App\Modules\CaseWorkflow\Domain\Exceptions\InvalidCaseTransitionException;
 use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
+use App\Modules\CaseWorkflow\Domain\Models\CaseTimelineStep;
 use App\Shared\Audit\AuditLogger;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -114,7 +116,8 @@ final class CaseStateMachine
     {
         $nextSequence = ((int) $case->timelineSteps()->max('sequence')) + 1;
 
-        $case->timelineSteps()->create([
+        /** @var CaseTimelineStep $step */
+        $step = $case->timelineSteps()->create([
             'sequence' => $nextSequence,
             'title' => $ctx->title,
             'description' => $ctx->description,
@@ -125,6 +128,8 @@ final class CaseStateMachine
             'actor_id' => $ctx->actorId,
             'occurred_at' => Carbon::now(),
         ]);
+
+        Event::dispatch(new CaseTimelineAppended($step));
     }
 
     private function recordAuditLog(CaseRequest $case, CaseStatus $from, CaseStatus $to, TransitionContext $ctx): void

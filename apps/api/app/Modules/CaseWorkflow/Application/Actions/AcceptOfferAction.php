@@ -7,6 +7,7 @@ namespace App\Modules\CaseWorkflow\Application\Actions;
 use App\Modules\CaseWorkflow\Domain\CaseStateMachine;
 use App\Modules\CaseWorkflow\Domain\Enums\CaseStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\DispatchOfferStatus;
+use App\Modules\CaseWorkflow\Domain\Events\DispatchOfferTaken;
 use App\Modules\CaseWorkflow\Domain\Exceptions\OfferAlreadyTakenException;
 use App\Modules\CaseWorkflow\Domain\Exceptions\OfferExpiredException;
 use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
@@ -17,6 +18,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 
 /**
  * AcceptOfferAction (Architecture §5.8, TASK-069).
@@ -94,15 +96,26 @@ final class AcceptOfferAction
                 TransitionContext::offerAccepted($operator->id)
             );
 
-            // Invalidate all other pending offers for this case across all offices
-            DispatchOffer::query()
+            // Invalidate all other pending offers for this case across all offices and notify via WebSocket
+            $otherOffers = DispatchOffer::query()
                 ->where('case_id', $case->id)
                 ->where('id', '!=', $offer->id)
                 ->where('status', DispatchOfferStatus::PENDING->value)
-                ->update([
+                ->get();
+
+            foreach ($otherOffers as $otherOffer) {
+                $otherOffer->update([
                     'status' => DispatchOfferStatus::EXPIRED,
                     'responded_at' => $now,
                 ]);
+
+                Event::dispatch(new DispatchOfferTaken(
+                    $otherOffer->id,
+                    $case->id,
+                    $otherOffer->office_id,
+                    'taken'
+                ));
+            }
 
             return [
                 'offer_id' => $offer->id,
