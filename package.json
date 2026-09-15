@@ -13,9 +13,12 @@
     "generate:client": "pnpm --filter @pishkhan/api-client generate",
     "contract-check": "bash scripts/contract-check.sh",
     "optimize:images": "vitest run scripts/optimize-images.test.ts",
-    "check:images": "node -e \"import('./scripts/check-image-budget.ts').then(m => m.verifyImageBudget()).then(r => console.log('Budget verified:', r.allFilesPassed && r.homePagePassed))\""
+    "check:images": "node -e \"import('./scripts/check-image-budget.ts').then(m => m.verifyImageBudget()).then(r => console.log('Budget verified:', r.allFilesPassed && r.homePagePassed))\"",
+    "test:e2e": "playwright test --config e2e/playwright.config.ts"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
     "@types/sharp": "^0.32.0",
     "blurhash": "^2.0.5",
     "eslint-plugin-import": "^2.31.0",

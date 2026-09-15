@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import {
   type TimelineStepStatus,
   type TurnOwner,
@@ -111,7 +111,7 @@ function TimelineStepItem({ item, officeNoteLabel, renderDate }: TimelineStepIte
         ) : null}
 
         {item.occurredAt ? (
-          <time dateTime={item.occurredAt} className="block text-[11px] text-slate-400 mt-2 text-start font-mono">
+          <time dateTime={item.occurredAt} className="block text-[11px] text-slate-600 dark:text-slate-400 mt-2 text-start font-mono">
             {renderDate ? renderDate(item.occurredAt) : item.occurredAt}
           </time>
         ) : null}

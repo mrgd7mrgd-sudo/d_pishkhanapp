@@ -29,6 +29,8 @@ coverage/
 .phpunit.result.cache
 .phpstan.cache/
 .php-cs-fixer.cache
+test-results/
+playwright-report/
 
 # Logs & System
 *.log

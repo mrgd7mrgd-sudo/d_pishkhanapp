@@ -14,7 +14,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       'inline-flex items-center justify-center font-medium rounded-xl transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:opacity-50 disabled:pointer-events-none min-h-[44px] min-w-[44px]';
 
     const variants = {
-      primary: 'bg-emerald-600 text-white hover:bg-emerald-700 active:bg-emerald-800',
+      primary: 'bg-emerald-700 text-white hover:bg-emerald-800 active:bg-emerald-900',
       secondary: 'bg-slate-100 text-slate-900 hover:bg-slate-200 active:bg-slate-300',
       glass: 'bg-white/70 backdrop-blur-md border border-white/50 text-slate-800 hover:bg-white/90',
       danger: 'bg-rose-600 text-white hover:bg-rose-700 active:bg-rose-800',

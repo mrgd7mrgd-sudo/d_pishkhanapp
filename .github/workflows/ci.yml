@@ -1,4 +1,4 @@
-﻿name: CI Pipeline
+name: CI Pipeline
 
 on:
   push:
@@ -213,3 +213,25 @@ jobs:
 
       - name: Check Bundle Size Limits
         run: npx size-limit
+
+  e2e:
+    name: 🎭 Playwright E2E Suite (Chromium, WebKit, Mobile)
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js & pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.5.2
+
+      - name: Install Node Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps chromium webkit
+
+      - name: Run E2E Test Suite
+        run: pnpm test:e2e

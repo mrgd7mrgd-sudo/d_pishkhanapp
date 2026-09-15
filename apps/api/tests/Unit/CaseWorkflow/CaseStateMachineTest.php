@@ -154,7 +154,7 @@ test('each of the 17 allowed transitions in architecture section 3.5 executes pr
         return $event->case->id === $case->id
             && $event->from === $from
             && $event->to === $to
-            && $event->eventName() === 'case.status_changed'
+            && $event->eventName() === 'case.status.changed'
             && $event->toPayload()['case_id'] === $case->id;
     });
 })->with('allowed_transitions_matrix');
