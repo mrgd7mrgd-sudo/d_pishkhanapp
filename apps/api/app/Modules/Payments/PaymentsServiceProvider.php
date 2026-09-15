@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Payments;
 
+use App\Modules\Payments\Console\Commands\ReconcilePaymentIntentsCommand;
 use App\Modules\Payments\Domain\LedgerService;
 use App\Modules\Payments\Domain\Models\LedgerAccount;
 use App\Modules\Payments\Domain\Models\LedgerEntry;
@@ -32,5 +33,11 @@ final class PaymentsServiceProvider extends ServiceProvider
         Gate::policy(LedgerEntry::class, LedgerEntryPolicy::class);
         Gate::policy(PaymentIntent::class, PaymentIntentPolicy::class);
         Gate::policy(Payout::class, PayoutPolicy::class);
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                ReconcilePaymentIntentsCommand::class,
+            ]);
+        }
     }
 }

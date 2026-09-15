@@ -17,3 +17,7 @@ Schedule::command('pishkhan:expire-action-required-cases')
 Schedule::command('pishkhan:expire-dispatch-offers')
     ->everyMinute()
     ->withoutOverlapping();
+
+Schedule::command('payments:reconcile --older-than=10')
+    ->everyFiveMinutes()
+    ->withoutOverlapping();
