@@ -1,0 +1,149 @@
+groups:
+  - name: pishkhan_critical_alerts
+    rules:
+      # 1. API Down (§9.6)
+      - alert: ApiDown
+        expr: probe_success{job="pishkhan-api"} == 0 or up{job="pishkhan-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          destination: sms_phone
+        annotations:
+          summary: "API Down — Health check 3 consecutive failures"
+          description: "API instance {{ $labels.instance }} is unreachable or failing health probes."
+
+      # 2. High Error Rate (§9.6)
+      - alert: HighErrorRate
+        expr: (sum(rate(http_requests_total{status=~"5.."}[5m])) / sum(rate(http_requests_total[5m]))) * 100 > 2
+        for: 5m
+        labels:
+          severity: critical
+          destination: sms
+        annotations:
+          summary: "High HTTP 5xx Error Rate"
+          description: "HTTP 5xx error rate exceeds 2% over 5 minutes (current: {{ $value }}%)."
+
+      # 3. Ledger Imbalance (§9.6)
+      - alert: LedgerImbalance
+        expr: pishkhan_ledger_balance_check != 1
+        for: 0m
+        labels:
+          severity: critical
+          destination: sms_halt_payout
+        annotations:
+          summary: "CRITICAL: Ledger Imbalance Detected"
+          description: "Debit and Credit totals in double-entry ledger do not balance! Automated payouts halted."
+
+      # 4. Audit Chain Break (§9.6)
+      - alert: AuditChainBroken
+        expr: pishkhan_audit_chain_status != 1
+        for: 0m
+        labels:
+          severity: critical
+          destination: sms
+        annotations:
+          summary: "CRITICAL: Audit Chain Hash Verification Failed"
+          description: "Immutable hash chain integrity failure in audit_logs table!"
+
+      # 5. Disk Full (§9.6)
+      - alert: DiskFull
+        expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) * 100 < 15
+        for: 5m
+        labels:
+          severity: critical
+          destination: sms
+        annotations:
+          summary: "Disk Usage Exceeds 85%"
+          description: "Available disk space is below 15% on {{ $labels.device }}."
+
+  - name: pishkhan_major_alerts
+    rules:
+      # 6. Replication Lag (§9.6)
+      - alert: ReplicationLag
+        expr: pg_replication_lag_seconds > 60
+        for: 1m
+        labels:
+          severity: major
+          destination: slack_bale
+        annotations:
+          summary: "PostgreSQL Database Replication Lag > 60s"
+          description: "Replica lag is {{ $value }} seconds, exceeding 60s threshold."
+
+      # 7. Queue Backlog (§9.6)
+      - alert: QueueBacklog
+        expr: sum(pishkhan_queue_pending_jobs) > 5000
+        for: 5m
+        labels:
+          severity: major
+          destination: slack
+        annotations:
+          summary: "Queue Backlog Exceeds 5,000 Jobs"
+          description: "Queue backlog has reached {{ $value }} pending jobs."
+
+      # 8. Slow Assignment (§9.6)
+      - alert: SlowAssignment
+        expr: histogram_quantile(0.5, sum(rate(pishkhan_case_assignment_duration_seconds_bucket[15m])) by (le)) > 300
+        for: 15m
+        labels:
+          severity: major
+          destination: slack
+        annotations:
+          summary: "Slow Case Dispatch Assignment"
+          description: "Median dispatch assignment time exceeds 5 minutes over 15 minutes."
+
+      # 9. OTP Delivery Drop (§9.6)
+      - alert: OtpDeliveryDrop
+        expr: (sum(rate(pishkhan_otp_delivered_total[10m])) / sum(rate(pishkhan_otp_sent_total[10m]))) * 100 < 95
+        for: 10m
+        labels:
+          severity: major
+          destination: slack
+        annotations:
+          summary: "OTP SMS Delivery Rate < 95%"
+          description: "OTP delivery success rate dropped to {{ $value }}% over 10 minutes."
+
+      # 10. Circuit Breaker Open (§9.6)
+      - alert: CircuitBreakerOpen
+        expr: pishkhan_circuit_breaker_state{state="open"} == 1
+        for: 0m
+        labels:
+          severity: major
+          destination: slack
+        annotations:
+          summary: "Circuit Breaker Opened for External Service"
+          description: "Circuit breaker for {{ $labels.service }} has entered OPEN state."
+
+      # 11. Document View Anomaly (§9.6)
+      - alert: DocumentViewAnomaly
+        expr: pishkhan_operator_document_views_ratio > 3
+        for: 5m
+        labels:
+          severity: major
+          destination: admin_office_manager
+        annotations:
+          summary: "Document View Anomaly — High Operator View Frequency"
+          description: "Operator document view rate exceeds 3x office mean."
+
+  - name: pishkhan_info_alerts
+    rules:
+      # 12. AI Budget Exceeded (§9.6)
+      - alert: AiBudgetExceeded
+        expr: (pishkhan_ai_monthly_cost_rials / pishkhan_ai_monthly_budget_rials) * 100 > 80
+        for: 1h
+        labels:
+          severity: info
+          destination: slack
+        annotations:
+          summary: "AI Service Monthly Budget Exceeded 80%"
+          description: "AI consumption has reached {{ $value }}% of monthly allocated budget."
+
+      # 13. Performance Budget Violation (§9.6)
+      - alert: PerformanceBudgetViolation
+        expr: pishkhan_lighthouse_ci_failed == 1
+        for: 0m
+        labels:
+          severity: info
+          destination: pr_comment
+        annotations:
+          summary: "Lighthouse CI Performance Budget Failed"
+          description: "Frontend bundle or performance regression detected in CI pipeline."

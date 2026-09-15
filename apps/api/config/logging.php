@@ -62,6 +62,16 @@ return [
             'processors' => [PiiRedactionProcessor::class],
         ],
 
+        'json' => [
+            'driver' => 'monolog',
+            'handler' => StreamHandler::class,
+            'formatter' => \App\Shared\Logging\StructuredJsonFormatter::class,
+            'with' => [
+                'stream' => 'php://stdout',
+            ],
+            'processors' => [PiiRedactionProcessor::class],
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

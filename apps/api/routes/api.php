@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Integration\Geo\Http\TileProxyController;
 use App\Shared\Http\Controllers\HealthController;
+use App\Shared\Http\Controllers\MetricsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ Route::get('/', function () {
 });
 
 Route::get('/v1/health', HealthController::class);
+Route::get('/v1/metrics', MetricsController::class);
+Route::get('/metrics', MetricsController::class);
 
 Route::post('/test/validation', function (Request $request) {
     $validated = $request->validate([

@@ -1,0 +1,93 @@
+services:
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    container_name: pishkhan-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+    networks:
+      - pishkhan-network
+
+  loki:
+    image: grafana/loki:3.1.1
+    container_name: pishkhan-loki
+    restart: unless-stopped
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki/config.yml:/etc/loki/local-config.yaml:ro
+      - loki-data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - pishkhan-network
+
+  grafana:
+    image: grafana/grafana:11.2.0
+    container_name: pishkhan-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=pishkhan_admin_pass
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/pishkhan-overview.json
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+      - loki
+    networks:
+      - pishkhan-network
+
+  glitchtip-db:
+    image: postgres:16-alpine
+    container_name: pishkhan-glitchtip-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=glitchtip
+      - POSTGRES_USER=glitchtip
+      - POSTGRES_PASSWORD=glitchtip_pass
+    volumes:
+      - glitchtip-db-data:/var/lib/postgresql/data
+    networks:
+      - pishkhan-network
+
+  glitchtip-web:
+    image: glitchtip/glitchtip:v4.1.3
+    container_name: pishkhan-glitchtip-web
+    restart: unless-stopped
+    ports:
+      - "8080:8000"
+    environment:
+      - DATABASE_URL=postgres://glitchtip:glitchtip_pass@glitchtip-db:5432/glitchtip
+      - SECRET_KEY=pishkhan_glitchtip_secret_key_ir_selfhosted_32b
+      - GLITCHTIP_DOMAIN=http://localhost:8080
+      - DEFAULT_FROM_EMAIL=glitchtip@pishkhan.ir
+      - ENABLE_ORGANIZATION_CREATION=true
+    depends_on:
+      - glitchtip-db
+    networks:
+      - pishkhan-network
+
+networks:
+  pishkhan-network:
+    name: pishkhan-network
+    external: true
+
+volumes:
+  prometheus-data:
+  loki-data:
+  grafana-data:
+  glitchtip-db-data:
