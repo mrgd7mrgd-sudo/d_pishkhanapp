@@ -21,3 +21,8 @@ Schedule::command('pishkhan:expire-dispatch-offers')
 Schedule::command('payments:reconcile --older-than=10')
     ->everyFiveMinutes()
     ->withoutOverlapping();
+
+Schedule::command('payments:generate-office-payouts')
+    ->dailyAt('02:00')
+    ->withoutOverlapping();
+

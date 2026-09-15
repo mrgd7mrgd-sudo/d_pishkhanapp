@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Payments;
 
+use App\Modules\Payments\Console\Commands\GenerateOfficePayoutsCommand;
 use App\Modules\Payments\Console\Commands\ReconcilePaymentIntentsCommand;
 use App\Modules\Payments\Domain\LedgerService;
 use App\Modules\Payments\Domain\Models\LedgerAccount;
@@ -37,6 +38,7 @@ final class PaymentsServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ReconcilePaymentIntentsCommand::class,
+                GenerateOfficePayoutsCommand::class,
             ]);
         }
     }
