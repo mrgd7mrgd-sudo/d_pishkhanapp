@@ -4,7 +4,7 @@
 > **منبع:** `ARCHITECTURE.md` نسخه ۱.۰.۱ — تمام ۱۲ فصل
 > **بازبینی ۱.۰.۱ (۱۴۰۵/۰۶/۱۷):** همگام‌سازی با اصلاحات سند معماری — نرخ OTP، توکن Service Worker، سقف متد، مسیر جداول مرجع، اتصال Deferred Dispatch، استرداد بین‌فازی، نقش پیک و نگاشت پوشش کامل ۲۵ تصمیم
 > **تاریخ تولید:** ۱۴۰۵/۰۶/۱۷ — 2026-09-08
-> **وضعیت:** 🔧 در حال اجرا — فاز ۳ (تسک‌های TASK-049 تا TASK-062 تکمیل شدند؛ آماده ورود به TASK-063)
+> **وضعیت:** 🚪 در انتظار بازبینی — فاز ۵ تکمیل شد (تسک‌های TASK-084 تا TASK-093-T تکمیل شدند؛ آماده GATE-P5)
 
 ---
 
@@ -317,9 +317,8 @@
 | **TASK-091** | ✅ | موجودی Materialized + کش Redis | §۶.۷، §۹.۲ | `Payments/Infrastructure/BalanceCache.php`, `Console/Commands/SnapshotBalancesCommand.php` | TASK-090 | Snapshot روزانه + دلتای پس از Snapshot (§۹.۲) · `RefreshMaterializedViewsCommand` هفتگی یکشنبه ۰۱:۰۰ (§۵.۹) · کش Redis `wallet:{id}:balance` TTL ۵ دقیقه · **کش است، نه منبع حقیقت** — منبع همیشه `SUM(ledger_entries)` — ✅ Completed |
 | TASK-091-T | ✅ | تست صحت موجودی | §۶.۷، §۹.۵ | `tests/Feature/Payments/BalanceCacheTest.php` | TASK-091 | **تست: موجودی کش‌شده همیشه با `SUM(ledger_entries)` برابر است** (۱۰۰۰ تراکنش تصادفی) · تست: پاک شدن Redis موجودی را خراب نمی‌کند، فقط کند می‌کند · بنچمارک: خواندن موجودی p95 <۲۰ms — ✅ Completed (6/6 passed, 156 assertions) |
 | **TASK-092** | ✅ | اسلایس `wallet` اپ شهروند | §۴.۱، §۴.۴ | `apps/citizen-pwa/src/features/wallet/**`, `packages/ui-kit/src/primitives/CurrencyText.tsx` | TASK-086, TASK-063 | کارت کیف پول، شارژ، تاریخچه تراکنش با Cursor · `CurrencyText` **ریال→تومان با جداکننده فارسی** · بازگشت از درگاه با مدیریت هر سه حالت (موفق/ناموفق/رهاشده) · **پرداخت هرگز Offline نیست** (§۴.۶) — ✅ Completed |
-| TASK-092-T | ✅ | تست UI کیف پول | §۴.۶، §۱۰.۳ | `features/wallet/**/*.test.tsx` | TASK-092 | پوشش ≥۷۵٪ · **E2E سناریو E9: شارژ → ثبت پرونده → بررسی تراز دفتر کل** · تست: در حالت Offline دکمه شارژ پیام مناسب می‌دهد · تست: نمایش تومان درست است ولی مقدار ارسالی ریال · تست axe — ✅ Completed (7/7 passed in citizen-pwa, 6/6 passed in ui-kit) |
-| **TASK-093** | 🔨 | اسلایس `finance` میز اپراتور (فقط مدیر دفتر) | §۴.۴، §۷.۳ | `apps/operator-desk/src/features/finance/**` | TASK-090, TASK-078 | گزارش درآمد، تسویه، مغایرت · **دسترسی فقط `office_manager`** (ماتریس §۷.۳) · نمودار درآمد با dataviz سازگار تم |
-| TASK-093-T | 🧪 | تست مالی میز اپراتور | §۷.۳، §۱۰.۲ | `features/finance/**/*.test.tsx`, `tests/Feature/Security/FinanceAccessTest.php` | TASK-093 | **تست: `office_operator` به مسیر `/finance` دسترسی ندارد (هم UI هم API)** · تست: اعداد گزارش با API مطابق‌اند · تست axe · بررسی دستی با دو نقش مختلف |
+| **TASK-093** | ✅ | اسلایس `finance` میز اپراتور (فقط مدیر دفتر) | §۴.۴، §۷.۳ | `apps/operator-desk/src/features/finance/**` | TASK-090, TASK-078 | گزارش درآمد، تسویه، مغایرت · **دسترسی فقط `office_manager`** (ماتریس §۷.۳) · نمودار درآمد با dataviz سازگار تم — ✅ Completed |
+| TASK-093-T | ✅ | تست مالی میز اپراتور | §۷.۳، §۱۰.۲ | `features/finance/**/*.test.tsx`, `tests/Feature/Security/FinanceAccessTest.php` | TASK-093 | **تست: `office_operator` به مسیر `/finance` دسترسی ندارد (هم UI هم API)** · تست: اعداد گزارش با API مطابق‌اند · تست axe · بررسی دستی با دو نقش مختلف — ✅ Completed (4/4 passed in Pest FinanceAccessTest, 6/6 passed in vitest including axe) |
 | **GATE-P5** | 🚪 | **دروازه بازبینی فاز ۵** | فصل ۱۱ فاز ۵ | — | TASK-093-T | همه ۷ معیار پذیرش فاز ۵ فصل ۱۱ اجرا و سبز · **SLO «صحت دفتر کل» = ۱۰۰٪ با بودجه خطای صفر تأیید شود** · رگرسیون فازهای ۰–۴ سبز · **توقف تا «approved»** |
 
 ---

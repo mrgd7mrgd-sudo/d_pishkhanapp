@@ -27,6 +27,11 @@ const QueuePage = lazy(async () => {
   return { default: mod.QueuePage };
 });
 
+const FinancePage = lazy(async () => {
+  const mod = await import('@/features/finance');
+  return { default: mod.FinanceView };
+});
+
 /**
  * All 10 Operator Desk Routes defined in Architecture §4.4
  */
@@ -38,7 +43,7 @@ export const deskRoutes: RouteObject[] = [
   { path: '/queue', Component: QueuePage },
   { path: '/delivery', Component: DeskPlaceholder('delivery') },
   { path: '/delivery/:deliveryId/waybill', Component: DeskPlaceholder('waybill') },
-  { path: '/finance', Component: DeskPlaceholder('finance') },
+  { path: '/finance', Component: FinancePage },
   { path: '/reviews', Component: DeskPlaceholder('reviews') },
   { path: '/office-profile', Component: DeskPlaceholder('office_profile') },
   { path: '/', Component: WorkspacePage }, // default workspace redirect
