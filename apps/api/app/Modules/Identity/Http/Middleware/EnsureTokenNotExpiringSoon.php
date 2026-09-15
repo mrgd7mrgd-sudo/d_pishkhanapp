@@ -24,7 +24,7 @@ final class EnsureTokenNotExpiringSoon
         }
 
         $currentToken = $user->currentAccessToken();
-        if ($currentToken !== null && $currentToken->expires_at !== null) {
+        if ($currentToken !== null && $currentToken->expires_at instanceof \DateTimeInterface) {
             $now = CarbonImmutable::now();
             $expiresAt = CarbonImmutable::instance($currentToken->expires_at);
 
