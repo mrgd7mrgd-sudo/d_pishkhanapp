@@ -13,6 +13,8 @@ use App\Modules\CaseWorkflow\Domain\TransitionContext;
 use App\Modules\Identity\Domain\Enums\OperatorRole;
 use App\Modules\Identity\Domain\Models\Operator;
 use App\Modules\Messaging\Jobs\SendCaseNotificationJob;
+use App\Modules\Payments\Domain\Enums\RefundReason;
+use App\Modules\Payments\Jobs\RefundCaseFeeJob;
 use App\Shared\Audit\AuditableAction;
 use App\Shared\Audit\AuditLogger;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -88,6 +90,14 @@ final class RejectCaseAction
             'operator',
             $operator->id
         );
+
+        // Dispatch refund through Payments module (Architecture §8.2, §3.5, Scenario E10)
+        if ($updatedCase->fee_paid_rials > 0) {
+            RefundCaseFeeJob::dispatch(
+                $updatedCase->id,
+                RefundReason::CASE_REJECTED
+            );
+        }
 
         return $updatedCase;
     }
