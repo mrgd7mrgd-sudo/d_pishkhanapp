@@ -13,6 +13,7 @@ export * from './primitives/OtpInput';
 export * from './primitives/ServiceTagBadge';
 export * from './primitives/ResponsiveImage';
 export * from './primitives/FileDropzone';
+export * from './primitives/CurrencyText';
 export * from './patterns/TurnOwnerChip';
 export * from './patterns/CountdownTimer';
 export * from './patterns/Timeline';

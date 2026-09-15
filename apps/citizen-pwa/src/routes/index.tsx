@@ -52,6 +52,16 @@ const Notifications = lazy(async () => {
   return { default: mod.NotificationsView };
 });
 
+const WalletDashboard = lazy(async () => {
+  const mod = await import('@/features/wallet');
+  return { default: mod.WalletDashboardView };
+});
+
+const WalletTransactions = lazy(async () => {
+  const mod = await import('@/features/wallet');
+  return { default: mod.WalletTransactionsView };
+});
+
 /**
  * All 26 Citizen Routes defined in Architecture §4.4
  */
@@ -80,8 +90,8 @@ export const routes: RouteObject[] = [
   { path: '/profile/settings', Component: Placeholder('settings') },
   { path: '/profile/support', Component: Placeholder('support') },
   { path: '/profile/about', Component: Placeholder('about') },
-  { path: '/wallet', Component: Placeholder('wallet') },
-  { path: '/wallet/transactions', Component: Placeholder('wallet_transactions') },
+  { path: '/wallet', Component: WalletDashboard },
+  { path: '/wallet/transactions', Component: WalletTransactions },
   { path: '/login', Component: Login },
   { path: '/offline', Component: Placeholder('offline') },
 ];
