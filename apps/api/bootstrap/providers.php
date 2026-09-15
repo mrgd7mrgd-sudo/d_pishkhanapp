@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Integration\Geo\GeoServiceProvider;
+use App\Integration\Payment\PaymentServiceProvider;
 use App\Integration\Sms\SmsServiceProvider;
 use App\Providers\AppServiceProvider;
 use App\Providers\ModuleServiceProvider;
@@ -14,4 +15,5 @@ return [
     RateLimitServiceProvider::class,
     SmsServiceProvider::class,
     GeoServiceProvider::class,
+    PaymentServiceProvider::class,
 ];

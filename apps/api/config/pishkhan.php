@@ -50,4 +50,15 @@ return [
     'gov' => [
         'driver' => env('GOV_DRIVER', 'simulator'),
     ],
+    'payment' => [
+        'driver' => env('PAYMENT_DRIVER', 'fake'), // 'fake', 'zarinpal', 'zibal', 'circuit_breaker'
+        'zarinpal' => [
+            'merchant_id' => env('ZARINPAL_MERCHANT_ID', '00000000-0000-0000-0000-000000000000'),
+            'sandbox' => (bool) env('ZARINPAL_SANDBOX', true),
+        ],
+        'zibal' => [
+            'merchant' => env('ZIBAL_MERCHANT', 'zibal'),
+            'sandbox' => (bool) env('ZIBAL_SANDBOX', true),
+        ],
+    ],
 ];
