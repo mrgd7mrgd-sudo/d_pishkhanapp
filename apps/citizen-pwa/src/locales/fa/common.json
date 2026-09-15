@@ -262,7 +262,9 @@
     "action_view_cancellation_details": "جزئیات لغو",
     "action_edit_case": "ویرایش پیش‌نویس",
     "action_submit_case": "ارسال نهایی پرونده",
-    "action_discard_case": "حذف پیش‌نویس"
+    "action_discard_case": "حذف پیش‌نویس",
+    "slow_update_mode": "حالت به‌روزرسانی کند (دریافت اطلاعات هر ۱۵ ثانیه)",
+    "realtime_connected": "ارتباط زنده برقرار است"
   },
   "vault": {
     "page_title": "مخزن امن مدارک من",

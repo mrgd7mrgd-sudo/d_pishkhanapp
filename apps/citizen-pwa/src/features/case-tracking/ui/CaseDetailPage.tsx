@@ -1,6 +1,12 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import {
+  QueryClient,
+  QueryClientContext,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query';
 import {
   StatusPill,
   TurnOwnerChip,
@@ -12,6 +18,7 @@ import {
 import type { CaseDetail } from '../types';
 import { caseTrackingApi } from '../api/caseTrackingApi';
 import { formatJalaliDateTime } from '../utils/formatters';
+import { useRealtimeOrPoll } from '@/shared/realtime';
 import { CaseStatusBanner } from './CaseStatusBanner';
 import { CaseActionsPanel } from './CaseActionsPanel';
 
@@ -128,37 +135,53 @@ function DetailLoadingOrError({ isLoading, detail }: { isLoading: boolean; detai
   return null;
 }
 
-export function CaseDetailPage(): React.JSX.Element {
+const fallbackQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      staleTime: 5000,
+    },
+  },
+});
+
+function CaseDetailContent(): React.JSX.Element {
   const { trackingCode } = useParams<{ trackingCode: string }>();
   const { t } = useTranslation();
-  const [detail, setDetail] = useState<CaseDetail | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [actionMessage, setActionMessage] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!trackingCode) return;
-    let mounted = true;
-    caseTrackingApi
-      .getCaseByTrackingCode(trackingCode)
-      .then((data) => {
-        if (mounted) {
-          setDetail(data);
-          setIsLoading(false);
-        }
-      })
-      .catch(() => {
-        if (mounted) setIsLoading(false);
-      });
-    return () => {
-      mounted = false;
-    };
-  }, [trackingCode]);
+  const queryKey = ['case', trackingCode];
+
+  // Wire Realtime & Mandatory Polling Fallback (§4.10, D-22)
+  const { isSlowUpdateMode, refetchInterval } = useRealtimeOrPoll({
+    channelName: trackingCode ? `private-case.${trackingCode}` : '',
+    queryKey,
+    pollIntervalMs: 15000,
+    connectionTimeoutMs: 10000,
+  });
+
+  const { data: detail = null, isLoading } = useQuery({
+    queryKey,
+    queryFn: () => (trackingCode ? caseTrackingApi.getCaseByTrackingCode(trackingCode) : Promise.resolve(null)),
+    enabled: Boolean(trackingCode),
+    refetchInterval,
+  });
 
   const earlyView = DetailLoadingOrError({ isLoading, detail });
   if (earlyView || !detail) return earlyView ?? <div />;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+      {isSlowUpdateMode && (
+        <div
+          role="status"
+          aria-live="polite"
+          data-testid="slow-update-badge"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-xs font-medium"
+        >
+          <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+          <span>{t('cases.slow_update_mode')}</span>
+        </div>
+      )}
       <CaseDetailHeader detail={detail} />
       <TurnAndSlaCard detail={detail} />
       {actionMessage && <div className="p-3 rounded-xl bg-blue-50 text-blue-800 text-xs border border-blue-200">{actionMessage}</div>}
@@ -169,5 +192,17 @@ export function CaseDetailPage(): React.JSX.Element {
       {detail.assigned_office ? <OfficeInfoCard office={detail.assigned_office} /> : null}
       <CaseActionsPanel availableActions={detail.available_actions} trackingCode={detail.tracking_code} onActionClick={(a) => setActionMessage(`${t('cases.action_executed_prefix')}: ${a}`)} />
     </div>
+  );
+}
+
+export function CaseDetailPage(): React.JSX.Element {
+  const existingClient = useContext(QueryClientContext);
+  if (existingClient) {
+    return <CaseDetailContent />;
+  }
+  return (
+    <QueryClientProvider client={fallbackQueryClient}>
+      <CaseDetailContent />
+    </QueryClientProvider>
   );
 }
