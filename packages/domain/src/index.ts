@@ -12,3 +12,4 @@ export * from './national-id.js';
 export * from './persian-text.js';
 export * from './ledger.js';
 export * from './dispatch.js';
+export * from './payment.js';

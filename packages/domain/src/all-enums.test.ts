@@ -26,6 +26,10 @@ import {
   getCitizenTierMeta,
   DELEGATION_STATUSES,
   getDelegationStatusMeta,
+  PAYMENT_INTENT_STATUSES,
+  PAYMENT_INTENT_STATUS_DEFINITIONS,
+  PAYOUT_STATUSES,
+  PAYOUT_STATUS_DEFINITIONS,
 } from './index.js';
 
 describe('Turn Owners (5 owners)', () => {
@@ -177,6 +181,24 @@ describe('Timeline, Citizen Tiers and Delegations', () => {
       expect(meta.label.trim().length).toBeGreaterThan(0);
       expect(meta.color.trim().length).toBeGreaterThan(0);
       expect(meta.description.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  it('has 6 payment intent statuses with non-empty Persian labels', () => {
+    expect(PAYMENT_INTENT_STATUSES).toHaveLength(6);
+    for (const status of PAYMENT_INTENT_STATUSES) {
+      const meta = PAYMENT_INTENT_STATUS_DEFINITIONS[status];
+      expect(meta.code).toBe(status);
+      expect(meta.label.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  it('has 4 payout statuses with non-empty Persian labels', () => {
+    expect(PAYOUT_STATUSES).toHaveLength(4);
+    for (const status of PAYOUT_STATUSES) {
+      const meta = PAYOUT_STATUS_DEFINITIONS[status];
+      expect(meta.code).toBe(status);
+      expect(meta.label.trim().length).toBeGreaterThan(0);
     }
   });
 });

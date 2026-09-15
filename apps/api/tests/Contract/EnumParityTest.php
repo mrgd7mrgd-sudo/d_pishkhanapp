@@ -13,6 +13,9 @@ use App\Modules\Payments\Domain\Enums\LedgerAccountKind;
 use App\Modules\Payments\Domain\Enums\LedgerDirection;
 use App\Modules\Payments\Domain\Enums\LedgerOwnerType;
 use App\Modules\Payments\Domain\Enums\LedgerTransactionType;
+use App\Modules\Payments\Domain\Enums\PaymentGateway;
+use App\Modules\Payments\Domain\Enums\PaymentIntentStatus;
+use App\Modules\Payments\Domain\Enums\PayoutStatus;
 use Illuminate\Support\Facades\File;
 
 function extractTsStringArray(string $filePath, string $arrayName): array
@@ -119,4 +122,24 @@ it('verifies exact parity between PHP DispatchOfferStatus and TypeScript DISPATC
 
     expect($phpStatuses)->toBe($tsStatuses)
         ->and(count($phpStatuses))->toBe(4);
+});
+
+it('verifies exact parity between PHP and TypeScript payment enums (§6.1, §8.2, TASK-084)', function (): void {
+    $tsPath = realpath(__DIR__.'/../../../../packages/domain/src/payment.ts');
+    expect($tsPath)->not->toBeFalse();
+
+    // Payment Intent Statuses
+    $tsIntentStatuses = extractTsStringArray($tsPath, 'PAYMENT_INTENT_STATUSES');
+    expect(PaymentIntentStatus::values())->toBe($tsIntentStatuses)
+        ->and(count($tsIntentStatuses))->toBe(6);
+
+    // Payment Gateways
+    $tsGateways = extractTsStringArray($tsPath, 'PAYMENT_GATEWAYS');
+    expect(PaymentGateway::values())->toBe($tsGateways)
+        ->and(count($tsGateways))->toBe(3);
+
+    // Payout Statuses
+    $tsPayoutStatuses = extractTsStringArray($tsPath, 'PAYOUT_STATUSES');
+    expect(PayoutStatus::values())->toBe($tsPayoutStatuses)
+        ->and(count($tsPayoutStatuses))->toBe(4);
 });
