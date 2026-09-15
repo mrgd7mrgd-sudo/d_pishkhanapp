@@ -75,6 +75,11 @@ final class CompleteCaseAction
             $operator->id
         );
 
+        // Side effect: Fee settlement between office and platform (§8.2)
+        if ($updatedCase->fee_paid_rials > 0) {
+            \App\Modules\Payments\Jobs\SettleCaseFeeJob::dispatch($updatedCase->id);
+        }
+
         return $updatedCase;
     }
 }
