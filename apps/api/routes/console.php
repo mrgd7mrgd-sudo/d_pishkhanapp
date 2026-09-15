@@ -26,3 +26,11 @@ Schedule::command('payments:generate-office-payouts')
     ->dailyAt('02:00')
     ->withoutOverlapping();
 
+Schedule::command('payments:snapshot-balances')
+    ->dailyAt('01:30')
+    ->withoutOverlapping();
+
+Schedule::command('pishkhan:refresh-materialized-views')
+    ->weeklyOn(0, '01:00')
+    ->withoutOverlapping();
+

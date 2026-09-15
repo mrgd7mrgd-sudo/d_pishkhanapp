@@ -16,6 +16,7 @@ use App\Modules\Payments\Http\Requests\TopupRequest;
 use App\Modules\Payments\Http\Requests\VerifyTopupRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Modules\Payments\Infrastructure\BalanceCache;
 use Illuminate\Support\Facades\Gate;
 
 final class WalletController
@@ -83,18 +84,12 @@ final class WalletController
         ], 200);
     }
 
-    public function balance(Request $request, LedgerService $ledgerService): JsonResponse
+    public function balance(Request $request, BalanceCache $balanceCache): JsonResponse
     {
         /** @var Citizen $citizen */
         $citizen = $request->user();
 
-        $walletAccount = $ledgerService->getOrCreateAccount(
-            ownerType: LedgerOwnerType::CITIZEN,
-            ownerId: $citizen->id,
-            kind: LedgerAccountKind::WALLET
-        );
-
-        $balanceRials = $ledgerService->getBalanceRials($walletAccount);
+        $balanceRials = $balanceCache->getBalance($citizen->id);
         $balanceToman = (int) floor($balanceRials / 10);
 
         return new JsonResponse([

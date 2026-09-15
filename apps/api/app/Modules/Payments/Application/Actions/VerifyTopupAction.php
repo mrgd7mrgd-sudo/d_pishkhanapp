@@ -20,6 +20,7 @@ use App\Modules\Payments\Domain\Exceptions\PaymentVerificationFailedException;
 use App\Modules\Payments\Domain\LedgerEntryData;
 use App\Modules\Payments\Domain\LedgerService;
 use App\Modules\Payments\Domain\Models\PaymentIntent;
+use App\Modules\Payments\Infrastructure\BalanceCache;
 use App\Shared\Money\Money;
 use Carbon\CarbonImmutable;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -31,6 +32,7 @@ final class VerifyTopupAction
     public function __construct(
         private readonly PaymentGatewayPort $paymentGateway,
         private readonly LedgerService $ledgerService,
+        private readonly BalanceCache $balanceCache,
     ) {}
 
     /**
@@ -138,7 +140,8 @@ final class VerifyTopupAction
                 paymentIntentId: $lockedIntent->id,
             );
 
-            $newBalanceRials = $this->ledgerService->getBalanceRials($walletAccount);
+            $this->balanceCache->invalidate($citizen->id);
+            $newBalanceRials = $this->balanceCache->getBalance($citizen->id);
 
             return [
                 'intent' => $lockedIntent,
