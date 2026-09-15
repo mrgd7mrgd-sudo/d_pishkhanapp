@@ -42,6 +42,16 @@ const DocumentsVault = lazy(async () => {
   return { default: mod.DocumentsVaultView };
 });
 
+const CaseChat = lazy(async () => {
+  const mod = await import('@/features/messaging');
+  return { default: mod.CaseChatView };
+});
+
+const Notifications = lazy(async () => {
+  const mod = await import('@/features/messaging');
+  return { default: mod.NotificationsView };
+});
+
 /**
  * All 26 Citizen Routes defined in Architecture §4.4
  */
@@ -56,7 +66,7 @@ export const routes: RouteObject[] = [
   { path: '/map/offices/:officeId', Component: OfficesMap },
   { path: '/cases', Component: CaseList },
   { path: '/cases/:trackingCode', Component: CaseDetail },
-  { path: '/cases/:trackingCode/chat', Component: Placeholder('case_chat') },
+  { path: '/cases/:trackingCode/chat', Component: CaseChat },
   { path: '/consultation', Component: Placeholder('consultation') },
   { path: '/consultation/advisors/:advisorId', Component: Placeholder('advisor_detail') },
   { path: '/consultation/sessions/:sessionId', Component: Placeholder('session_live') },
@@ -65,7 +75,7 @@ export const routes: RouteObject[] = [
   { path: '/profile/documents', Component: DocumentsVault },
   { path: '/profile/appointments', Component: Placeholder('appointments') },
   { path: '/profile/reminders', Component: Placeholder('reminders') },
-  { path: '/profile/messages', Component: Placeholder('messages') },
+  { path: '/profile/messages', Component: Notifications },
   { path: '/profile/delegations', Component: Placeholder('delegations') },
   { path: '/profile/settings', Component: Placeholder('settings') },
   { path: '/profile/support', Component: Placeholder('support') },

@@ -303,6 +303,28 @@
     "upload_missing_fields": "لطفاً عنوان مدرک و فایل را انتخاب فرمایید.",
     "upload_failed": "خطا در بارگذاری مدرک در مخزن.",
     "submit_upload": "بارگذاری و ذخیره در مخزن"
+  },
+  "messaging": {
+    "chat_title": "گفتگو با دفتر پیشخوان",
+    "case_label": "پرونده",
+    "back_to_case": "بازگشت به پرونده",
+    "input_placeholder": "پیام خود را بنویسید...",
+    "send_button": "ارسال",
+    "sending": "در حال ارسال...",
+    "pending_offline": "در صف ارسال آفلاین",
+    "failed_send": "خطا در ارسال",
+    "retry": "تلاش مجدد",
+    "empty_messages": "هنوز پیامی در این گفتگو ثبت نشده است.",
+    "offline_notice": "ارتباط اینترنتی قطع است — پیام در صف محلی ذخیره شد.",
+    "notifications_title": "پیام‌ها و ابلاغیه‌ها",
+    "notifications_subtitle": "اعلان‌های سیستم، وضعیت پرونده‌ها و ابلاغیه‌های رسمی",
+    "tab_all": "همه پیام‌ها",
+    "tab_unread": "خوانده‌نشده",
+    "tab_notices": "ابلاغیه‌های رسمی",
+    "mark_all_read": "خواندن همه",
+    "mark_as_read": "خوانده شد",
+    "empty_notifications": "هیچ پیام یا اعلانی برای نمایش وجود ندارد.",
+    "official_notice_badge": "ابلاغیه رسمی"
   }
 }
 
