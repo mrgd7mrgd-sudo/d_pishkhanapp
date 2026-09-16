@@ -1,0 +1,52 @@
+services:
+  ai-egress-proxy-primary:
+    build:
+      context: ../services/ai-egress-proxy
+      dockerfile: Dockerfile
+    container_name: pishkhan_ai_egress_proxy_primary
+    restart: always
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    ports:
+      - "8443:8443"
+    environment:
+      PORT: "8443"
+      TARGET_BASE_URL: "https://openrouter.ai/api"
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      ENFORCE_MTLS: "true"
+      SERVER_CERT_PATH: "/certs/server.crt"
+      SERVER_KEY_PATH: "/certs/server.key"
+      CLIENT_CA_CERT_PATH: "/certs/ca.crt"
+    volumes:
+      - ./certs/proxy:/certs:ro
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  ai-egress-proxy-secondary:
+    build:
+      context: ../services/ai-egress-proxy
+      dockerfile: Dockerfile
+    container_name: pishkhan_ai_egress_proxy_secondary
+    restart: always
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    ports:
+      - "8444:8443"
+    environment:
+      PORT: "8443"
+      TARGET_BASE_URL: "https://openrouter.ai/api"
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      ENFORCE_MTLS: "true"
+      SERVER_CERT_PATH: "/certs/server.crt"
+      SERVER_KEY_PATH: "/certs/server.key"
+      CLIENT_CA_CERT_PATH: "/certs/ca.crt"
+    volumes:
+      - ./certs/proxy:/certs:ro
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
