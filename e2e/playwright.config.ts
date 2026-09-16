@@ -22,6 +22,13 @@ export default defineConfig({
     baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:5173',
     trace: 'on-first-retry',
   },
+  webServer: {
+    command: 'pnpm --filter ./apps/citizen-pwa dev',
+    url: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:5173',
+    cwd: path.join(__dirname, '..'),
+    reuseExistingServer: !process.env.CI,
+    timeout: 120_000,
+  },
   projects: [
     {
       name: 'chromium',
