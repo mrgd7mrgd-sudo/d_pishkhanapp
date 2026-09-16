@@ -43,6 +43,7 @@ use Illuminate\Support\Carbon;
  * @property-read Collection<int, OfficeSpecialty> $specialties
  * @property-read Collection<int, OfficeMedal> $medals
  * @property-read Collection<int, OfficeAnnouncement> $announcements
+ * @property-read Collection<int, OfficeReview> $reviews
  */
 final class Office extends Model
 {
@@ -125,5 +126,13 @@ final class Office extends Model
     public function announcements(): HasMany
     {
         return $this->hasMany(OfficeAnnouncement::class, 'office_id');
+    }
+
+    /**
+     * @return HasMany<OfficeReview, $this>
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(OfficeReview::class, 'office_id');
     }
 }
