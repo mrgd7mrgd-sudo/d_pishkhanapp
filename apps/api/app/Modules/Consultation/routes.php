@@ -23,3 +23,11 @@ Route::middleware(['auth:sanctum'])->prefix('admin/advisors')->group(function ()
     Route::post('/{id}/approve', [AdminAdvisorController::class, 'approve']);
     Route::post('/{id}/reject', [AdminAdvisorController::class, 'reject']);
 });
+
+// Consultation sessions management routes (§5.3, §8.2, TASK-119)
+Route::middleware(['auth:sanctum'])->prefix('consultations/sessions')->group(function (): void {
+    Route::get('/', [\App\Modules\Consultation\Http\Controllers\SessionController::class, 'index']);
+    Route::post('/start', [\App\Modules\Consultation\Http\Controllers\SessionController::class, 'start']);
+    Route::get('/{id}', [\App\Modules\Consultation\Http\Controllers\SessionController::class, 'show']);
+    Route::post('/{id}/end', [\App\Modules\Consultation\Http\Controllers\SessionController::class, 'end']);
+});
