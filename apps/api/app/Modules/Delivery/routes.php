@@ -15,6 +15,8 @@ Route::get('/deliveries/{id}/waybill/download', [WaybillController::class, 'down
 
 // Operator desk delivery management
 Route::middleware(['auth:operator,sanctum', 'office.scope'])->group(function (): void {
+    Route::get('/deliveries', [DeliveryController::class, 'index']);
+    Route::get('/deliveries/ready-cases', [DeliveryController::class, 'readyCases']);
     Route::post('/deliveries', [DeliveryController::class, 'store']);
     Route::get('/deliveries/{id}', [DeliveryController::class, 'show']);
     Route::post('/deliveries/{id}/assign-courier', [DeliveryController::class, 'assignCourier']);

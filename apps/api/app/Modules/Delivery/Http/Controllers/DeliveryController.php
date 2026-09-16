@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Delivery\Http\Controllers;
 
+use App\Modules\CaseWorkflow\Domain\Enums\CaseStatus;
+use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
 use App\Modules\Delivery\Application\Actions\AssignCourierAction;
 use App\Modules\Delivery\Application\Actions\ConfirmDeliveryAction;
 use App\Modules\Delivery\Application\Actions\CreateDeliveryRequestAction;
@@ -18,11 +20,86 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * DeliveryController (Architecture §3.5, §6.1, §7.1, §7.3, TASK-095, TASK-096).
+ * DeliveryController (Architecture §3.5, §6.1, §7.1, §7.3, TASK-095, TASK-096, TASK-103).
  * Endpoints for managing delivery lifecycle and OTP confirmation.
  */
 final class DeliveryController
 {
+    /**
+     * GET /deliveries
+     */
+    public function index(Request $request): JsonResponse
+    {
+        $operator = $this->resolveOperator($request);
+
+        $query = DeliveryRequest::query()
+            ->with(['office'])
+            ->where('office_id', $operator->office_id)
+            ->orderBy('created_at', 'desc');
+
+        if ($request->filled('status')) {
+            $query->where('delivery_status', (string) $request->query('status'));
+        }
+
+        if ($request->filled('courier_type')) {
+            $query->where('courier_type', (string) $request->query('courier_type'));
+        }
+
+        if ($request->filled('search')) {
+            $search = (string) $request->query('search');
+            $query->where(function ($q) use ($search): void {
+                $q->where('tracking_barcode', 'like', "%{$search}%")
+                    ->orWhere('destination_address', 'like', "%{$search}%")
+                    ->orWhere('courier_name', 'like', "%{$search}%");
+            });
+        }
+
+        $deliveries = $query->paginate(25);
+
+        return new JsonResponse([
+            'data' => DeliveryResource::collection($deliveries->items())->resolve(),
+            'meta' => [
+                'current_page' => $deliveries->currentPage(),
+                'last_page' => $deliveries->lastPage(),
+                'total' => $deliveries->total(),
+            ],
+        ]);
+    }
+
+    /**
+     * GET /deliveries/ready-cases
+     */
+    public function readyCases(Request $request): JsonResponse
+    {
+        $operator = $this->resolveOperator($request);
+
+        $cases = CaseRequest::query()
+            ->with(['citizen', 'service'])
+            ->where('office_id', $operator->office_id)
+            ->where('status', CaseStatus::READY_FOR_ISSUE->value)
+            ->orderBy('updated_at', 'desc')
+            ->limit(50)
+            ->get();
+
+        /** @var list<array<string, mixed>> $data */
+        $data = [];
+        foreach ($cases as $case) {
+            /** @var CaseRequest $case */
+            $data[] = [
+                'id' => $case->id,
+                'tracking_code' => $case->tracking_code,
+                'service_title' => $case->service?->title,
+                'citizen_name' => $case->citizen?->full_name,
+                'citizen_mobile' => $case->citizen?->mobile,
+                'delivery_preference' => $case->delivery_preference->value,
+                'address' => $case->citizen?->address,
+                'postal_code' => $case->citizen?->postal_code,
+            ];
+        }
+
+        return new JsonResponse(['data' => $data]);
+    }
+
     /**
      * POST /deliveries
      */
