@@ -396,8 +396,8 @@
 
 | ID | Type | عنوان | Arch § | فایل‌ها | Deps | Definition of Done |
 |---|:---:|---|---|---|---|---|
-| **TASK-116** | 🔨 | مهاجرت‌های مشاوران | §۶.۱ | `app/Modules/Consultation/Database/Migrations/*` (۳ فایل), `Domain/Models/{Advisor,AdvisorSpecialty,AdvisorReview}.php` | TASK-107 | **۶ دسته مشاوره** Enum · **امتیاز سه‌بعدی** `rating_accuracy`/`rating_eloquence`/`rating_patience` · **سه نرخ**: `price_text_chat_rials`, `price_phone_per_minute_rials`, `price_deep_review_rials` · `application_status` · `license_number` |
-| TASK-116-T | 🧪 | تست Schema مشاوران | §۶.۱، §۶.۳ | `tests/Feature/Consultation/AdvisorSchemaTest.php` | TASK-116 | تست: هر ۶ دسته در Enum و مطابق `packages/domain` · تست: هر سه نرخ عدد صحیح ریالی‌اند · تست: امتیاز کلی از سه بعد مشتق می‌شود |
+| **TASK-116** | ✅ | مهاجرت‌های مشاوران | §۶.۱ | `app/Modules/Consultation/Database/Migrations/*` (۳ فایل), `Domain/Models/{Advisor,AdvisorSpecialty,AdvisorReview}.php` | TASK-107 | **۶ دسته مشاوره** Enum · **امتیاز سه‌بعدی** `rating_accuracy`/`rating_eloquence`/`rating_patience` · **سه نرخ**: `price_text_chat_rials`, `price_phone_per_minute_rials`, `price_deep_review_rials` · `application_status` · `license_number` — ✅ Completed |
+| TASK-116-T | ✅ | تست Schema مشاوران | §۶.۱، §۶.۳ | `tests/Feature/Consultation/AdvisorSchemaTest.php` | TASK-116 | تست: هر ۶ دسته در Enum و مطابق `packages/domain` · تست: هر سه نرخ عدد صحیح ریالی‌اند · تست: امتیاز کلی از سه بعد مشتق می‌شود — ✅ Completed (4/4 passed, 29 assertions; enum parity passed) |
 | **TASK-117** | 🔨 | مهاجرت‌های جلسه مشاوره و اشتراک | §۶.۱ | `Consultation/Database/Migrations/*` (۵ فایل), `Domain/Models/{ConsultationSession,SessionMessage,SubscriptionPlan,Subscription,QuotaUsage}.php` | TASK-116 | **۳ حالت مشاوره** Enum (`text`/`call`/`case_review`) · `linked_service_id` برای اتصال «مشاوره → اجرای خدمت» · `quota_usages` با **Invariant §۵.۳: هرگز منفی نشود** |
 | TASK-117-T | 🧪 | تست Schema جلسه و اشتراک | §۵.۳ | `tests/Feature/Consultation/SessionSchemaTest.php` | TASK-117 | تست: `quota_usages.used` منفی → نقض Constraint دیتابیس · تست: هر ۳ حالت در Enum · تست: `linked_service_id` نامعتبر → نقض کلید خارجی |
 | **TASK-118** | 🔨 | ثبت‌نام و تأیید مشاور | §۵.۳، §۷.۳ | `Consultation/Application/Actions/{SubmitAdvisorApplicationAction,ApproveAdvisorAction}.php`, `Http/Controllers/{AdvisorController,AdminAdvisorController}.php` | TASK-117, TASK-030 | `POST /advisors/apply` (نگاشت `AdvisorRegistrationForm` پروتوتایپ) · `GET /advisors`, `GET /advisors/{id}` · `POST /admin/advisors/{id}/approve` · **Invariant §۵.۳: فعال‌سازی فقط پس از تأیید ادمین و اعتبارسنجی شماره پروانه** · نقش `advisor` پس از تأیید اعطا می‌شود |
@@ -439,11 +439,11 @@
 | **۴ — Dispatch و میز کار** 🎯 | TASK-066 … TASK-083 | ۲ | ۰ | ۳۴ | ⬜ **GATE-P4 = MVP** |
 | ۵ — پرداخت | TASK-084 … TASK-093 | ۰ | ۰ | ۲۰ | ⬜ GATE-P5 |
 | ۶ — تحویل و نوبت | TASK-094 … TASK-106 | ۲۶ | ۰ | ۲۶ | 🚪 GATE-P6 |
-| ۷ — هوش مصنوعی | TASK-107 … TASK-115 | ۱۸ | ۰ | ۰ | 🚪 GATE-P7 |
-| ۸ — مشاوره و مقیاس | TASK-116 … TASK-129 | ۰ | ۰ | ۲۸ | ⬜ GATE-P8 |
-| | **مجموع** | **۱۵۰** | **۰** | **۱۰۸** | **۵/۹ دروازه** |
+| ۷ — هوش مصنوعی | TASK-107 … TASK-115 | ۱۸ | ۰ | ۰ | ✅ GATE-P7 |
+| ۸ — مشاوره و مقیاس | TASK-116 … TASK-129 | ۲ | ۰ | ۲۶ | ⬜ GATE-P8 |
+| | **مجموع** | **۱۵۲** | **۰** | **۱۰۶** | **۵/۹ دروازه** |
 
-**تسک جاری:** GATE-P7 (دروازه بازبینی فاز ۷ — دستیار هوشمند)
+**تسک جاری:** TASK-117 (مهاجرت‌های جلسه مشاوره و اشتراک)
 
 ---
 

@@ -189,3 +189,13 @@ it('verifies exact parity between PHP and TypeScript AI assistance enums (§6.1,
     expect(AiMessageRole::values())->toBe($tsRoles)
         ->and(count($tsRoles))->toBe(3);
 });
+
+it('verifies exact parity between PHP and TypeScript consultation enums (§6.1, §6.3, TASK-116)', function (): void {
+    $tsPath = realpath(__DIR__.'/../../../../packages/domain/src/consultation.ts');
+    expect($tsPath)->not->toBeFalse();
+
+    // Consultation Categories
+    $tsCategories = extractTsStringArray($tsPath, 'CONSULTATION_CATEGORIES');
+    expect(\App\Modules\Consultation\Domain\Enums\ConsultationCategory::values())->toBe($tsCategories)
+        ->and(count($tsCategories))->toBe(6);
+});
