@@ -4,7 +4,7 @@
 > **منبع:** `ARCHITECTURE.md` نسخه ۱.۰.۱ — تمام ۱۲ فصل
 > **بازبینی ۱.۰.۱ (۱۴۰۵/۰۶/۱۷):** همگام‌سازی با اصلاحات سند معماری — نرخ OTP، توکن Service Worker، سقف متد، مسیر جداول مرجع، اتصال Deferred Dispatch، استرداد بین‌فازی، نقش پیک و نگاشت پوشش کامل ۲۵ تصمیم
 > **تاریخ تولید:** ۱۴۰۵/۰۶/۱۷ — 2026-09-08
-> **وضعیت:** 🚪 در انتظار بازبینی — فاز ۵ تکمیل شد (تسک‌های TASK-084 تا TASK-093-T تکمیل شدند؛ آماده GATE-P5)
+> **وضعیت:** 🚪 در انتظار بازبینی — فاز ۷ تکمیل شد (تسک‌های TASK-107 تا TASK-115-T تکمیل شدند؛ آماده GATE-P7)
 
 ---
 
@@ -383,8 +383,8 @@
 | TASK-113-T | ✅ | تست تاب‌آوری AI | §۹.۴، §۱۰.۳ (E16) | `tests/Feature/Ai/AiResilienceTest.php` | TASK-113 | **E2E سناریو E16: خاموش کردن پروکسی → پاسخ Fallback داده می‌شود، نه خطای ۵۰۰** (خروجی واقعی) · تست: پیام ۳۱ در ساعت → `429` با پیام فارسی · تست: اتمام بودجه → Fallback + هشدار · تست: `isAvailable()` وضعیت واقعی را برمی‌گرداند — ✅ Completed (4/4 passed, 23 assertions) |
 | **TASK-114** | ✅ | دستیار صوتی — رونویسی فارسی سمت سرور | §۸.۱.۵ | `AiAssistance/Http/Controllers/AiVoiceController.php`, `Application/TranscribeVoiceAction.php`, `Jobs/TranscribeVoiceJob.php` | TASK-113 | `POST /ai/voice` (multipart) · **سقف ۳۰ ثانیه و ۱MB** §۸.۱.۵ · مدل `openai/whisper-large-v3` (فارسی دقیق‌تر از Gemini) · خروجی `{transcript, reply, suggested_actions}` · فایل صوتی پس از رونویسی **بلافاصله حذف می‌شود** — ✅ Completed |
 | TASK-114-T | ✅ | تست رونویسی صوت | §۸.۱.۵، فصل ۱۱ فاز ۷ | `tests/Feature/Ai/VoiceTest.php`, `tests/fixtures/audio/*.webm` | TASK-114 | **تست: ۱۰ نمونه صوت فارسی واقعی با دقت قابل قبول رونویسی می‌شوند** (خروجی هر ۱۰ نمایش داده شود) · تست: فایل >۱MB یا >۳۰ ثانیه رد می‌شود · تست: فایل صوتی پس از پردازش روی دیسک نمانده · تست: نشت PII صفر — ✅ Completed (5/5 passed, 128 assertions) |
-| **TASK-115** | 🔨 | اسلایس `ai-assistant` اپ شهروند | §۴.۱، §۸.۱.۵، HC-5 | `apps/citizen-pwa/src/features/ai-assistant/**` | TASK-114, TASK-045 | چت با پخش SSE و همان ظاهر Liquid Glass پروتوتایپ · دکمه میکروفون با `MediaRecorder` · **Fallback §۸.۱.۵: بدون `MediaRecorder` → دکمه پنهان و ورودی متنی پیشنهاد می‌شود** · `SpeechSynthesis` اختیاری · `suggested_actions` قابل کلیک · **Chunk جدا ≤۱۸KB gz** |
-| TASK-115-T | 🧪 | تست دستیار هوشمند UI + تأیید HC-5 | HC-5، §۷.۸، §۱۰.۳ (E15) | `features/ai-assistant/**/*.test.tsx`, `e2e/ai-assistant.spec.ts` | TASK-115 | **تست: هیچ کلید AI و هیچ ارجاع به OpenRouter/OpenAI/Anthropic در باندل کلاینت نیست** (اسکن فایل بیلد، خروجی واقعی) · **بررسی دستی: CSP اتصال مستقیم مرورگر به OpenRouter را مسدود می‌کند** (خطای کنسول مستند شود) · **E2E سناریو E15: پرسش حاوی کد ملی → Payload خروجی کد ملی ندارد** · تست: مرورگر بدون `MediaRecorder` دکمه میکروفون ندارد · تست axe |
+| **TASK-115** | ✅ | اسلایس `ai-assistant` اپ شهروند | §۴.۱، §۸.۱.۵، HC-5 | `apps/citizen-pwa/src/features/ai-assistant/**` | TASK-114, TASK-045 | چت با پخش SSE و همان ظاهر Liquid Glass پروتوتایپ · دکمه میکروفون با `MediaRecorder` · **Fallback §۸.۱.۵: بدون `MediaRecorder` → دکمه پنهان و ورودی متنی پیشنهاد می‌شود** · `SpeechSynthesis` اختیاری · `suggested_actions` قابل کلیک · **Chunk جدا ≤۱۸KB gz** — ✅ Completed |
+| TASK-115-T | ✅ | تست دستیار هوشمند UI + تأیید HC-5 | HC-5، §۷.۸، §۱۰.۳ (E15) | `features/ai-assistant/**/*.test.tsx`, `e2e/ai-assistant.spec.ts` | TASK-115 | **تست: هیچ کلید AI و هیچ ارجاع به OpenRouter/OpenAI/Anthropic در باندل کلاینت نیست** (اسکن فایل بیلد، خروجی واقعی) · **بررسی دستی: CSP اتصال مستقیم مرورگر به OpenRouter را مسدود می‌کند** (خطای کنسول مستند شود) · **E2E سناریو E15: پرسش حاوی کد ملی → Payload خروجی کد ملی ندارد** · تست: مرورگر بدون `MediaRecorder` دکمه میکروفون ندارد · تست axe — ✅ Completed (8/8 unit + 2/2 e2e passed, 0 axe violations, HC-5 verified) |
 | **GATE-P7** | 🚪 | **دروازه بازبینی فاز ۷** | فصل ۱۱ فاز ۷ | — | TASK-115-T | همه ۹ معیار پذیرش فاز ۷ فصل ۱۱ اجرا و سبز · **تست نشت PII در CI فعال و سبز** · `constraint-guard` سبز · رگرسیون فازهای ۰–۶ سبز · **توقف تا «approved»** |
 
 ---
@@ -439,11 +439,11 @@
 | **۴ — Dispatch و میز کار** 🎯 | TASK-066 … TASK-083 | ۲ | ۰ | ۳۴ | ⬜ **GATE-P4 = MVP** |
 | ۵ — پرداخت | TASK-084 … TASK-093 | ۰ | ۰ | ۲۰ | ⬜ GATE-P5 |
 | ۶ — تحویل و نوبت | TASK-094 … TASK-106 | ۲۶ | ۰ | ۲۶ | 🚪 GATE-P6 |
-| ۷ — هوش مصنوعی | TASK-107 … TASK-115 | ۶ | ۰ | ۱۲ | ⬜ GATE-P7 |
+| ۷ — هوش مصنوعی | TASK-107 … TASK-115 | ۱۸ | ۰ | ۰ | 🚪 GATE-P7 |
 | ۸ — مشاوره و مقیاس | TASK-116 … TASK-129 | ۰ | ۰ | ۲۸ | ⬜ GATE-P8 |
-| | **مجموع** | **۱۳۲** | **۰** | **۱۲۶** | **۴/۹ دروازه** |
+| | **مجموع** | **۱۵۰** | **۰** | **۱۰۸** | **۵/۹ دروازه** |
 
-**تسک جاری:** TASK-067 (`DispatchCaseJob` — قلب فلوی Snapp-style)
+**تسک جاری:** GATE-P7 (دروازه بازبینی فاز ۷ — دستیار هوشمند)
 
 ---
 
