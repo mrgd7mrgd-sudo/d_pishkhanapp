@@ -22,5 +22,11 @@ final class DeliveryServiceProvider extends ServiceProvider
     {
         Gate::policy(DeliveryRequest::class, DeliveryRequestPolicy::class);
         Gate::policy(DeliveryEvent::class, DeliveryEventPolicy::class);
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \App\Modules\Delivery\Console\Commands\SyncPostTrackingCommand::class,
+            ]);
+        }
     }
 }

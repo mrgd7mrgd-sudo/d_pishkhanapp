@@ -6,6 +6,8 @@ namespace App\Modules\Delivery\Infrastructure\Pdf;
 
 use App\Modules\Delivery\Domain\Models\DeliveryRequest;
 use App\Modules\Documents\Infrastructure\Storage\EncryptedObjectStore;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\View;
 use TCPDF;
 use TCPDF_FONTS;
 
@@ -53,7 +55,7 @@ final class WaybillGenerator
         $pdf->Ln(20);
 
         // Render HTML content from Blade template
-        $html = view('pdf.waybill', ['delivery' => $delivery])->render();
+        $html = View::make('pdf.waybill', ['delivery' => $delivery])->render();
         $pdf->writeHTML($html, true, false, true, false, '');
 
         /** @var string $output */
@@ -88,7 +90,7 @@ final class WaybillGenerator
     private function ensureTcpdfLoaded(): void
     {
         if (! class_exists('TCPDF')) {
-            $tcpdfPath = base_path('vendor/tecnickcom/tcpdf/tcpdf.php');
+            $tcpdfPath = App::basePath('vendor/tecnickcom/tcpdf/tcpdf.php');
             if (file_exists($tcpdfPath)) {
                 require_once $tcpdfPath;
             }
@@ -97,7 +99,7 @@ final class WaybillGenerator
 
     private function loadVazirmatnFont(): string
     {
-        $fontPath = resource_path('fonts/Vazirmatn-Regular.ttf');
+        $fontPath = App::resourcePath('fonts/Vazirmatn-Regular.ttf');
 
         if (file_exists($fontPath)) {
             /** @var string $font */

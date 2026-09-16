@@ -34,3 +34,6 @@ Schedule::command('pishkhan:refresh-materialized-views')
     ->weeklyOn(0, '01:00')
     ->withoutOverlapping();
 
+Schedule::command('delivery:sync-post-tracking')
+    ->hourly()
+    ->withoutOverlapping();

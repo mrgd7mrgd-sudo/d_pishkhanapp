@@ -43,7 +43,7 @@ final class SimulatorPostalClient implements PostalClient
                 );
 
             case '2':
-                if (! (bool) env('SIMULATOR_FAST_TEST', false)) {
+                if (! (bool) (getenv('SIMULATOR_FAST_TEST') ?: false)) {
                     sleep(30);
                 }
 

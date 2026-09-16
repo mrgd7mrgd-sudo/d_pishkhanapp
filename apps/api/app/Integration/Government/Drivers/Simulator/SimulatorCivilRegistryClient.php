@@ -46,7 +46,7 @@ final class SimulatorCivilRegistryClient implements CivilRegistryClient
                 );
 
             case '2':
-                if (! (bool) env('SIMULATOR_FAST_TEST', false)) {
+                if (! (bool) (getenv('SIMULATOR_FAST_TEST') ?: false)) {
                     sleep(30);
                 }
 
@@ -114,7 +114,7 @@ final class SimulatorCivilRegistryClient implements CivilRegistryClient
                 );
 
             case '2':
-                if (! (bool) env('SIMULATOR_FAST_TEST', false)) {
+                if (! (bool) (getenv('SIMULATOR_FAST_TEST') ?: false)) {
                     sleep(30);
                 }
 
