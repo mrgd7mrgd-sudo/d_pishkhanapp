@@ -18,4 +18,3 @@ Route::middleware(['auth:sanctum', 'token.slide'])->group(function (): void {
 Route::middleware(['auth:operator,sanctum', 'office.scope'])->group(function (): void {
     Route::get('/desk/finance', [DeskFinanceController::class, 'index']);
 });
-

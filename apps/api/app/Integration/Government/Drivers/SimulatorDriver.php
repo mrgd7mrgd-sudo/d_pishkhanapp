@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Integration\Government\Drivers;
 
+use App\Integration\Government\Drivers\Simulator\SimulatorPostalClient;
 use App\Integration\Government\DTO\PostalAddress;
 use App\Integration\Government\DTO\ShipmentRequest;
 use App\Integration\Government\DTO\ShipmentResult;
 use App\Integration\Government\DTO\TrackingResult;
-use App\Integration\Government\Drivers\Simulator\SimulatorPostalClient;
 use App\Integration\Government\PostalClient;
 
 /**

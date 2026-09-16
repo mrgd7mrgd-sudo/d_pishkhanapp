@@ -61,6 +61,8 @@ enum AuditableAction: string
     case APPOINTMENT_COMPLETION_UPDATED = 'appointment.completion_updated';
     case REVIEW_SUBMITTED = 'review.submitted';
     case REVIEW_REPLIED = 'review.replied';
+    case SLA_BREACH_RECORDED = 'sla.breach_recorded';
+    case SLA_SCORES_RECALCULATED = 'sla.scores_recalculated';
 
     // Administration (§7.6)
     case OFFICE_APPROVED = 'office.approved';

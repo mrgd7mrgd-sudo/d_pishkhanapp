@@ -7,16 +7,13 @@ namespace App\Modules\Payments\Http\Controllers;
 use App\Modules\Identity\Domain\Models\Citizen;
 use App\Modules\Payments\Application\Actions\CreateTopupIntentAction;
 use App\Modules\Payments\Application\Actions\VerifyTopupAction;
-use App\Modules\Payments\Domain\Enums\LedgerAccountKind;
-use App\Modules\Payments\Domain\Enums\LedgerOwnerType;
 use App\Modules\Payments\Domain\Enums\PaymentGateway;
-use App\Modules\Payments\Domain\LedgerService;
 use App\Modules\Payments\Domain\Models\PaymentIntent;
 use App\Modules\Payments\Http\Requests\TopupRequest;
 use App\Modules\Payments\Http\Requests\VerifyTopupRequest;
+use App\Modules\Payments\Infrastructure\BalanceCache;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Modules\Payments\Infrastructure\BalanceCache;
 use Illuminate\Support\Facades\Gate;
 
 final class WalletController

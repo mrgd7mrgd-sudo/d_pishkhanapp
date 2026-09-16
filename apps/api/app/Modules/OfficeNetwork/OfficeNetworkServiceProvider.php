@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\Modules\OfficeNetwork;
 
 use App\Modules\CaseWorkflow\Domain\Events\CaseStatusChanged;
+use App\Modules\OfficeNetwork\Console\Commands\CheckSlaBreachesCommand;
+use App\Modules\OfficeNetwork\Console\Commands\RecalculateOfficeScoresCommand;
 use App\Modules\OfficeNetwork\Domain\Models\Appointment;
 use App\Modules\OfficeNetwork\Domain\Models\Office;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeAnnouncement;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeMedal;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeReview;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeServiceCoverage;
+use App\Modules\OfficeNetwork\Domain\Models\OfficeSlaEvent;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeSpecialty;
 use App\Modules\OfficeNetwork\Infrastructure\Policies\AppointmentPolicy;
 use App\Modules\OfficeNetwork\Infrastructure\Policies\OfficeAnnouncementPolicy;
@@ -18,6 +21,7 @@ use App\Modules\OfficeNetwork\Infrastructure\Policies\OfficeMedalPolicy;
 use App\Modules\OfficeNetwork\Infrastructure\Policies\OfficePolicy;
 use App\Modules\OfficeNetwork\Infrastructure\Policies\OfficeReviewPolicy;
 use App\Modules\OfficeNetwork\Infrastructure\Policies\OfficeServiceCoveragePolicy;
+use App\Modules\OfficeNetwork\Infrastructure\Policies\OfficeSlaEventPolicy;
 use App\Modules\OfficeNetwork\Infrastructure\Policies\OfficeSpecialtyPolicy;
 use App\Modules\OfficeNetwork\Listeners\UpdateOfficeQueueOnCaseStatusChanged;
 use Illuminate\Support\Facades\Event;
@@ -37,10 +41,18 @@ final class OfficeNetworkServiceProvider extends ServiceProvider
         Gate::policy(OfficeAnnouncement::class, OfficeAnnouncementPolicy::class);
         Gate::policy(Appointment::class, AppointmentPolicy::class);
         Gate::policy(OfficeReview::class, OfficeReviewPolicy::class);
+        Gate::policy(OfficeSlaEvent::class, OfficeSlaEventPolicy::class);
 
         Event::listen(
             CaseStatusChanged::class,
             UpdateOfficeQueueOnCaseStatusChanged::class
         );
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                RecalculateOfficeScoresCommand::class,
+                CheckSlaBreachesCommand::class,
+            ]);
+        }
     }
 }

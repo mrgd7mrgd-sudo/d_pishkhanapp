@@ -12,6 +12,7 @@ use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
 use App\Modules\CaseWorkflow\Domain\TransitionContext;
 use App\Modules\Identity\Domain\Models\Operator;
 use App\Modules\Messaging\Jobs\SendCaseNotificationJob;
+use App\Modules\Payments\Jobs\SettleCaseFeeJob;
 use App\Shared\Audit\AuditableAction;
 use App\Shared\Audit\AuditLogger;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -77,7 +78,7 @@ final class CompleteCaseAction
 
         // Side effect: Fee settlement between office and platform (§8.2)
         if ($updatedCase->fee_paid_rials > 0) {
-            \App\Modules\Payments\Jobs\SettleCaseFeeJob::dispatch($updatedCase->id);
+            SettleCaseFeeJob::dispatch($updatedCase->id);
         }
 
         return $updatedCase;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Delivery;
 
+use App\Modules\Delivery\Console\Commands\SyncPostTrackingCommand;
 use App\Modules\Delivery\Domain\Models\DeliveryEvent;
 use App\Modules\Delivery\Domain\Models\DeliveryRequest;
 use App\Modules\Delivery\Infrastructure\Policies\DeliveryEventPolicy;
@@ -25,7 +26,7 @@ final class DeliveryServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \App\Modules\Delivery\Console\Commands\SyncPostTrackingCommand::class,
+                SyncPostTrackingCommand::class,
             ]);
         }
     }

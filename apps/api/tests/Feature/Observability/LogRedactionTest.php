@@ -35,7 +35,7 @@ final class LogRedactionTest extends TestCase
 
     public function test_pii_redaction_processor_redacts_record_message_and_context(): void
     {
-        $processor = new PiiRedactionProcessor();
+        $processor = new PiiRedactionProcessor;
 
         $record = new LogRecord(
             datetime: new DateTimeImmutable('2026-09-15T12:00:00Z'),
@@ -68,7 +68,7 @@ final class LogRedactionTest extends TestCase
 
     public function test_structured_json_formatter_produces_valid_json_with_architecture_keys(): void
     {
-        $formatter = new StructuredJsonFormatter();
+        $formatter = new StructuredJsonFormatter;
 
         $record = new LogRecord(
             datetime: new DateTimeImmutable('2026-09-15T12:00:00Z'),

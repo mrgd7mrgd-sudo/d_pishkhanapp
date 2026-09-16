@@ -135,4 +135,12 @@ final class Office extends Model
     {
         return $this->hasMany(OfficeReview::class, 'office_id');
     }
+
+    /**
+     * @return HasMany<OfficeSlaEvent, $this>
+     */
+    public function slaEvents(): HasMany
+    {
+        return $this->hasMany(OfficeSlaEvent::class, 'office_id');
+    }
 }

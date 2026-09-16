@@ -37,3 +37,11 @@ Schedule::command('pishkhan:refresh-materialized-views')
 Schedule::command('delivery:sync-post-tracking')
     ->hourly()
     ->withoutOverlapping();
+
+Schedule::command('pishkhan:check-sla-breaches')
+    ->everyFifteenMinutes()
+    ->withoutOverlapping();
+
+Schedule::command('pishkhan:recalculate-office-scores')
+    ->dailyAt('03:00')
+    ->withoutOverlapping();

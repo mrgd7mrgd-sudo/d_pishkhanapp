@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Shared\Logging\PiiRedactionProcessor;
+use App\Shared\Logging\StructuredJsonFormatter;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -65,7 +66,7 @@ return [
         'json' => [
             'driver' => 'monolog',
             'handler' => StreamHandler::class,
-            'formatter' => \App\Shared\Logging\StructuredJsonFormatter::class,
+            'formatter' => StructuredJsonFormatter::class,
             'with' => [
                 'stream' => 'php://stdout',
             ],
