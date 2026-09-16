@@ -31,6 +31,7 @@ use App\Modules\ServiceCatalog\Domain\Models\Service;
 use App\Shared\Errors\ErrorCode;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
@@ -108,7 +109,7 @@ final class CreateCaseAction
             );
 
             $this->createInitialTimelineStep($case, $citizen);
-            $this->attachUploadedDocuments($case, $data['documents'] ?? []);
+            $this->attachUploadedDocuments($case, $citizen, $data['documents'] ?? []);
 
             DB::afterCommit(static function () use ($case, $delegation, $citizen): void {
                 Event::dispatch(new CaseCreated($case));
@@ -291,25 +292,47 @@ final class CreateCaseAction
     }
 
     /**
+     * Attach documents referenced by upload_id without fabricating integrity data.
+     *
+     * When the two-stage upload intent (TASK-057) is still present in cache, its real
+     * metadata (mime type, size, temp storage key) is carried over and ownership is
+     * enforced. When it is absent, explicitly-unknown placeholders are stored — a hash
+     * of the upload identifier must never be presented as the content hash.
+     *
      * @param  list<array{document_type_code: string, upload_id: string}>  $documents
      */
-    private function attachUploadedDocuments(CaseRequest $case, array $documents): void
+    private function attachUploadedDocuments(CaseRequest $case, Citizen $citizen, array $documents): void
     {
+        $rows = [];
+
         foreach ($documents as $doc) {
-            CaseDocument::query()->create([
+            $uploadId = trim((string) $doc['upload_id']);
+
+            /** @var array{citizen_id: string, mime_type: string, size_bytes: int, temp_storage_key: string}|null $intent */
+            $intent = Cache::get("upload_intent:{$uploadId}");
+
+            if ($intent !== null && $intent['citizen_id'] !== $citizen->id) {
+                $intent = null;
+            }
+
+            $rows[] = [
                 'id' => (string) Str::uuid(),
                 'case_id' => $case->id,
                 'document_type_code' => $doc['document_type_code'],
                 'version' => 1,
                 'status' => CaseDocumentStatus::PENDING,
-                'storage_key' => 'uploads/'.trim($doc['upload_id']),
+                'storage_key' => $intent['temp_storage_key'] ?? ('uploads/'.$uploadId),
                 'encrypted_data_key' => 'pending-envelope-key',
-                'content_sha256' => hash('sha256', $doc['upload_id']),
-                'size_bytes' => 0,
-                'mime_type' => 'application/octet-stream',
+                'content_sha256' => '',
+                'size_bytes' => $intent['size_bytes'] ?? 0,
+                'mime_type' => $intent['mime_type'] ?? 'application/octet-stream',
                 'quality_warnings' => [],
                 'uploaded_at' => CarbonImmutable::now(),
-            ]);
+            ];
+        }
+
+        if ($rows !== []) {
+            CaseDocument::query()->createMany($rows);
         }
     }
 
