@@ -67,8 +67,15 @@ enum AuditableAction: string
     // Administration (§7.6)
     case OFFICE_APPROVED = 'office.approved';
     case OFFICE_SUSPENDED = 'office.suspended';
+    case OFFICE_PROFILE_UPDATED = 'office.profile.updated';
+    case OFFICE_SPECIALTIES_UPDATED = 'office.specialties.updated';
+    case OFFICE_COVERAGES_UPDATED = 'office.coverages.updated';
+    case OFFICE_ANNOUNCEMENT_CREATED = 'office.announcement.created';
+    case OFFICE_ANNOUNCEMENT_UPDATED = 'office.announcement.updated';
+    case OFFICE_ANNOUNCEMENT_DELETED = 'office.announcement.deleted';
     case OPERATOR_CREATED = 'operator.created';
     case OPERATOR_DISABLED = 'operator.disabled';
+    case OPERATOR_UPDATED = 'operator.updated';
     case ADVISOR_APPROVED = 'advisor.approved';
     case SERVICE_UPDATED = 'service.updated';
     case ROLE_CHANGED = 'role.changed';

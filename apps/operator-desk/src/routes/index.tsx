@@ -47,6 +47,11 @@ const ReviewsFeaturePage = lazy(async () => {
   return { default: mod.ReviewsPage };
 });
 
+const OfficeProfileFeaturePage = lazy(async () => {
+  const mod = await import('@/features/office-profile');
+  return { default: mod.OfficeProfilePage };
+});
+
 /**
  * All 10 Operator Desk Routes defined in Architecture §4.4
  */
@@ -60,6 +65,6 @@ export const deskRoutes: RouteObject[] = [
   { path: '/delivery/:deliveryId/waybill', Component: WaybillFeaturePage },
   { path: '/finance', Component: FinancePage },
   { path: '/reviews', Component: ReviewsFeaturePage },
-  { path: '/office-profile', Component: DeskPlaceholder('office_profile') },
+  { path: '/office-profile', Component: OfficeProfileFeaturePage },
   { path: '/', Component: WorkspacePage }, // default workspace redirect
 ];
