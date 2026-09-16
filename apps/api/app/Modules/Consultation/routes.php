@@ -31,3 +31,14 @@ Route::middleware(['auth:sanctum'])->prefix('consultations/sessions')->group(fun
     Route::get('/{id}', [\App\Modules\Consultation\Http\Controllers\SessionController::class, 'show']);
     Route::post('/{id}/end', [\App\Modules\Consultation\Http\Controllers\SessionController::class, 'end']);
 });
+
+// Business subscription plans & quota routes (§5.3, §6.1, TASK-120)
+Route::prefix('consultations/plans')->group(function (): void {
+    Route::get('/', [\App\Modules\Consultation\Http\Controllers\SubscriptionController::class, 'plans']);
+});
+
+Route::middleware(['auth:sanctum'])->prefix('consultations')->group(function (): void {
+    Route::get('/my-subscription', [\App\Modules\Consultation\Http\Controllers\SubscriptionController::class, 'mySubscription']);
+    Route::post('/subscribe', [\App\Modules\Consultation\Http\Controllers\SubscriptionController::class, 'subscribe']);
+    Route::post('/quota/consume', [\App\Modules\Consultation\Http\Controllers\SubscriptionController::class, 'consumeQuota']);
+});

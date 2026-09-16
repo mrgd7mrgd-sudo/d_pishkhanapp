@@ -404,8 +404,8 @@
 | TASK-118-T | ✅ | تست چرخه تأیید مشاور | §۵.۳، §۷.۳ | `tests/Feature/Consultation/AdvisorApprovalTest.php` | TASK-118 | تست: مشاور تأییدنشده در فهرست عمومی نیست · تست: فقط `system_admin` می‌تواند تأیید کند · تست: پس از تأیید، نقش `advisor` اعطا و Audit ثبت می‌شود · تست: شماره پروانه تکراری رد می‌شود — ✅ Completed (4/4 passed) |
 | **TASK-119** | ✅ | چرخه جلسه مشاوره + محاسبه هزینه سمت سرور | §۵.۳، §۸.۲ | `Consultation/Application/Actions/{StartSessionAction,EndSessionAction}.php`, `Domain/SessionBillingCalculator.php`, `Http/Controllers/SessionController.php` | TASK-118, TASK-089 | هر ۳ حالت · **Invariant §۵.۳: محاسبه هزینه دقیقه‌ای فقط از مهر زمانی سرور، هرگز از کلاینت** · تسویه **۸۰٪ مشاور / ۲۰٪ پلتفرم** §۸.۲ در دفتر کل · کانال `private-consultation.{sessionId}` §۵.۷ · حالت `case_review` با آپلود سند و ثبت `advisor_verdict` — ✅ Completed |
 | TASK-119-T | ✅ | تست صورتحساب جلسه — بحرانی | §۵.۳، §۱۰.۳ (E21) | `tests/Feature/Consultation/SessionBillingTest.php` | TASK-119 | **تست: ارسال `duration_seconds` جعلی از کلاینت هیچ اثری بر هزینه ندارد** (خروجی واقعی) · **E2E سناریو E21: جلسه دقیقه‌ای → محاسبه از مهر زمانی سرور → تسویه ۸۰/۲۰ درست در دفتر کل** · تست: تراز دفتر کل پس از هر جلسه · تست: `case_review` با آپلود و نظر کار می‌کند — ✅ Completed (3/3 passed) |
-| **TASK-120** | 🔨 | پلن‌های اشتراک کسب‌وکار و سهمیه | §۵.۳، §۶.۱ | `Consultation/Application/Actions/{SubscribeAction,ConsumeQuotaAction}.php`, `Http/Controllers/SubscriptionController.php`, `Database/Seeders/SubscriptionPlanSeeder.php` | TASK-119 | ۳ پلن از `BUSINESS_SUBSCRIPTION_PLANS` پروتوتایپ · مصرف سهمیه با قفل تراکنشی · **Invariant: سهمیه هرگز منفی نشود** · تمدید و انقضای خودکار |
-| TASK-120-T | 🧪 | تست سهمیه اشتراک | §۵.۳ | `tests/Feature/Consultation/QuotaTest.php` | TASK-120 | **تست همزمانی: ۲۰ مصرف موازی روی سهمیه ۵تایی → دقیقاً ۵ موفق، ۱۵ رد** (خروجی واقعی) · تست: اشتراک منقضی سهمیه نمی‌دهد · تست: هر ۳ پلن Seed می‌شوند |
+| **TASK-120** | ✅ | پلن‌های اشتراک کسب‌وکار و سهمیه | §۵.۳، §۶.۱ | `Consultation/Application/Actions/{SubscribeAction,ConsumeQuotaAction}.php`, `Http/Controllers/SubscriptionController.php`, `Database/Seeders/SubscriptionPlanSeeder.php` | TASK-119 | ۳ پلن از `BUSINESS_SUBSCRIPTION_PLANS` پروتوتایپ · مصرف سهمیه با قفل تراکنشی · **Invariant: سهمیه هرگز منفی نشود** · تمدید و انقضای خودکار — ✅ Completed |
+| TASK-120-T | ✅ | تست سهمیه اشتراک | §۵.۳ | `tests/Feature/Consultation/QuotaTest.php` | TASK-120 | **تست همزمانی: ۲۰ مصرف موازی روی سهمیه ۵تایی → دقیقاً ۵ موفق، ۱۵ رد** (خروجی واقعی) · تست: اشتراک منقضی سهمیه نمی‌دهد · تست: هر ۳ پلن Seed می‌شوند — ✅ Completed (4/4 passed) |
 | **TASK-121** | 🔨 | نمایندگی حقوقی — مهاجرت و فعال‌سازی با OTP دوطرفه | §۵.۳، §۷.۱ (T4) | `Identity/Database/Migrations/*_create_delegations_table.php`, `Domain/Models/Delegation.php`, `Application/Actions/{CreateDelegationAction,ActivateDelegationAction,RevokeDelegationAction}.php` | TASK-027, TASK-030 | **Invariant §۵.۳: `validUntil` آینده، `max_amount_rials > 0`، فعال‌سازی نیازمند OTP هر دو طرف** · `allowed_service_ids` jsonb · وضعیت‌های `pending_otp`/`active`/`revoked`/`expired` · `document_number` |
 | TASK-121-T | 🧪 | تست فعال‌سازی نمایندگی | §۷.۱ (T4)، §۱۰.۳ (E17) | `tests/Feature/Identity/DelegationActivationTest.php` | TASK-121 | **تست: نمایندگی فقط با OTP هر دو طرف فعال می‌شود** — با یک OTP در `pending_otp` می‌ماند · تست: `valid_until` گذشته رد می‌شود · تست: `max_amount_rials = 0` رد می‌شود · تست: ابطال فوری اثر می‌کند |
 | **TASK-122** | 🔨 | اعمال محدودیت‌های نمایندگی + اعلان به موکل | §۷.۳، §۷.۱ (T4) | `Identity/Infrastructure/Policies/DelegationPolicy.php`, `Listeners/NotifyPrincipalOnDelegationUseListener.php`, `Console/Commands/ExpireDelegationsCommand.php` | TASK-121, TASK-073 | نقش `citizen_delegate` با محدودیت `allowed_service_ids` و `max_amount_rials` §۷.۳ · **هر استفاده به موکل اعلان می‌دهد** · انقضای خودکار روزانه |
@@ -440,10 +440,10 @@
 | ۵ — پرداخت | TASK-084 … TASK-093 | ۰ | ۰ | ۲۰ | ⬜ GATE-P5 |
 | ۶ — تحویل و نوبت | TASK-094 … TASK-106 | ۲۶ | ۰ | ۲۶ | 🚪 GATE-P6 |
 | ۷ — هوش مصنوعی | TASK-107 … TASK-115 | ۱۸ | ۰ | ۰ | ✅ GATE-P7 |
-| ۸ — مشاوره و مقیاس | TASK-116 … TASK-129 | ۸ | ۰ | ۲۰ | ⬜ GATE-P8 |
-| | **مجموع** | **۱۵۸** | **۰** | **۱۰۰** | **۵/۹ دروازه** |
+| ۸ — مشاوره و مقیاس | TASK-116 … TASK-129 | ۱۰ | ۰ | ۱۸ | ⬜ GATE-P8 |
+| | **مجموع** | **۱۶۰** | **۰** | **۹۸** | **۵/۹ دروازه** |
 
-**تسک جاری:** TASK-120 (پلن‌های اشتراک کسب‌وکار و سهمیه)
+**تسک جاری:** TASK-121 (نمایندگی حقوقی — مهاجرت و فعال‌سازی با OTP دوطرفه)
 
 ---
 
