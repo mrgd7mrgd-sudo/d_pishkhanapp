@@ -79,7 +79,13 @@ final class Handler
         if ($e instanceof HttpExceptionInterface) {
             $status = $e->getStatusCode();
             $headers = $e->getHeaders();
-            if ($status === 404) {
+            if (method_exists($e, 'getErrorCode')) {
+                /** @var mixed $errCode */
+                $errCode = $e->getErrorCode();
+                $code = $errCode instanceof ErrorCode ? $errCode->value : (string) $errCode;
+                $title = $errCode instanceof ErrorCode ? $errCode->title() : 'خطای دامنه';
+                $detail = $e->getMessage() ?: ($errCode instanceof ErrorCode ? $errCode->defaultDetail() : 'درخواست غیرمجاز است.');
+            } elseif ($status === 404) {
                 $title = 'منبع مورد نظر یافت نشد';
                 $code = 'RESOURCE_NOT_FOUND';
                 $detail = 'شناسه یا مسیر درخواستی در سامانه وجود ندارد.';
