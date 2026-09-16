@@ -23,6 +23,7 @@ enum ErrorCode: string
     case DELIVERY_OTP_INVALID = 'DELIVERY_OTP_INVALID';
     case DELEGATION_EXPIRED = 'DELEGATION_EXPIRED';
     case DELEGATION_AMOUNT_EXCEEDED = 'DELEGATION_AMOUNT_EXCEEDED';
+    case DELEGATION_SERVICE_NOT_ALLOWED = 'DELEGATION_SERVICE_NOT_ALLOWED';
     case OFFICE_OFFLINE = 'OFFICE_OFFLINE';
     case AI_PROVIDER_UNAVAILABLE = 'AI_PROVIDER_UNAVAILABLE';
     case RATE_LIMITED = 'RATE_LIMITED';
@@ -47,6 +48,7 @@ enum ErrorCode: string
             self::DELIVERY_OTP_INVALID => 'کد تحویل مرسوله نامعتبر است',
             self::DELEGATION_EXPIRED => 'وکالت یا نمایندگی منقضی شده است',
             self::DELEGATION_AMOUNT_EXCEEDED => 'مبلغ بیش از سقف اختیارات نماینده است',
+            self::DELEGATION_SERVICE_NOT_ALLOWED => 'خدمت خارج از دامنه اختیارات نماینده است',
             self::OFFICE_OFFLINE => 'دفتر منتخب در حال حاضر غیرفعال است',
             self::AI_PROVIDER_UNAVAILABLE => 'سرویس هوش مصنوعی موقتاً در دسترس نیست',
             self::RATE_LIMITED => 'تعداد درخواست‌ها بیش از سقف مجاز است',
@@ -73,6 +75,7 @@ enum ErrorCode: string
             self::DELIVERY_OTP_INVALID => 'کد پیامک‌شده به گیرنده را به درستی وارد فرمایید.',
             self::DELEGATION_EXPIRED => 'تاریخ اعتبار نمایندگی منقضی گردیده است.',
             self::DELEGATION_AMOUNT_EXCEEDED => 'تراکنش درخواستی فراتر از سقف ریالی وکیل است.',
+            self::DELEGATION_SERVICE_NOT_ALLOWED => 'این خدمت در لیست خدمات مجاز این نمایندگی تعریف نشده است.',
             self::OFFICE_OFFLINE => 'ساعات کاری دفتر به پایان رسیده یا وضعیت آن آفلاین است.',
             self::AI_PROVIDER_UNAVAILABLE => 'پاسخ هوشمند موقتاً آماده نشد؛ جستجوی سنتی در دسترس است.',
             self::RATE_LIMITED => 'سرعت ارسال درخواست‌ها بیش از حد مجاز سامانه است.',
@@ -86,7 +89,7 @@ enum ErrorCode: string
             self::AUTH_OTP_EXPIRED, self::CASE_DEADLINE_EXPIRED, self::OFFER_EXPIRED => 410,
             self::AUTH_OTP_TOO_MANY, self::RATE_LIMITED => 429,
             self::WALLET_INSUFFICIENT_BALANCE => 402,
-            self::CASE_NOT_YOUR_TURN, self::DELEGATION_EXPIRED, self::DELEGATION_AMOUNT_EXCEEDED => 403,
+            self::CASE_NOT_YOUR_TURN, self::DELEGATION_EXPIRED, self::DELEGATION_AMOUNT_EXCEEDED, self::DELEGATION_SERVICE_NOT_ALLOWED => 403,
             self::OFFER_ALREADY_TAKEN, self::CASE_INVALID_TRANSITION => 409,
             self::DOC_TOO_LARGE => 413,
             self::PAYMENT_GATEWAY_UNAVAILABLE, self::AI_PROVIDER_UNAVAILABLE, self::DISPATCH_NO_OFFICE_AVAILABLE, self::OFFICE_OFFLINE => 503,

@@ -82,4 +82,14 @@ final class Delegation extends Model
 
         return in_array($serviceId, $this->allowed_service_ids, true);
     }
+
+    public function isAmountAllowed(int $amountRials): bool
+    {
+        return $amountRials <= $this->max_amount_rials;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status === DelegationStatus::Active && $this->valid_until->isFuture();
+    }
 }

@@ -45,3 +45,7 @@ Schedule::command('pishkhan:check-sla-breaches')
 Schedule::command('pishkhan:recalculate-office-scores')
     ->dailyAt('03:00')
     ->withoutOverlapping();
+
+Schedule::command('pishkhan:expire-delegations')
+    ->dailyAt('00:00')
+    ->withoutOverlapping();

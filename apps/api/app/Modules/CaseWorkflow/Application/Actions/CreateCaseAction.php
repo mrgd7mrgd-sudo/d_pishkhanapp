@@ -14,7 +14,10 @@ use App\Modules\CaseWorkflow\Domain\Events\CaseCreated;
 use App\Modules\CaseWorkflow\Domain\Models\CaseDocument;
 use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
 use App\Modules\CaseWorkflow\Domain\Models\CaseTimelineStep;
+use App\Modules\Identity\Domain\Enums\DelegationStatus;
+use App\Modules\Identity\Domain\Events\DelegationUsed;
 use App\Modules\Identity\Domain\Models\Citizen;
+use App\Modules\Identity\Domain\Models\Delegation;
 use App\Modules\Payments\Domain\Enums\LedgerAccountKind;
 use App\Modules\Payments\Domain\Enums\LedgerDirection;
 use App\Modules\Payments\Domain\Enums\LedgerOwnerType;
@@ -24,8 +27,11 @@ use App\Modules\Payments\Domain\LedgerEntryData;
 use App\Modules\Payments\Domain\LedgerService;
 use App\Modules\Payments\Domain\Models\LedgerAccount;
 use App\Modules\ServiceCatalog\Domain\Models\Service;
+use App\Shared\Errors\ErrorCode;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
@@ -56,9 +62,16 @@ final class CreateCaseAction
             $service = $this->resolveService($data['service_id']);
             $requiredFeeRials = $service->fee_rials;
 
+            $delegation = $this->resolveAndValidateDelegation($citizen, $data, $service, $requiredFeeRials);
+            $caseOwnerCitizen = $delegation !== null
+                ? (Citizen::query()->find($delegation->principal_citizen_id) ?? $citizen)
+                : $citizen;
+
+            $walletCitizen = $this->determineWalletOwner($citizen, $caseOwnerCitizen, $requiredFeeRials);
+
             $walletAccount = $this->ledgerService->getOrCreateAccount(
                 ownerType: LedgerOwnerType::CITIZEN,
-                ownerId: $citizen->id,
+                ownerId: $walletCitizen->id,
                 kind: LedgerAccountKind::WALLET
             );
 
@@ -90,7 +103,7 @@ final class CreateCaseAction
             $case = $this->persistCaseRecord(
                 caseId: $caseId,
                 trackingCode: $trackingCode,
-                citizen: $citizen,
+                citizen: $caseOwnerCitizen,
                 service: $service,
                 data: $data
             );
@@ -98,12 +111,98 @@ final class CreateCaseAction
             $this->createInitialTimelineStep($case, $citizen);
             $this->attachUploadedDocuments($case, $data['documents'] ?? []);
 
-            DB::afterCommit(static function () use ($case): void {
+            DB::afterCommit(static function () use ($case, $delegation, $citizen): void {
                 Event::dispatch(new CaseCreated($case));
+                if ($delegation !== null) {
+                    Event::dispatch(new DelegationUsed($delegation, $citizen, $case, 'case_created'));
+                }
             });
 
             return $case->load(['service', 'timelineSteps', 'documents']);
         });
+    }
+
+    /**
+     * @param  array{on_behalf_of_delegation_id?: string|null}  $data
+     */
+    private function resolveAndValidateDelegation(
+        Citizen $citizen,
+        array $data,
+        Service $service,
+        int $requiredFeeRials
+    ): ?Delegation {
+        $delegationId = $data['on_behalf_of_delegation_id'] ?? null;
+        if ($delegationId === null) {
+            return null;
+        }
+
+        /** @var Delegation|null $delegation */
+        $delegation = Delegation::query()->find($delegationId);
+        if ($delegation === null || $delegation->delegate_citizen_id !== $citizen->id) {
+            throw new HttpResponseException(new JsonResponse([
+                'type' => 'https://api.pishkhan.ir/errors/'.ErrorCode::DELEGATION_EXPIRED->value,
+                'title' => ErrorCode::DELEGATION_EXPIRED->title(),
+                'status' => 403,
+                'code' => ErrorCode::DELEGATION_EXPIRED->value,
+                'detail' => 'وکالت‌نامه یافت نشد یا شما نماینده مجاز این وکالت‌نامه نیستید.',
+                'instance' => request()->path(),
+            ], 403));
+        }
+
+        if ($delegation->status !== DelegationStatus::Active || $delegation->valid_until->isPast()) {
+            throw new HttpResponseException(new JsonResponse([
+                'type' => 'https://api.pishkhan.ir/errors/'.ErrorCode::DELEGATION_EXPIRED->value,
+                'title' => ErrorCode::DELEGATION_EXPIRED->title(),
+                'status' => 403,
+                'code' => ErrorCode::DELEGATION_EXPIRED->value,
+                'detail' => ErrorCode::DELEGATION_EXPIRED->defaultDetail(),
+                'instance' => request()->path(),
+            ], 403));
+        }
+
+        if (! $delegation->isServiceAllowed($service->id) && ! $delegation->isServiceAllowed($service->slug)) {
+            throw new HttpResponseException(new JsonResponse([
+                'type' => 'https://api.pishkhan.ir/errors/'.ErrorCode::DELEGATION_SERVICE_NOT_ALLOWED->value,
+                'title' => ErrorCode::DELEGATION_SERVICE_NOT_ALLOWED->title(),
+                'status' => 403,
+                'code' => ErrorCode::DELEGATION_SERVICE_NOT_ALLOWED->value,
+                'detail' => ErrorCode::DELEGATION_SERVICE_NOT_ALLOWED->defaultDetail(),
+                'instance' => request()->path(),
+            ], 403));
+        }
+
+        if ($requiredFeeRials > $delegation->max_amount_rials) {
+            throw new HttpResponseException(new JsonResponse([
+                'type' => 'https://api.pishkhan.ir/errors/'.ErrorCode::DELEGATION_AMOUNT_EXCEEDED->value,
+                'title' => ErrorCode::DELEGATION_AMOUNT_EXCEEDED->title(),
+                'status' => 403,
+                'code' => ErrorCode::DELEGATION_AMOUNT_EXCEEDED->value,
+                'detail' => ErrorCode::DELEGATION_AMOUNT_EXCEEDED->defaultDetail(),
+                'instance' => request()->path(),
+            ], 403));
+        }
+
+        return $delegation;
+    }
+
+    private function determineWalletOwner(Citizen $delegate, Citizen $principal, int $requiredFeeRials): Citizen
+    {
+        if ($delegate->id === $principal->id) {
+            return $delegate;
+        }
+
+        $principalWallet = $this->ledgerService->getOrCreateAccount(
+            ownerType: LedgerOwnerType::CITIZEN,
+            ownerId: $principal->id,
+            kind: LedgerAccountKind::WALLET
+        );
+
+        $principalBalance = $this->ledgerService->getBalanceRials($principalWallet);
+        if ($principalBalance >= $requiredFeeRials) {
+            return $principal;
+        }
+
+        return $delegate;
     }
 
     private function resolveService(string $serviceId): Service

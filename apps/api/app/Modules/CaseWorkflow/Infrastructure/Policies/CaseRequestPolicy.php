@@ -20,7 +20,17 @@ final class CaseRequestPolicy extends BasePolicy
     public function view(?Authenticatable $user, CaseRequest $case): bool
     {
         if ($user instanceof Citizen) {
-            return $user->id === $case->citizen_id;
+            if ($user->id === $case->citizen_id) {
+                return true;
+            }
+
+            return \App\Modules\Identity\Domain\Models\Delegation::query()
+                ->where('principal_citizen_id', $case->citizen_id)
+                ->where('delegate_citizen_id', $user->id)
+                ->where('status', \App\Modules\Identity\Domain\Enums\DelegationStatus::Active)
+                ->where('valid_until', '>', \Carbon\CarbonImmutable::now())
+                ->get()
+                ->contains(fn (\App\Modules\Identity\Domain\Models\Delegation $d) => $d->isServiceAllowed($case->service_id));
         }
 
         if ($user instanceof Operator) {

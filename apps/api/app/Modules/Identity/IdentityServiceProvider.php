@@ -27,5 +27,19 @@ final class IdentityServiceProvider extends ServiceProvider
         Gate::policy(\App\Modules\Identity\Domain\Models\Delegation::class, \App\Modules\Identity\Infrastructure\Policies\DelegationPolicy::class);
 
         Event::subscribe(AuditAuthEventsListener::class);
+        Event::listen(
+            \App\Modules\Identity\Domain\Events\DelegationUsed::class,
+            \App\Modules\Identity\Listeners\NotifyPrincipalOnDelegationUseListener::class
+        );
+        Event::listen(
+            \App\Modules\CaseWorkflow\Domain\Events\CaseCreated::class,
+            \App\Modules\Identity\Listeners\NotifyPrincipalOnDelegationUseListener::class
+        );
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \App\Modules\Identity\Console\Commands\ExpireDelegationsCommand::class,
+            ]);
+        }
     }
 }
