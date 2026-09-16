@@ -400,8 +400,8 @@
 | TASK-116-T | ✅ | تست Schema مشاوران | §۶.۱، §۶.۳ | `tests/Feature/Consultation/AdvisorSchemaTest.php` | TASK-116 | تست: هر ۶ دسته در Enum و مطابق `packages/domain` · تست: هر سه نرخ عدد صحیح ریالی‌اند · تست: امتیاز کلی از سه بعد مشتق می‌شود — ✅ Completed (4/4 passed, 29 assertions; enum parity passed) |
 | **TASK-117** | ✅ | مهاجرت‌های جلسه مشاوره و اشتراک | §۶.۱ | `Consultation/Database/Migrations/*` (۵ فایل), `Domain/Models/{ConsultationSession,SessionMessage,SubscriptionPlan,Subscription,QuotaUsage}.php` | TASK-116 | **۳ حالت مشاوره** Enum (`text`/`call`/`case_review`) · `linked_service_id` برای اتصال «مشاوره → اجرای خدمت» · `quota_usages` با **Invariant §۵.۳: هرگز منفی نشود** — ✅ Completed |
 | TASK-117-T | ✅ | تست Schema جلسه و اشتراک | §۵.۳ | `tests/Feature/Consultation/SessionSchemaTest.php` | TASK-117 | تست: `quota_usages.used` منفی → نقض Constraint دیتابیس · تست: هر ۳ حالت در Enum · تست: `linked_service_id` نامعتبر → نقض کلید خارجی — ✅ Completed (4/4 passed) |
-| **TASK-118** | 🔨 | ثبت‌نام و تأیید مشاور | §۵.۳، §۷.۳ | `Consultation/Application/Actions/{SubmitAdvisorApplicationAction,ApproveAdvisorAction}.php`, `Http/Controllers/{AdvisorController,AdminAdvisorController}.php` | TASK-117, TASK-030 | `POST /advisors/apply` (نگاشت `AdvisorRegistrationForm` پروتوتایپ) · `GET /advisors`, `GET /advisors/{id}` · `POST /admin/advisors/{id}/approve` · **Invariant §۵.۳: فعال‌سازی فقط پس از تأیید ادمین و اعتبارسنجی شماره پروانه** · نقش `advisor` پس از تأیید اعطا می‌شود |
-| TASK-118-T | 🧪 | تست چرخه تأیید مشاور | §۵.۳، §۷.۳ | `tests/Feature/Consultation/AdvisorApprovalTest.php` | TASK-118 | تست: مشاور تأییدنشده در فهرست عمومی نیست · تست: فقط `system_admin` می‌تواند تأیید کند · تست: پس از تأیید، نقش `advisor` اعطا و Audit ثبت می‌شود · تست: شماره پروانه تکراری رد می‌شود |
+| **TASK-118** | ✅ | ثبت‌نام و تأیید مشاور | §۵.۳، §۷.۳ | `Consultation/Application/Actions/{SubmitAdvisorApplicationAction,ApproveAdvisorAction}.php`, `Http/Controllers/{AdvisorController,AdminAdvisorController}.php` | TASK-117, TASK-030 | `POST /advisors/apply` (نگاشت `AdvisorRegistrationForm` پروتوتایپ) · `GET /advisors`, `GET /advisors/{id}` · `POST /admin/advisors/{id}/approve` · **Invariant §۵.۳: فعال‌سازی فقط پس از تأیید ادمین و اعتبارسنجی شماره پروانه** · نقش `advisor` پس از تأیید اعطا می‌شود — ✅ Completed |
+| TASK-118-T | ✅ | تست چرخه تأیید مشاور | §۵.۳، §۷.۳ | `tests/Feature/Consultation/AdvisorApprovalTest.php` | TASK-118 | تست: مشاور تأییدنشده در فهرست عمومی نیست · تست: فقط `system_admin` می‌تواند تأیید کند · تست: پس از تأیید، نقش `advisor` اعطا و Audit ثبت می‌شود · تست: شماره پروانه تکراری رد می‌شود — ✅ Completed (4/4 passed) |
 | **TASK-119** | 🔨 | چرخه جلسه مشاوره + محاسبه هزینه سمت سرور | §۵.۳، §۸.۲ | `Consultation/Application/Actions/{StartSessionAction,EndSessionAction}.php`, `Domain/SessionBillingCalculator.php`, `Http/Controllers/SessionController.php` | TASK-118, TASK-089 | هر ۳ حالت · **Invariant §۵.۳: محاسبه هزینه دقیقه‌ای فقط از مهر زمانی سرور، هرگز از کلاینت** · تسویه **۸۰٪ مشاور / ۲۰٪ پلتفرم** §۸.۲ در دفتر کل · کانال `private-consultation.{sessionId}` §۵.۷ · حالت `case_review` با آپلود سند و ثبت `advisor_verdict` |
 | TASK-119-T | 🧪 | تست صورتحساب جلسه — بحرانی | §۵.۳، §۱۰.۳ (E21) | `tests/Feature/Consultation/SessionBillingTest.php` | TASK-119 | **تست: ارسال `duration_seconds` جعلی از کلاینت هیچ اثری بر هزینه ندارد** (خروجی واقعی) · **E2E سناریو E21: جلسه دقیقه‌ای → محاسبه از مهر زمانی سرور → تسویه ۸۰/۲۰ درست در دفتر کل** · تست: تراز دفتر کل پس از هر جلسه · تست: `case_review` با آپلود و نظر کار می‌کند |
 | **TASK-120** | 🔨 | پلن‌های اشتراک کسب‌وکار و سهمیه | §۵.۳، §۶.۱ | `Consultation/Application/Actions/{SubscribeAction,ConsumeQuotaAction}.php`, `Http/Controllers/SubscriptionController.php`, `Database/Seeders/SubscriptionPlanSeeder.php` | TASK-119 | ۳ پلن از `BUSINESS_SUBSCRIPTION_PLANS` پروتوتایپ · مصرف سهمیه با قفل تراکنشی · **Invariant: سهمیه هرگز منفی نشود** · تمدید و انقضای خودکار |
@@ -440,10 +440,10 @@
 | ۵ — پرداخت | TASK-084 … TASK-093 | ۰ | ۰ | ۲۰ | ⬜ GATE-P5 |
 | ۶ — تحویل و نوبت | TASK-094 … TASK-106 | ۲۶ | ۰ | ۲۶ | 🚪 GATE-P6 |
 | ۷ — هوش مصنوعی | TASK-107 … TASK-115 | ۱۸ | ۰ | ۰ | ✅ GATE-P7 |
-| ۸ — مشاوره و مقیاس | TASK-116 … TASK-129 | ۴ | ۰ | ۲۴ | ⬜ GATE-P8 |
-| | **مجموع** | **۱۵۴** | **۰** | **۱۰۴** | **۵/۹ دروازه** |
+| ۸ — مشاوره و مقیاس | TASK-116 … TASK-129 | ۶ | ۰ | ۲۲ | ⬜ GATE-P8 |
+| | **مجموع** | **۱۵۶** | **۰** | **۱۰۲** | **۵/۹ دروازه** |
 
-**تسک جاری:** TASK-118 (ثبت‌نام و تأیید مشاور)
+**تسک جاری:** TASK-119 (چرخه جلسه مشاوره + محاسبه هزینه سمت سرور)
 
 ---
 
