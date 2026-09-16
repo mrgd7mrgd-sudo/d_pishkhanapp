@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Integration\Ai\AiProvider;
+use App\Integration\Ai\Drivers\FakeDriver as AiFakeDriver;
+use App\Integration\Ai\Drivers\OpenRouterDriver;
 use App\Integration\Government\CivilRegistryClient;
 use App\Integration\Government\Drivers\HttpDriver;
 use App\Integration\Government\Drivers\Simulator\SimulatorCivilRegistryClient;
@@ -42,6 +45,23 @@ final class AppServiceProvider extends ServiceProvider
                 ),
                 default => new SimulatorPostalClient,
             };
+        });
+
+        $this->app->singleton(AiProvider::class, function () {
+            $driver = env('AI_DRIVER', config('pishkhan.ai.driver', 'fake'));
+
+            if (strtolower((string) $driver) === 'openrouter') {
+                return new OpenRouterDriver(
+                    proxyUrl: (string) config('pishkhan.ai.proxy_url', 'https://127.0.0.1:8443'),
+                    modelMap: (array) config('pishkhan.ai.models', []),
+                    clientCertPath: config('pishkhan.ai.client_cert'),
+                    clientKeyPath: config('pishkhan.ai.client_key'),
+                    caCertPath: config('pishkhan.ai.ca_cert'),
+                    timeoutSeconds: (int) config('pishkhan.ai.timeout', 30)
+                );
+            }
+
+            return new AiFakeDriver;
         });
     }
 

@@ -61,4 +61,39 @@ return [
             'sandbox' => (bool) env('ZIBAL_SANDBOX', true),
         ],
     ],
+    'ai' => [
+        'driver' => env('AI_DRIVER', 'fake'), // 'fake', 'openrouter'
+        'proxy_url' => env('AI_EGRESS_PROXY_URL', 'https://127.0.0.1:8443'),
+        'client_cert' => env('AI_CLIENT_CERT', null),
+        'client_key' => env('AI_CLIENT_KEY', null),
+        'ca_cert' => env('AI_CA_CERT', null),
+        'timeout' => (int) env('AI_TIMEOUT', 30),
+        'models' => [
+            'chatbot_response' => [
+                'primary' => env('AI_MODEL_CHATBOT_PRIMARY', 'google/gemini-2.5-flash'),
+                'fallback' => env('AI_MODEL_CHATBOT_FALLBACK', 'anthropic/claude-haiku-4.5'),
+                'max_tokens' => 1024,
+            ],
+            'intent_classification' => [
+                'primary' => env('AI_MODEL_INTENT_PRIMARY', 'google/gemini-2.5-flash-lite'),
+                'fallback' => env('AI_MODEL_INTENT_FALLBACK', 'openai/gpt-4o-mini'),
+                'max_tokens' => 128,
+            ],
+            'persian_voice_transcription' => [
+                'primary' => env('AI_MODEL_VOICE_PRIMARY', 'openai/whisper-large-v3'),
+                'fallback' => env('AI_MODEL_VOICE_FALLBACK', 'google/gemini-2.5-flash'),
+                'max_tokens' => 0,
+            ],
+            'document_quality_vision' => [
+                'primary' => env('AI_MODEL_VISION_PRIMARY', 'google/gemini-2.5-flash'),
+                'fallback' => env('AI_MODEL_VISION_FALLBACK', 'local_opencv'),
+                'max_tokens' => 512,
+            ],
+            'case_summary_operator' => [
+                'primary' => env('AI_MODEL_SUMMARY_PRIMARY', 'anthropic/claude-sonnet-4.5'),
+                'fallback' => env('AI_MODEL_SUMMARY_FALLBACK', 'google/gemini-2.5-pro'),
+                'max_tokens' => 2048,
+            ],
+        ],
+    ],
 ];
