@@ -111,6 +111,14 @@ final class Handler
             'errors' => null,
         ];
 
+        if (method_exists($e, 'getMeta')) {
+            /** @var array<string, mixed> $meta */
+            $meta = $e->getMeta();
+            if ($meta !== []) {
+                $payload['meta'] = $meta;
+            }
+        }
+
         if ($status === 429 && isset($headers['Retry-After'])) {
             $payload['retry_after'] = (int) $headers['Retry-After'];
         }

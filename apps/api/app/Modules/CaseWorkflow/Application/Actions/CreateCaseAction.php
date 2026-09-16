@@ -16,6 +16,7 @@ use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
 use App\Modules\CaseWorkflow\Domain\Models\CaseTimelineStep;
 use App\Modules\Identity\Domain\Enums\DelegationStatus;
 use App\Modules\Identity\Domain\Events\DelegationUsed;
+use App\Modules\Identity\Domain\Exceptions\DelegationNotUsableException;
 use App\Modules\Identity\Domain\Models\Citizen;
 use App\Modules\Identity\Domain\Models\Delegation;
 use App\Modules\Payments\Domain\Enums\LedgerAccountKind;
@@ -30,8 +31,6 @@ use App\Modules\ServiceCatalog\Domain\Models\Service;
 use App\Shared\Errors\ErrorCode;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
@@ -139,47 +138,22 @@ final class CreateCaseAction
         /** @var Delegation|null $delegation */
         $delegation = Delegation::query()->find($delegationId);
         if ($delegation === null || $delegation->delegate_citizen_id !== $citizen->id) {
-            throw new HttpResponseException(new JsonResponse([
-                'type' => 'https://api.pishkhan.ir/errors/'.ErrorCode::DELEGATION_EXPIRED->value,
-                'title' => ErrorCode::DELEGATION_EXPIRED->title(),
-                'status' => 403,
-                'code' => ErrorCode::DELEGATION_EXPIRED->value,
-                'detail' => 'وکالت‌نامه یافت نشد یا شما نماینده مجاز این وکالت‌نامه نیستید.',
-                'instance' => request()->path(),
-            ], 403));
+            throw new DelegationNotUsableException(
+                errorCode: ErrorCode::DELEGATION_EXPIRED,
+                message: 'وکالت‌نامه یافت نشد یا شما نماینده مجاز این وکالت‌نامه نیستید.'
+            );
         }
 
         if ($delegation->status !== DelegationStatus::Active || $delegation->valid_until->isPast()) {
-            throw new HttpResponseException(new JsonResponse([
-                'type' => 'https://api.pishkhan.ir/errors/'.ErrorCode::DELEGATION_EXPIRED->value,
-                'title' => ErrorCode::DELEGATION_EXPIRED->title(),
-                'status' => 403,
-                'code' => ErrorCode::DELEGATION_EXPIRED->value,
-                'detail' => ErrorCode::DELEGATION_EXPIRED->defaultDetail(),
-                'instance' => request()->path(),
-            ], 403));
+            throw new DelegationNotUsableException(ErrorCode::DELEGATION_EXPIRED);
         }
 
         if (! $delegation->isServiceAllowed($service->id) && ! $delegation->isServiceAllowed($service->slug)) {
-            throw new HttpResponseException(new JsonResponse([
-                'type' => 'https://api.pishkhan.ir/errors/'.ErrorCode::DELEGATION_SERVICE_NOT_ALLOWED->value,
-                'title' => ErrorCode::DELEGATION_SERVICE_NOT_ALLOWED->title(),
-                'status' => 403,
-                'code' => ErrorCode::DELEGATION_SERVICE_NOT_ALLOWED->value,
-                'detail' => ErrorCode::DELEGATION_SERVICE_NOT_ALLOWED->defaultDetail(),
-                'instance' => request()->path(),
-            ], 403));
+            throw new DelegationNotUsableException(ErrorCode::DELEGATION_SERVICE_NOT_ALLOWED);
         }
 
         if ($requiredFeeRials > $delegation->max_amount_rials) {
-            throw new HttpResponseException(new JsonResponse([
-                'type' => 'https://api.pishkhan.ir/errors/'.ErrorCode::DELEGATION_AMOUNT_EXCEEDED->value,
-                'title' => ErrorCode::DELEGATION_AMOUNT_EXCEEDED->title(),
-                'status' => 403,
-                'code' => ErrorCode::DELEGATION_AMOUNT_EXCEEDED->value,
-                'detail' => ErrorCode::DELEGATION_AMOUNT_EXCEEDED->defaultDetail(),
-                'instance' => request()->path(),
-            ], 403));
+            throw new DelegationNotUsableException(ErrorCode::DELEGATION_AMOUNT_EXCEEDED);
         }
 
         return $delegation;
