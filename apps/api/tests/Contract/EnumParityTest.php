@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Contract;
 
+use App\Modules\AiAssistance\Domain\Enums\AiChannel;
+use App\Modules\AiAssistance\Domain\Enums\AiMessageRole;
 use App\Modules\CaseWorkflow\Domain\Enums\CaseStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\DispatchOfferStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\ReturnReasonCode;
@@ -171,4 +173,19 @@ it('verifies exact parity between PHP and TypeScript appointment enums (§6.1, �
     $tsReminderTypes = extractTsStringArray($tsPath, 'APPOINTMENT_REMINDER_TYPES');
     expect(AppointmentReminderType::values())->toBe($tsReminderTypes)
         ->and(count($tsReminderTypes))->toBe(3);
+});
+
+it('verifies exact parity between PHP and TypeScript AI assistance enums (§6.1, §6.3, TASK-107)', function (): void {
+    $tsPath = realpath(__DIR__.'/../../../../packages/domain/src/ai-assistance.ts');
+    expect($tsPath)->not->toBeFalse();
+
+    // AI Channels
+    $tsChannels = extractTsStringArray($tsPath, 'AI_CHANNELS');
+    expect(AiChannel::values())->toBe($tsChannels)
+        ->and(count($tsChannels))->toBe(2);
+
+    // AI Message Roles
+    $tsRoles = extractTsStringArray($tsPath, 'AI_MESSAGE_ROLES');
+    expect(AiMessageRole::values())->toBe($tsRoles)
+        ->and(count($tsRoles))->toBe(3);
 });

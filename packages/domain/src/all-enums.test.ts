@@ -38,6 +38,9 @@ import {
   APPOINTMENT_COMPLETION_META,
   APPOINTMENT_REMINDER_TYPES,
   APPOINTMENT_REMINDER_TYPE_META,
+  AI_CHANNELS,
+  AI_MESSAGE_ROLES,
+  getAiChannelMeta,
 } from './index.js';
 
 describe('Turn Owners (5 owners)', () => {
@@ -244,5 +247,20 @@ describe('Timeline, Citizen Tiers and Delegations', () => {
       expect(meta.code).toBe(reminder);
       expect(meta.label.trim().length).toBeGreaterThan(0);
     }
+  });
+});
+
+describe('AI Assistance Enums (§6.1, §8.1)', () => {
+  it('has 2 AI channels with Persian labels', () => {
+    expect(AI_CHANNELS).toHaveLength(2);
+    for (const channel of AI_CHANNELS) {
+      const meta = getAiChannelMeta(channel);
+      expect(meta.code).toBe(channel);
+      expect(meta.label.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  it('has 3 AI message roles', () => {
+    expect(AI_MESSAGE_ROLES).toEqual(['user', 'assistant', 'system']);
   });
 });

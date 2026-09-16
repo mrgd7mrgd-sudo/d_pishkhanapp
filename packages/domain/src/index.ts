@@ -14,3 +14,4 @@ export * from './ledger.js';
 export * from './dispatch.js';
 export * from './payment.js';
 export * from './appointment.js';
+export * from './ai-assistance.js';
