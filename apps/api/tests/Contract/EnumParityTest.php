@@ -9,6 +9,10 @@ use App\Modules\CaseWorkflow\Domain\Enums\DispatchOfferStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\ReturnReasonCode;
 use App\Modules\CaseWorkflow\Domain\Enums\TimelineStepStatus;
 use App\Modules\CaseWorkflow\Domain\Enums\TurnOwner;
+use App\Modules\OfficeNetwork\Domain\Enums\AppointmentAttendance;
+use App\Modules\OfficeNetwork\Domain\Enums\AppointmentCompletion;
+use App\Modules\OfficeNetwork\Domain\Enums\AppointmentReminderType;
+use App\Modules\OfficeNetwork\Domain\Enums\AppointmentStatus;
 use App\Modules\Payments\Domain\Enums\LedgerAccountKind;
 use App\Modules\Payments\Domain\Enums\LedgerDirection;
 use App\Modules\Payments\Domain\Enums\LedgerOwnerType;
@@ -142,4 +146,29 @@ it('verifies exact parity between PHP and TypeScript payment enums (§6.1, §8.2
     $tsPayoutStatuses = extractTsStringArray($tsPath, 'PAYOUT_STATUSES');
     expect(PayoutStatus::values())->toBe($tsPayoutStatuses)
         ->and(count($tsPayoutStatuses))->toBe(4);
+});
+
+it('verifies exact parity between PHP and TypeScript appointment enums (§6.1, §6.3, TASK-099)', function (): void {
+    $tsPath = realpath(__DIR__.'/../../../../packages/domain/src/appointment.ts');
+    expect($tsPath)->not->toBeFalse();
+
+    // Appointment Statuses
+    $tsStatuses = extractTsStringArray($tsPath, 'APPOINTMENT_STATUSES');
+    expect(AppointmentStatus::values())->toBe($tsStatuses)
+        ->and(count($tsStatuses))->toBe(3);
+
+    // Attendances
+    $tsAttendances = extractTsStringArray($tsPath, 'APPOINTMENT_ATTENDANCES');
+    expect(AppointmentAttendance::values())->toBe($tsAttendances)
+        ->and(count($tsAttendances))->toBe(3);
+
+    // Completions
+    $tsCompletions = extractTsStringArray($tsPath, 'APPOINTMENT_COMPLETIONS');
+    expect(AppointmentCompletion::values())->toBe($tsCompletions)
+        ->and(count($tsCompletions))->toBe(4);
+
+    // Reminder Types
+    $tsReminderTypes = extractTsStringArray($tsPath, 'APPOINTMENT_REMINDER_TYPES');
+    expect(AppointmentReminderType::values())->toBe($tsReminderTypes)
+        ->and(count($tsReminderTypes))->toBe(3);
 });

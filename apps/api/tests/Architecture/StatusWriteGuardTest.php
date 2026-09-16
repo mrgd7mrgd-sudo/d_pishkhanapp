@@ -39,8 +39,8 @@ test('architecture rule: no file outside CaseStateMachine assigns directly to st
 
         $content = (string) file_get_contents($filePath);
 
-        // Pattern checking direct assignment to case status: $case->status = ...
-        if (preg_match('/\$case\s*->\s*status\s*=/i', $content)) {
+        // Pattern checking direct assignment to case status: $case->status = ... (excluding comparison == or ===)
+        if (preg_match('/\$case\s*->\s*status\s*=(?!=)/i', $content)) {
             $violations[] = $normalizedPath;
         }
     }

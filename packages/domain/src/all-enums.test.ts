@@ -30,6 +30,14 @@ import {
   PAYMENT_INTENT_STATUS_DEFINITIONS,
   PAYOUT_STATUSES,
   PAYOUT_STATUS_DEFINITIONS,
+  APPOINTMENT_STATUSES,
+  APPOINTMENT_STATUS_META,
+  APPOINTMENT_ATTENDANCES,
+  APPOINTMENT_ATTENDANCE_META,
+  APPOINTMENT_COMPLETIONS,
+  APPOINTMENT_COMPLETION_META,
+  APPOINTMENT_REMINDER_TYPES,
+  APPOINTMENT_REMINDER_TYPE_META,
 } from './index.js';
 
 describe('Turn Owners (5 owners)', () => {
@@ -198,6 +206,42 @@ describe('Timeline, Citizen Tiers and Delegations', () => {
     for (const status of PAYOUT_STATUSES) {
       const meta = PAYOUT_STATUS_DEFINITIONS[status];
       expect(meta.code).toBe(status);
+      expect(meta.label.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  it('has 3 appointment statuses with non-empty Persian labels', () => {
+    expect(APPOINTMENT_STATUSES).toHaveLength(3);
+    for (const status of APPOINTMENT_STATUSES) {
+      const meta = APPOINTMENT_STATUS_META[status];
+      expect(meta.code).toBe(status);
+      expect(meta.label.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  it('has 3 appointment attendances with non-empty Persian labels', () => {
+    expect(APPOINTMENT_ATTENDANCES).toHaveLength(3);
+    for (const attendance of APPOINTMENT_ATTENDANCES) {
+      const meta = APPOINTMENT_ATTENDANCE_META[attendance];
+      expect(meta.code).toBe(attendance);
+      expect(meta.label.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  it('has 4 appointment completions with non-empty Persian labels', () => {
+    expect(APPOINTMENT_COMPLETIONS).toHaveLength(4);
+    for (const completion of APPOINTMENT_COMPLETIONS) {
+      const meta = APPOINTMENT_COMPLETION_META[completion];
+      expect(meta.code).toBe(completion);
+      expect(meta.label.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  it('has 3 appointment reminder types with non-empty Persian labels', () => {
+    expect(APPOINTMENT_REMINDER_TYPES).toHaveLength(3);
+    for (const reminder of APPOINTMENT_REMINDER_TYPES) {
+      const meta = APPOINTMENT_REMINDER_TYPE_META[reminder];
+      expect(meta.code).toBe(reminder);
       expect(meta.label.trim().length).toBeGreaterThan(0);
     }
   });

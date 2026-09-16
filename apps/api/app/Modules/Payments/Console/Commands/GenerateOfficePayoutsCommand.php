@@ -11,6 +11,7 @@ use App\Modules\Payments\Domain\Models\Payout;
 use App\Shared\Audit\AuditableAction;
 use App\Shared\Audit\AuditLogger;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
@@ -142,7 +143,7 @@ final class GenerateOfficePayoutsCommand extends Command
                 'period_end' => $periodEnd,
                 'total_cases_count' => $report->totalCasesCount,
                 'reference_number' => $referenceNumber,
-                'generated_at' => now(),
+                'generated_at' => CarbonImmutable::now(),
             ]);
 
             AuditLogger::record(

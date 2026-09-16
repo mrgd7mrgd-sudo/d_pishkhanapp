@@ -13,3 +13,4 @@ export * from './persian-text.js';
 export * from './ledger.js';
 export * from './dispatch.js';
 export * from './payment.js';
+export * from './appointment.js';

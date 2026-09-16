@@ -61,9 +61,6 @@ final class OfficeFinder
         int $limit = 3
     ): Collection {
         $coords = $this->parseLocationCoordinates($location);
-        if ($coords === null) {
-            return new Collection;
-        }
 
         $nearby = $this->findNearby(
             lat: $coords['lat'],
@@ -92,9 +89,9 @@ final class OfficeFinder
     }
 
     /**
-     * @return array{lat: float, lng: float}|null
+     * @return array{lat: float, lng: float}
      */
-    public function parseLocationCoordinates(mixed $location): ?array
+    public function parseLocationCoordinates(mixed $location): array
     {
         if (is_array($location) && isset($location['lat'], $location['lng'])) {
             return ['lat' => (float) $location['lat'], 'lng' => (float) $location['lng']];

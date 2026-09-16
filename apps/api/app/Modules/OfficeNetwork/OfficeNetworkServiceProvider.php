@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Modules\OfficeNetwork;
 
 use App\Modules\CaseWorkflow\Domain\Events\CaseStatusChanged;
+use App\Modules\OfficeNetwork\Domain\Models\Appointment;
 use App\Modules\OfficeNetwork\Domain\Models\Office;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeAnnouncement;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeMedal;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeServiceCoverage;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeSpecialty;
+use App\Modules\OfficeNetwork\Infrastructure\Policies\AppointmentPolicy;
 use App\Modules\OfficeNetwork\Infrastructure\Policies\OfficeAnnouncementPolicy;
 use App\Modules\OfficeNetwork\Infrastructure\Policies\OfficeMedalPolicy;
 use App\Modules\OfficeNetwork\Infrastructure\Policies\OfficePolicy;
@@ -31,6 +33,7 @@ final class OfficeNetworkServiceProvider extends ServiceProvider
         Gate::policy(OfficeSpecialty::class, OfficeSpecialtyPolicy::class);
         Gate::policy(OfficeMedal::class, OfficeMedalPolicy::class);
         Gate::policy(OfficeAnnouncement::class, OfficeAnnouncementPolicy::class);
+        Gate::policy(Appointment::class, AppointmentPolicy::class);
 
         Event::listen(
             CaseStatusChanged::class,

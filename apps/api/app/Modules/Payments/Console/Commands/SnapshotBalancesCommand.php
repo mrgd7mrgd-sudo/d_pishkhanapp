@@ -10,6 +10,7 @@ use App\Modules\Payments\Domain\LedgerService;
 use App\Modules\Payments\Domain\Models\LedgerAccount;
 use App\Modules\Payments\Domain\Models\LedgerBalanceSnapshot;
 use App\Modules\Payments\Infrastructure\BalanceCache;
+use Carbon\CarbonImmutable;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -41,7 +42,7 @@ final class SnapshotBalancesCommand extends Command
         $this->info("Found {$accounts->count()} ledger accounts to snapshot.");
 
         $snapshotsCreated = 0;
-        $snapshotTimestamp = now();
+        $snapshotTimestamp = CarbonImmutable::now();
 
         foreach ($accounts as $account) {
             $this->snapshotAccount($account, $snapshotTimestamp);
