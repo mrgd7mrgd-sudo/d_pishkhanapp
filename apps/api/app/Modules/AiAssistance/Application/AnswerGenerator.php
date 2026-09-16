@@ -14,18 +14,33 @@ use App\Modules\AiAssistance\Domain\Models\AiMessage;
 use App\Modules\AiAssistance\Domain\Models\AiUsageRecord;
 use App\Modules\AiAssistance\Domain\PiiRedactor;
 use App\Modules\AiAssistance\Domain\RedactionMap;
+use App\Modules\AiAssistance\Infrastructure\AiBudgetGuard;
+use App\Modules\AiAssistance\Infrastructure\CatalogFallbackResponder;
 use App\Modules\Identity\Domain\Models\Citizen;
+use App\Shared\Resilience\CircuitBreaker;
 use Carbon\CarbonImmutable;
+use Throwable;
 
 final class AnswerGenerator
 {
+    private readonly CircuitBreaker $circuitBreaker;
+    private readonly AiBudgetGuard $budgetGuard;
+    private readonly CatalogFallbackResponder $fallbackResponder;
+
     public function __construct(
         private readonly IntentClassifier $intentClassifier,
         private readonly ContextRetriever $contextRetriever,
         private readonly PiiRedactor $piiRedactor,
         private readonly EntityNameCollector $entityCollector,
-        private readonly AiProvider $aiProvider
-    ) {}
+        private readonly AiProvider $aiProvider,
+        ?AiBudgetGuard $budgetGuard = null,
+        ?CatalogFallbackResponder $fallbackResponder = null,
+        ?CircuitBreaker $circuitBreaker = null
+    ) {
+        $this->budgetGuard = $budgetGuard ?? new AiBudgetGuard;
+        $this->fallbackResponder = $fallbackResponder ?? new CatalogFallbackResponder;
+        $this->circuitBreaker = $circuitBreaker ?? new CircuitBreaker('ai_egress_proxy', 3, 60);
+    }
 
     /**
      * Executes the 7-step RAG pipeline (§5.6 #10, §8.1).
@@ -59,6 +74,11 @@ final class AnswerGenerator
         // Step 2: Context Retrieval
         $retrieved = $this->contextRetriever->retrieve($message, $context, $citizen);
 
+        // Fallback Guard: Proxy unavailable, Circuit Breaker Open, or Monthly Budget Exhausted (§8.1.4, §9.4)
+        if (! $this->aiProvider->isAvailable() || ! $this->circuitBreaker->isAvailable() || ! $this->budgetGuard->isBudgetAvailable()) {
+            return $this->fallbackResponder->respond($message, $retrieved, $intent, $confidence, $conversation);
+        }
+
         // Step 3: PII Redaction
         $redactionMap = new RedactionMap;
         $knownEntities = $citizen !== null ? $this->entityCollector->collectFromCitizen($citizen) : [];
@@ -69,7 +89,7 @@ final class AnswerGenerator
         $systemPrompt = $this->buildSystemPrompt();
         $userPrompt = "{$redactedGrounding}\n\nپرسش شهروند:\n{$redactedMessage}";
 
-        // Step 5: LLM Completion via AiProvider
+        // Step 5: LLM Completion via AiProvider with Circuit Breaker resilience
         $aiRequest = new AiRequest(
             task: AiTask::ChatbotResponse,
             messages: [
@@ -80,13 +100,18 @@ final class AnswerGenerator
             temperature: 0.3
         );
 
-        $aiResponse = $this->aiProvider->complete($aiRequest);
+        try {
+            $aiResponse = $this->circuitBreaker->execute(fn () => $this->aiProvider->complete($aiRequest));
+        } catch (Throwable) {
+            return $this->fallbackResponder->respond($message, $retrieved, $intent, $confidence, $conversation);
+        }
 
         // Step 6: Token Restoration (Server-side only)
         $restoredReply = $this->piiRedactor->restore($aiResponse->content, $redactionMap);
 
         // Step 7: Record Usage and Persist
         $costRials = max(100, (int) round(($aiResponse->inputTokens * 0.4) + ($aiResponse->outputTokens * 1.2)));
+        $this->budgetGuard->recordUsage($costRials);
         $this->persistConversationState($conversation, $message, $restoredReply, $retrieved['citations'], $retrieved['suggested_actions'], $aiResponse->model, $aiResponse->inputTokens, $aiResponse->outputTokens, $costRials);
 
         return [
@@ -106,7 +131,7 @@ final class AnswerGenerator
 
     private function buildSystemPrompt(): string
     {
-        return <<<'PROMPT'
+        return <<<PROMPT
 شما دستیار هوشمند و رسمی سامانه پیشخوان خدمات دولت و امور شهروندی ایران هستید.
 وظیفه شما راهنمایی دقیق، محترمانه و کوتاه شهروندان بر اساس اطلاعات موثق زیر است.
 قواعد مهم:

@@ -13,6 +13,7 @@ use App\Modules\AiAssistance\Domain\Models\AiMessage;
 use App\Modules\AiAssistance\Http\Requests\AiChatRequest;
 use App\Modules\AiAssistance\Http\Resources\AiConversationResource;
 use App\Modules\AiAssistance\Http\Resources\AiReplyResource;
+use App\Modules\AiAssistance\Infrastructure\AiBudgetGuard;
 use App\Modules\Identity\Domain\Models\Citizen;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,16 +23,27 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 final class AiChatController extends Controller
 {
     public function __construct(
-        private readonly AnswerGenerator $answerGenerator
+        private readonly AnswerGenerator $answerGenerator,
+        private readonly AiBudgetGuard $budgetGuard
     ) {}
 
     /**
-     * POST /api/v1/ai/chat (§5.6 #10, TASK-112)
+     * POST /api/v1/ai/chat (§5.6 #10, §7.5, TASK-112, TASK-113)
      */
     public function chat(AiChatRequest $request): JsonResponse|StreamedResponse
     {
         /** @var Citizen $citizen */
         $citizen = $request->user();
+
+        // 30 msg/hour and 200 msg/day per citizen (§7.5, TASK-113)
+        if (! $this->budgetGuard->checkRateLimit((string) $citizen->id)) {
+            return response()->json([
+                'message' => 'شما به سقف مجاز پیام‌های هوش مصنوعی (۳۰ پیام در ساعت یا ۲۰۰ پیام در روز) رسیده‌اید. لطفاً ساعتی دیگر مراجعه فرمایید.',
+                'code' => 'AI_RATE_LIMIT_EXCEEDED',
+            ], 429);
+        }
+
+        $this->budgetGuard->incrementCitizenUsage((string) $citizen->id);
 
         $conversation = $this->resolveConversation($citizen, $request->input('conversation_id'), $request->input('message'));
 
@@ -54,7 +66,7 @@ final class AiChatController extends Controller
 
         $data = array_merge($result, [
             'conversation_id' => (string) $conversation->id,
-            'message_id' => $assistantMessage ? (string) $assistantMessage->id : 'msg_'.bin2hex(random_bytes(8)),
+            'message_id' => $assistantMessage ? (string) $assistantMessage->id : 'msg_' . bin2hex(random_bytes(8)),
         ]);
 
         return (new AiReplyResource($data))->response();
@@ -128,7 +140,7 @@ final class AiChatController extends Controller
                 'intent' => $result['intent'],
                 'confidence' => $result['confidence'],
             ];
-            echo "event: meta\ndata: ".json_encode($meta, JSON_UNESCAPED_UNICODE)."\n\n";
+            echo "event: meta\ndata: " . json_encode($meta, JSON_UNESCAPED_UNICODE) . "\n\n";
             if (ob_get_level() > 0) {
                 ob_flush();
             }
@@ -140,7 +152,7 @@ final class AiChatController extends Controller
                 if ($w === '') {
                     continue;
                 }
-                echo "event: token\ndata: ".json_encode(['chunk' => $w], JSON_UNESCAPED_UNICODE)."\n\n";
+                echo "event: token\ndata: " . json_encode(['chunk' => $w], JSON_UNESCAPED_UNICODE) . "\n\n";
                 if (ob_get_level() > 0) {
                     ob_flush();
                 }
@@ -155,13 +167,13 @@ final class AiChatController extends Controller
 
             $donePayload = [
                 'conversation_id' => (string) $conversation->id,
-                'message_id' => $assistantMessage ? (string) $assistantMessage->id : 'msg_'.bin2hex(random_bytes(8)),
+                'message_id' => $assistantMessage ? (string) $assistantMessage->id : 'msg_' . bin2hex(random_bytes(8)),
                 'reply' => $result['reply'],
                 'citations' => $result['citations'],
                 'suggested_actions' => $result['suggested_actions'],
                 'usage' => $result['usage'],
             ];
-            echo "event: done\ndata: ".json_encode($donePayload, JSON_UNESCAPED_UNICODE)."\n\n";
+            echo "event: done\ndata: " . json_encode($donePayload, JSON_UNESCAPED_UNICODE) . "\n\n";
             if (ob_get_level() > 0) {
                 ob_flush();
             }

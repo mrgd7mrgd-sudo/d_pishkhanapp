@@ -68,6 +68,9 @@ return [
         'client_key' => env('AI_CLIENT_KEY', null),
         'ca_cert' => env('AI_CA_CERT', null),
         'timeout' => (int) env('AI_TIMEOUT', 30),
+        'monthly_budget_rials' => (int) env('AI_MONTHLY_BUDGET_RIALS', 50000000),
+        'citizen_hourly_limit' => (int) env('AI_CITIZEN_HOURLY_LIMIT', 30),
+        'citizen_daily_limit' => (int) env('AI_CITIZEN_DAILY_LIMIT', 200),
         'models' => [
             'chatbot_response' => [
                 'primary' => env('AI_MODEL_CHATBOT_PRIMARY', 'google/gemini-2.5-flash'),
