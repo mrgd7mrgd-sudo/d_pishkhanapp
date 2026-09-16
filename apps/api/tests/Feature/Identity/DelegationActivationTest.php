@@ -8,6 +8,7 @@ use App\Modules\Identity\Domain\Enums\DelegationStatus;
 use App\Modules\Identity\Domain\Enums\RoleName;
 use App\Modules\Identity\Domain\Models\Citizen;
 use App\Modules\Identity\Domain\Models\Delegation;
+use App\Shared\Crypto\EnvelopeEncryptor;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -22,11 +23,13 @@ beforeEach(function (): void {
 
 function createDelegationCitizen(string $mobile, string $nationalId, string $name): Citizen
 {
+    $encryptor = app(EnvelopeEncryptor::class);
+
     return Citizen::query()->create([
         'id' => (string) Str::uuid(),
-        'mobile_hash' => hash('sha256', $mobile),
+        'mobile_hash' => $encryptor->hashIndex($mobile),
         'mobile_encrypted' => 'enc:'.$mobile,
-        'national_id_hash' => hash('sha256', $nationalId),
+        'national_id_hash' => $encryptor->hashIndex($nationalId),
         'national_id_encrypted' => 'enc:'.$nationalId,
         'full_name' => $name,
         'tier' => CitizenTier::BRONZE->value,

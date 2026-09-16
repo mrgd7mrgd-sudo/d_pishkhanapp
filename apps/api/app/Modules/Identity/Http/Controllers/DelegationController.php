@@ -79,8 +79,9 @@ final class DelegationController
 
             return new JsonResponse([
                 'data' => (new DelegationResource($result['delegation']))->resolve(),
-                // In testing/dev environment OTP can be provided in meta for verification convenience
-                'meta' => config('app.env') !== 'production' ? [
+                // OTP codes are delivered to each party via SMS (TASK-121).
+                // Only the automated testing environment may observe them — never staging/production.
+                'meta' => app()->environment('testing') ? [
                     'principal_otp' => $result['principal_otp'],
                     'delegate_otp' => $result['delegate_otp'],
                 ] : null,

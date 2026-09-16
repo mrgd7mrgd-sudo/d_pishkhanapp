@@ -12,6 +12,7 @@ use App\Shared\Audit\AuditableAction;
 use App\Shared\Audit\AuditLogger;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\RateLimiter;
 use InvalidArgumentException;
 
 final class ActivateDelegationAction
@@ -43,20 +44,26 @@ final class ActivateDelegationAction
             throw new InvalidArgumentException('شما طرف مجاز در این قرارداد نمایندگی نیستید.');
         }
 
-        $inputHash = hash('sha256', $otpCode);
+        // Brute-force protection (§7.2): 5 failed attempts per party per delegation, 15-minute lockout.
+        $lockoutKey = 'delegation-otp:'.$delegationId.':'.$citizen->id;
+        if (RateLimiter::tooManyAttempts($lockoutKey, 5)) {
+            throw new InvalidArgumentException('به دلیل تلاش‌های ناموفق مکرر، امکان تلاش مجدد در حال حاضر وجود ندارد.');
+        }
 
-        return DB::transaction(function () use ($citizen, $delegation, $isPrincipal, $isDelegate, $inputHash): Delegation {
+        $verified = DB::transaction(function () use ($citizen, $delegation, $isPrincipal, $isDelegate, $otpCode): bool {
+            if ($isPrincipal && ! password_verify($otpCode, (string) $delegation->principal_otp_hash)) {
+                return false;
+            }
+
+            if ($isDelegate && ! password_verify($otpCode, (string) $delegation->delegate_otp_hash)) {
+                return false;
+            }
+
             if ($isPrincipal) {
-                if ($delegation->principal_otp_hash !== $inputHash) {
-                    throw new InvalidArgumentException('کد تایید موکل نادرست است.');
-                }
                 $delegation->principal_otp_verified = true;
             }
 
             if ($isDelegate) {
-                if ($delegation->delegate_otp_hash !== $inputHash) {
-                    throw new InvalidArgumentException('کد تایید وکیل/نماینده نادرست است.');
-                }
                 $delegation->delegate_otp_verified = true;
             }
 
@@ -86,7 +93,19 @@ final class ActivateDelegationAction
 
             $delegation->save();
 
-            return $delegation->fresh(['principal', 'delegate']);
+            return true;
         });
+
+        if (! $verified) {
+            RateLimiter::hit($lockoutKey, 900);
+
+            throw new InvalidArgumentException($isPrincipal
+                ? 'کد تایید موکل نادرست است.'
+                : 'کد تایید وکیل/نماینده نادرست است.');
+        }
+
+        RateLimiter::clear($lockoutKey);
+
+        return $delegation->fresh(['principal', 'delegate']);
     }
 }
