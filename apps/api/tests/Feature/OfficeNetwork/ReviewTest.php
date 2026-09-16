@@ -14,6 +14,7 @@ use App\Modules\Identity\Domain\Models\Citizen;
 use App\Modules\Identity\Domain\Models\Operator;
 use App\Modules\OfficeNetwork\Domain\Models\Office;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeReview;
+use App\Modules\OfficeNetwork\Domain\Models\OfficeSlaEvent;
 use App\Modules\ServiceCatalog\Domain\Models\Service;
 use App\Modules\ServiceCatalog\Domain\Models\ServiceCategory;
 use App\Shared\Audit\AuditableAction;
@@ -405,4 +406,28 @@ test('Desk GET /desk/reviews lists office reviews with filters (TASK-101, §4.4,
         ->assertJsonPath('data.0.rating', 3);
     $this->getJson('/api/v1/desk/reviews?filter=with_reply')->assertOk()->assertJsonCount(1, 'data')
         ->assertJsonPath('data.0.rating', 5);
+});
+
+test('Desk GET /desk/reviews/sla-stats returns SLA trends and breakdown (TASK-104, §4.4, §7.3)', function (): void {
+    OfficeSlaEvent::query()->create([
+        'office_id' => $this->officeA->id,
+        'event_type' => 'late_return',
+        'penalty_points' => 5,
+        'is_breach' => true,
+        'occurred_at' => now(),
+    ]);
+
+    Sanctum::actingAs($this->operatorA, ['*']);
+    $response = $this->getJson('/api/v1/desk/reviews/sla-stats');
+
+    $response->assertOk()
+        ->assertJsonStructure([
+            'data' => [
+                'current_score',
+                'window_days',
+                'trend',
+                'breakdown',
+            ],
+        ])
+        ->assertJsonPath('data.window_days', 30);
 });

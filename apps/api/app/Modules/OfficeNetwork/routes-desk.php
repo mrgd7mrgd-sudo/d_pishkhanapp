@@ -19,7 +19,8 @@ Route::get('/desk/appointments/{id}', [DeskAppointmentController::class, 'show']
 Route::post('/desk/appointments/{id}/attendance', [DeskAppointmentController::class, 'setAttendance']);
 Route::post('/desk/appointments/{id}/completion', [DeskAppointmentController::class, 'setCompletion']);
 
-// Operator desk reviews (§4.4, §7.3, TASK-101)
+// Operator desk reviews (§4.4, §7.3, TASK-101, TASK-104)
+Route::get('/desk/reviews/sla-stats', [DeskReviewController::class, 'slaStats']);
 Route::get('/desk/reviews', [DeskReviewController::class, 'index']);
 Route::get('/desk/reviews/{id}', [DeskReviewController::class, 'show']);
 Route::post('/desk/reviews/{id}/reply', [DeskReviewController::class, 'reply']);

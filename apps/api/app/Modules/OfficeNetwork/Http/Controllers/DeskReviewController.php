@@ -6,9 +6,12 @@ namespace App\Modules\OfficeNetwork\Http\Controllers;
 
 use App\Modules\Identity\Domain\Models\Operator;
 use App\Modules\OfficeNetwork\Application\Actions\ReplyOfficeReviewAction;
+use App\Modules\OfficeNetwork\Domain\Models\Office;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeReview;
+use App\Modules\OfficeNetwork\Domain\Models\OfficeSlaEvent;
 use App\Modules\OfficeNetwork\Http\Requests\ReplyOfficeReviewRequest;
 use App\Modules\OfficeNetwork\Http\Resources\OfficeReviewResource;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
@@ -113,6 +116,67 @@ final class DeskReviewController
         if ($search !== null && $search !== '') {
             $query->where('comment', 'like', "%{$search}%");
         }
+    }
+
+    public function slaStats(Request $request): JsonResponse
+    {
+        $operator = $this->resolveOperator($request);
+        /** @var Office|null $office */
+        $office = Office::query()->find($operator->office_id);
+        if ($office === null) {
+            throw new HttpResponseException(new JsonResponse([
+                'status' => 404,
+                'detail' => 'دفتر مربوطه یافت نشد.',
+            ], 404));
+        }
+
+        $currentScore = (float) $office->sla_score;
+
+        // Daily points for the last 30 days
+        $days = 30;
+        $trend = [];
+        $now = CarbonImmutable::now();
+
+        for ($i = $days - 1; $i >= 0; $i--) {
+            $day = $now->subDays($i);
+            $dayStart = $day->startOfDay();
+            $dayEnd = $day->endOfDay();
+
+            $breachesCount = OfficeSlaEvent::query()
+                ->where('office_id', $office->id)
+                ->where('is_breach', true)
+                ->whereBetween('occurred_at', [$dayStart, $dayEnd])
+                ->count();
+
+            $dayPenalties = (float) OfficeSlaEvent::query()
+                ->where('office_id', $office->id)
+                ->where('is_breach', true)
+                ->whereBetween('occurred_at', [$dayStart, $dayEnd])
+                ->sum('penalty_points');
+
+            $trend[] = [
+                'date' => $day->format('Y-m-d'),
+                'breaches_count' => $breachesCount,
+                'penalties' => $dayPenalties,
+            ];
+        }
+
+        $breachBreakdown = OfficeSlaEvent::query()
+            ->where('office_id', $office->id)
+            ->where('is_breach', true)
+            ->where('occurred_at', '>=', $now->subDays($days))
+            ->selectRaw('event_type, count(*) as count, sum(penalty_points) as total_penalty')
+            ->groupBy('event_type')
+            ->get();
+
+        return new JsonResponse([
+            'data' => [
+                'current_score' => $currentScore,
+                'window_days' => $days,
+                'trend' => $trend,
+                'breakdown' => $breachBreakdown,
+            ],
+        ]);
     }
 
     private function resolveOperator(Request $request): Operator
