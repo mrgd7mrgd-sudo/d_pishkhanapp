@@ -82,6 +82,10 @@ final class FakeDriver implements AiProvider
 
     public function transcribe(AudioFile $audio, string $language = 'fa'): TranscriptionResult
     {
+        if (isset($this->customResponses['transcribe'])) {
+            return $this->customResponses['transcribe'];
+        }
+
         return new TranscriptionResult(
             text: 'برای دریافت کارت بازرگانی چه مدارکی لازم است؟',
             language: $language,
