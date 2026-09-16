@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Modules\AiAssistance\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Modules\AiAssistance\Application\TranscribeVoiceAction;
 use App\Modules\AiAssistance\Domain\Enums\AiChannel;
 use App\Modules\AiAssistance\Domain\Models\AiConversation;
@@ -13,6 +12,7 @@ use App\Modules\Identity\Domain\Models\Citizen;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Routing\Controller;
 use Illuminate\Validation\ValidationException;
 
 final class AiVoiceController extends Controller

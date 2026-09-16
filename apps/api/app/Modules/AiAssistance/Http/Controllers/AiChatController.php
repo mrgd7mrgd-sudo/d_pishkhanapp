@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Modules\AiAssistance\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Modules\AiAssistance\Application\AnswerGenerator;
 use App\Modules\AiAssistance\Domain\Enums\AiChannel;
 use App\Modules\AiAssistance\Domain\Enums\AiMessageRole;
@@ -18,6 +17,7 @@ use App\Modules\Identity\Domain\Models\Citizen;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Routing\Controller;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class AiChatController extends Controller

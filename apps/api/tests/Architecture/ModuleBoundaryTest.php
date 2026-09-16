@@ -13,6 +13,7 @@ arch('modules communicate only via contracts')
         'Carbon',
         'Symfony',
         'Symfony\\Component\\HttpFoundation\\Response',
+        'Symfony\\Component\\HttpFoundation\\StreamedResponse',
         'Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface',
         'Spatie\\Permission',
         'config',
@@ -23,6 +24,9 @@ arch('modules communicate only via contracts')
         'event',
         'base_path',
         'resource_path',
+        'collect',
+    ])
+    ->ignoring([
         'TCPDF',
         'TCPDF_FONTS',
     ]);
