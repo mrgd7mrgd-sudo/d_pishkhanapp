@@ -143,10 +143,14 @@ final class DeliveryRequest extends Model
 
     /**
      * Set a new 6-digit OTP (hashed with bcrypt, never raw).
+     *
+     * bcrypt is pinned explicitly (like OtpChallenge) because the otp_hash
+     * column is varchar(60) — sized for bcrypt — while the default hash
+     * driver is argon2id (~97 chars), which Postgres would reject.
      */
     public function setOtp(string $rawOtp, \DateTimeInterface $expiresAt): void
     {
-        $this->otp_hash = Hash::make($rawOtp);
+        $this->otp_hash = Hash::driver('bcrypt')->make($rawOtp);
         $this->otp_expires_at = Carbon::instance($expiresAt);
     }
 
@@ -163,6 +167,6 @@ final class DeliveryRequest extends Model
             return false;
         }
 
-        return Hash::check($rawOtp, $this->otp_hash);
+        return password_verify($rawOtp, $this->otp_hash);
     }
 }
