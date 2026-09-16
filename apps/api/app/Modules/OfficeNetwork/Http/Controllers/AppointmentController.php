@@ -15,6 +15,7 @@ use App\Modules\OfficeNetwork\Http\Requests\BookAppointmentRequest;
 use App\Modules\OfficeNetwork\Http\Requests\GetSlotsRequest;
 use App\Modules\OfficeNetwork\Http\Resources\AppointmentResource;
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -100,7 +101,7 @@ final class AppointmentController
         $appointment = Appointment::findOrFail($id);
         Gate::authorize('cancel', $appointment);
 
-        /** @var \Illuminate\Contracts\Auth\Authenticatable $actor */
+        /** @var Authenticatable $actor */
         $actor = $request->user();
 
         $reason = $request->input('reason');

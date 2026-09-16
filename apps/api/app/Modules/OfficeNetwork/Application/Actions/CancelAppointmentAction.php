@@ -8,8 +8,8 @@ use App\Modules\Identity\Domain\Models\Operator;
 use App\Modules\OfficeNetwork\Domain\Enums\AppointmentStatus;
 use App\Modules\OfficeNetwork\Domain\Models\Appointment;
 use App\Shared\Audit\AuditLogger;
-use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\ValidationException;
 
 final class CancelAppointmentAction

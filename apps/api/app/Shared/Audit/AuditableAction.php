@@ -56,6 +56,10 @@ enum AuditableAction: string
     case DELEGATION_USED = 'delegation.used';
     case DELEGATION_REVOKED = 'delegation.revoked';
 
+    // In-Person Appointments (§7.6)
+    case APPOINTMENT_ATTENDANCE_UPDATED = 'appointment.attendance_updated';
+    case APPOINTMENT_COMPLETION_UPDATED = 'appointment.completion_updated';
+
     // Administration (§7.6)
     case OFFICE_APPROVED = 'office.approved';
     case OFFICE_SUSPENDED = 'office.suspended';
