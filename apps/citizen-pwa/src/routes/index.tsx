@@ -62,6 +62,16 @@ const WalletTransactions = lazy(async () => {
   return { default: mod.WalletTransactionsView };
 });
 
+const AppointmentsView = lazy(async () => {
+  const mod = await import('@/features/appointments');
+  return { default: mod.AppointmentsPage };
+});
+
+const SmartReminderView = lazy(async () => {
+  const mod = await import('@/features/smart-reminder');
+  return { default: mod.SmartReminderPage };
+});
+
 /**
  * All 26 Citizen Routes defined in Architecture §4.4
  */
@@ -83,8 +93,8 @@ export const routes: RouteObject[] = [
   { path: '/profile', Component: Placeholder('profile') },
   { path: '/profile/personal-info', Component: Placeholder('personal_info') },
   { path: '/profile/documents', Component: DocumentsVault },
-  { path: '/profile/appointments', Component: Placeholder('appointments') },
-  { path: '/profile/reminders', Component: Placeholder('reminders') },
+  { path: '/profile/appointments', Component: AppointmentsView },
+  { path: '/profile/reminders', Component: SmartReminderView },
   { path: '/profile/messages', Component: Notifications },
   { path: '/profile/delegations', Component: Placeholder('delegations') },
   { path: '/profile/settings', Component: Placeholder('settings') },

@@ -10,7 +10,6 @@ use App\Modules\OfficeNetwork\Application\Queries\OfficeFinder;
 use App\Modules\OfficeNetwork\Domain\Enums\OfficeMembershipStatus;
 use App\Modules\OfficeNetwork\Domain\Models\Office;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeAnnouncement;
-use App\Modules\OfficeNetwork\Domain\Models\OfficeServiceCoverage;
 use App\Modules\OfficeNetwork\Domain\Models\OfficeSpecialty;
 use App\Modules\ServiceCatalog\Domain\Models\ServiceCategory;
 use App\Shared\Audit\AuditableAction;
@@ -18,7 +17,6 @@ use Database\Seeders\ProvinceSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Laravel\Sanctum\Sanctum;
 use Spatie\Permission\Models\Role;
 
