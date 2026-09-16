@@ -24,6 +24,7 @@ final class IdentityServiceProvider extends ServiceProvider
         Gate::policy(Citizen::class, CitizenPolicy::class);
         Gate::policy(Operator::class, OperatorPolicy::class);
         Gate::policy(OtpChallenge::class, OtpChallengePolicy::class);
+        Gate::policy(\App\Modules\Identity\Domain\Models\Delegation::class, \App\Modules\Identity\Infrastructure\Policies\DelegationPolicy::class);
 
         Event::subscribe(AuditAuthEventsListener::class);
     }

@@ -22,6 +22,12 @@ Route::middleware(['auth:sanctum', 'token.slide'])->group(function (): void {
     Route::get('/auth/me', MeController::class);
     Route::get('/auth/devices', [DeviceController::class, 'index']);
     Route::delete('/auth/devices/{id}', [DeviceController::class, 'destroy']);
+
+    // Legal delegations (§4.4, §5.3, §7.1 T4, TASK-121)
+    Route::get('/profile/delegations', [\App\Modules\Identity\Http\Controllers\DelegationController::class, 'index']);
+    Route::post('/profile/delegations', [\App\Modules\Identity\Http\Controllers\DelegationController::class, 'store']);
+    Route::post('/profile/delegations/{id}/activate', [\App\Modules\Identity\Http\Controllers\DelegationController::class, 'activate']);
+    Route::post('/profile/delegations/{id}/revoke', [\App\Modules\Identity\Http\Controllers\DelegationController::class, 'revoke']);
 });
 
 /*
