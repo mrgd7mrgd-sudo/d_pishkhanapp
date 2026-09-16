@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\Modules\Documents\Application\Actions;
 
 use App\Modules\CaseWorkflow\Domain\Models\CaseDocument;
-use App\Modules\CaseWorkflow\Domain\Models\CaseRequest;
-use App\Modules\Identity\Domain\Enums\DelegationStatus;
+use App\Modules\Identity\Domain\DelegationAuthorizer;
 use App\Modules\Identity\Domain\Models\Citizen;
-use App\Modules\Identity\Domain\Models\Delegation;
 use App\Shared\Audit\AuditableAction;
 use App\Shared\Audit\AuditLogger;
 use Carbon\CarbonImmutable;
@@ -26,6 +24,10 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class IssueSignedUrlAction
 {
+    public function __construct(
+        private readonly DelegationAuthorizer $delegations,
+    ) {}
+
     /**
      * @return array{
      *     url: string,
@@ -41,7 +43,7 @@ final class IssueSignedUrlAction
 
         /** @var CaseDocument|null $document */
         $document = CaseDocument::query()
-            ->with(['caseRequest.service'])
+            ->with('caseRequest')
             ->where('id', $cleanId)
             ->first();
 
@@ -49,18 +51,16 @@ final class IssueSignedUrlAction
             $this->abortNotFound();
         }
 
-        // Anti-enumeration authorization check (§7.3)
+        // Anti-enumeration authorization check (§7.3): owner or authorized delegate only
         if ($actor instanceof Citizen) {
             $case = $document->caseRequest;
             if ($case === null) {
                 $this->abortNotFound();
             }
 
-            if ($case->citizen_id !== $actor->id) {
-                $isAuthorizedDelegate = $this->verifyDelegateAccess($actor, $case);
-                if (! $isAuthorizedDelegate) {
-                    $this->abortNotFound();
-                }
+            if ($case->citizen_id !== $actor->id
+                && ! $this->delegations->isAuthorizedFor($actor, $case->citizen_id, $case->service_id)) {
+                $this->abortNotFound();
             }
         }
 
@@ -110,20 +110,5 @@ final class IssueSignedUrlAction
             'detail' => 'مدرک یا پرونده یافت نشد.',
             'instance' => Request::path(),
         ], Response::HTTP_NOT_FOUND));
-    }
-
-    private function verifyDelegateAccess(Citizen $actor, CaseRequest $case): bool
-    {
-        $delegations = Delegation::query()
-            ->where('principal_citizen_id', $case->citizen_id)
-            ->where('delegate_citizen_id', $actor->id)
-            ->where('status', DelegationStatus::Active)
-            ->where('valid_until', '>', CarbonImmutable::now())
-            ->get();
-
-        return $delegations->contains(function (Delegation $delegation) use ($case): bool {
-            return $delegation->isServiceAllowed($case->service_id)
-                || ($case->service !== null && $delegation->isServiceAllowed($case->service->slug));
-        });
     }
 }

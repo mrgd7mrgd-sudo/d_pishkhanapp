@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\CaseWorkflow\Infrastructure\Policies;
 
 use App\Modules\CaseWorkflow\Domain\Models\CaseDocument;
+use App\Modules\Identity\Domain\DelegationAuthorizer;
 use App\Modules\Identity\Domain\Models\Citizen;
 use App\Modules\Identity\Domain\Models\Operator;
 use App\Modules\Identity\Infrastructure\Policies\BasePolicy;
@@ -12,6 +13,10 @@ use Illuminate\Contracts\Auth\Authenticatable;
 
 final class CaseDocumentPolicy extends BasePolicy
 {
+    public function __construct(
+        private readonly DelegationAuthorizer $delegations,
+    ) {}
+
     public function viewAny(?Authenticatable $user): bool
     {
         return $user instanceof Citizen || $user instanceof Operator;
@@ -37,13 +42,7 @@ final class CaseDocumentPolicy extends BasePolicy
                 return true;
             }
 
-            return \App\Modules\Identity\Domain\Models\Delegation::query()
-                ->where('principal_citizen_id', $case->citizen_id)
-                ->where('delegate_citizen_id', $user->id)
-                ->where('status', \App\Modules\Identity\Domain\Enums\DelegationStatus::Active)
-                ->where('valid_until', '>', \Carbon\CarbonImmutable::now())
-                ->get()
-                ->contains(fn (\App\Modules\Identity\Domain\Models\Delegation $d) => $d->isServiceAllowed($case->service_id));
+            return $this->delegations->isAuthorizedFor($user, $case->citizen_id, $case->service_id);
         }
 
         if ($user instanceof Operator) {
