@@ -13,7 +13,8 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "league/flysystem-aws-s3-v3": "^3.35",
-        "spatie/laravel-permission": "^8.3"
+        "spatie/laravel-permission": "^8.3",
+        "tecnickcom/tcpdf": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
